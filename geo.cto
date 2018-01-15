@@ -1,7 +1,7 @@
 namespace org.accordproject.geo
 
-import org.accordproject.address.PostalAddress //from github://accordproject/models/master/address.cto
-import org.accordproject.Thing //from 
+import org.accordproject.address.PostalAddress from github://accordproject/models/master/address.cto
+import org.accordproject.Thing from github://accordproject/models/master/base.cto
 
 /**
  * http://schema.org/GeoCoordinates

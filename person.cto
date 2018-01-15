@@ -1,10 +1,10 @@
 namespace org.accordproject.person
 
-import org.accordproject.* //from github://accordproject/models/master/address.cto
-import org.accordproject.address.PostalAddress //from github://accordproject/models/master/address.cto
-import org.accordproject.organization.* //from github://accordproject/models/master/address.cto
-import org.accordproject.geo.* //from github://accordproject/models/master/address.cto
-import org.accordproject.product.* //from github://accordproject/models/master/address.cto
+import org.accordproject.* from github://accordproject/models/master/base.cto
+import org.accordproject.address.PostalAddress from github://accordproject/models/master/address.cto
+import org.accordproject.organization.* from github://accordproject/models/master/address.cto
+import org.accordproject.geo.* from github://accordproject/models/master/address.cto
+import org.accordproject.product.* from github://accordproject/models/master/address.cto
 
 enum Gender {
   o MALE

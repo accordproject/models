@@ -1,10 +1,10 @@
 namespace org.accordproject.business
 
-import org.accordproject.address.PostalAddress //from github://accordproject/models/master/address.cto
+import org.accordproject.address.PostalAddress from github://accordproject/models/master/address.cto
 
 /**
  */
-concept Business {
+concept Business extends Thing {
   o String name
   o PostalAddress address
 }

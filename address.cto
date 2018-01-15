@@ -1,6 +1,6 @@
 namespace org.accordproject.address
 
-import org.accordproject.Thing //from 
+import org.accordproject.Thing from github://accordproject/models/master/base.cto
 
 /**
  * Based on http://schema.org/PostalAddress
