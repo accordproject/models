@@ -1,7 +1,7 @@
-namespace org.accordproject.us.state
+namespace org.accordproject.usa.state
 
 /**
- * List of available states
+ * States in the USA
  */
 enum State {
   o AL
