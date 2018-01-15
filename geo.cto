@@ -1,0 +1,38 @@
+namespace org.accordproject.geo
+
+import org.accordproject.address.PostalAddress //from github://accordproject/models/master/address.cto
+import org.accordproject.Thing //from 
+
+/**
+ * http://schema.org/GeoCoordinates
+ */
+concept GeoCoordinates extends Thing {
+  o PostalAddress address optional
+  o String addressCountry optional
+  o Double elevation optional
+  o Double latitude optional
+  o Double longitude optional
+}
+
+/**
+ * http://schema.org/Place
+ */
+concept Place extends Thing {
+  o PostalAddress address optional
+  o String branchCode optional
+  o String faxNumber optional
+  o GeoCoordinates geo optional
+  o String globalLocationNumber optional
+  o String mapUrl optional
+  o String isicsV4 optional
+  o String telephone optional
+}
+
+/**
+ * http://schema.org/Country
+ */
+concept Country extends Thing {
+  o PostalAddress address optional
+  o String branchCode optional
+  o String faxNumber optional
+}

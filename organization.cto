@@ -1,0 +1,5 @@
+namespace org.accordproject.organization
+
+participant Organization identified by identifier {
+  o String identifier
+}

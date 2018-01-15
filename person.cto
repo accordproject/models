@@ -1,0 +1,63 @@
+namespace org.accordproject.person
+
+import org.accordproject.* //from github://accordproject/models/master/address.cto
+import org.accordproject.address.PostalAddress //from github://accordproject/models/master/address.cto
+import org.accordproject.organization.* //from github://accordproject/models/master/address.cto
+import org.accordproject.geo.* //from github://accordproject/models/master/address.cto
+import org.accordproject.product.* //from github://accordproject/models/master/address.cto
+
+enum Gender {
+  o MALE
+  o FEMALE
+  o OTHER
+  o UNKNOWN
+}
+
+/**
+ * Based on http://schema.org/Person
+ */
+participant Person identified by identifier {
+  o String identifier
+  o String personId
+  o String additionalName
+  o PostalAddress address optional
+  --> Organization affiliation optional
+  --> Organization alumniOf optional
+  o String award
+  o DateTime birthDate
+  o DateTime deathDate
+  o Place birthPlace
+  --> Person[] children
+  --> Person[] colleagues
+  o String duns
+  o String email
+  o String familyName
+  o String faxNumber
+  --> Person[] follows
+  --> Organization funder
+  o Gender gender
+  o String givenName
+  o String globalLocationNumber
+  o QualtativeValue height
+  o PostalAddress homeLocation
+  o String honorificPrefix
+  o String honorificSuffix
+  o String isicsV4
+  o String jobTitle
+  --> Person[] knows
+  --> Organization memberOf
+  o String naics
+  o Country nationality
+  o MonetaryAmount netWorth
+  --> Product owns
+  --> Person parent
+  --> Person relatedTo
+  --> Person[] sibling
+  --> Organization sponsor
+  --> Person spouse
+  o String taxId
+  o String telephone
+  o String vatId
+  o QualtativeValue weight
+  --> Organization worksFor
+}
