@@ -1,7 +1,6 @@
 namespace org.accordproject.money
 
 // Use something like currency.js to ensure precision
-@AccordType("Double __ String", "{% (d) => {return ${d[0];} %}")
 concept MonetaryAmount {
   o Double value
   o String currencyCode
