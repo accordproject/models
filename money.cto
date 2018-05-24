@@ -1,7 +1,7 @@
 namespace org.accordproject.money
 
 concept MonetaryAmount {
-  o String currency
   o Integer whole
   o Integer fractional
+  o String currency
 }
