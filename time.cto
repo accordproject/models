@@ -1,7 +1,7 @@
 namespace org.accordproject.time
 
 /**
- * Units for a duration. 24 hour days are assumed.
+ * Units for a duration.
  */
 enum TemporalUnit {
   o seconds
