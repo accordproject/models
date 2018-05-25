@@ -190,6 +190,6 @@ o ZWL
  * Represents an amount of money
  */
 concept MonetaryAmount {
-  o Double doubleValue // convert to a String and use something like currency.js to ensure precision?
+  o Double doubleValue // convert to fixed-point?
   o CurrencyCode currencyCode
 }
