@@ -1,0 +1,42 @@
+namespace org.accordproject.cicero.runtime
+
+import org.accordproject.cicero.contract.AccordClause from github://accordproject/models/master/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContract from github://accordproject/models/master/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContractState from github://accordproject/models/master/cicero/contract.cto
+
+/**
+ * Contract API
+ * -- Describes input and output of calls to a contract's clause
+ */
+
+/* A request is a transaction */
+abstract transaction Request {}
+
+/* A response is a transaction */
+abstract transaction Response {}
+
+/* An Error is a transaction */
+abstract transaction ErrorResponse {}
+
+/* A payload has contract data, a request and a state */
+concept Payload {
+  o AccordContract contract  // the contract data
+  o Request request
+  o AccordContractState state // TODO (DCS) make this optional so that the logic can instantiate?
+}
+
+/* If the call to a contract's clause succeeds, it returns a response, a list of events and a new state */
+concept Success {
+  o Response response
+  o AccordContractState state
+  o Event[] emit
+}
+/* If the call to a contract's clause fails, it returns and error */ 
+concept Failure {
+  o ErrorResponse error
+}
+
+/**
+ * The functional signature for a contract call is as follows:
+ * clausecall : String contractName -> String clauseName -> Payload payload -> Success | Failure
+ */
