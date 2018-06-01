@@ -1,8 +1,8 @@
 namespace org.accordproject.product
 
-import org.accordproject.* from github://accordproject/models/master/base.cto
-import org.accordproject.address.PostalAddress from github://accordproject/models/master/address.cto
-import org.accordproject.organization.Organization from github://accordproject/models/master/organization.cto
+import org.accordproject.QualtativeValue from https://accordproject-models.netlify.com/base.cto
+import org.accordproject.address.PostalAddress from https://accordproject-models.netlify.com/address.cto
+import org.accordproject.organization.Organization from https://accordproject-models.netlify.com/organization.cto
 
 /**
  * http://schema.org/Product

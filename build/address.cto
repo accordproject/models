@@ -1,11 +1,9 @@
 namespace org.accordproject.address
 
-import org.accordproject.Thing from github://accordproject/models/master/base.cto
-
 /**
  * Based on http://schema.org/PostalAddress
  */
-concept PostalAddress extends Thing {
+concept PostalAddress {
   o String streetAddress
   o String postalCode
   o String postOfficeBoxNumber

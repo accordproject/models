@@ -1,12 +1,11 @@
 namespace org.accordproject.geo
 
-import org.accordproject.address.PostalAddress from github://accordproject/models/master/address.cto
-import org.accordproject.Thing from github://accordproject/models/master/base.cto
+import org.accordproject.address.PostalAddress from https://accordproject-models.netlify.com/address.cto
 
 /**
  * http://schema.org/GeoCoordinates
  */
-concept GeoCoordinates extends Thing {
+concept GeoCoordinates {
   o PostalAddress address optional
   o String addressCountry optional
   o Double elevation optional
@@ -17,7 +16,7 @@ concept GeoCoordinates extends Thing {
 /**
  * http://schema.org/Place
  */
-concept Place extends Thing {
+concept Place {
   o PostalAddress address optional
   o String branchCode optional
   o String faxNumber optional
@@ -31,7 +30,7 @@ concept Place extends Thing {
 /**
  * http://schema.org/Country
  */
-concept Country extends Thing {
+concept Country {
   o PostalAddress address optional
   o String branchCode optional
   o String faxNumber optional
