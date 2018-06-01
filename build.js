@@ -55,8 +55,10 @@ const rootDir = resolve(__dirname, './src/');
         const modelText = fs.readFileSync(file, 'utf8');
         const mm = new ModelManager();
         try {
-            mm.addModelFile(modelText, file, false);
-            mm.updateExternalModels();
+            if(process.env.VALIDATE) {
+                mm.addModelFile(modelText, file, false);
+                mm.updateExternalModels();
+            }
 
             // passed validation, so copy to build dir
             const dest = file.replace('/src/', '/build/');
