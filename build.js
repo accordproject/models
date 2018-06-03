@@ -15,9 +15,11 @@
 'use strict';
 
 const ModelManager = require('composer-common').ModelManager;
+const ModelFile = require('composer-common').ModelFile;
+
 const rimraf = require('rimraf');
 const path = require('path');
-
+const nunjucks = require('nunjucks');
 const {
     promisify
 } = require('util');
@@ -48,6 +50,8 @@ const buildDir = resolve(__dirname, './build/');
     // delete build directory
     rimraf.sync('./build');
 
+    nunjucks.configure('./views', { autoescape: true });
+    
     // convert README.md to html
     await fs.ensureDir('./build');
     const readme = fs.readFileSync('README.md', 'utf8');
@@ -60,22 +64,36 @@ const buildDir = resolve(__dirname, './build/');
     const files = await getFiles(rootDir);
     for( const file of files ) {
         const modelText = fs.readFileSync(file, 'utf8');
-        const mm = new ModelManager();
+        const modelManager = new ModelManager();
+        const modelFile  = new ModelFile(modelManager, modelText, file);
+
         try {
             if(process.env.VALIDATE) {
-                mm.addModelFile(modelText, file, true);
-                mm.updateExternalModels();
+                modelManager.addModelFile(modelFile, modelFile.getName(), true);
+                modelManager.updateExternalModels();
             }
 
             // passed validation, so copy to build dir
             const dest = file.replace('/src/', '/build/');
             const destPath = path.dirname(dest);
             const fileName = path.basename(file);
+            const fileNameNoExt = path.parse(fileName).name;
             const relative = path.relative(buildDir, destPath);
             await fs.ensureDir(destPath);
             await fs.copy(file, dest);
             console.log('Copied ' + file);
-            indexHtml += `<tr><td><a href="${relative}/${fileName}">${relative}/${fileName}</a></td></tr>`
+
+            // generate the html page for the model
+            const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
+            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile });
+            fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+            
+            indexHtml += `<tr><td><a href="${generatedHtmlFile}">${generatedHtmlFile}</a></td></tr>`
+
         } catch (err) {
             console.log(err.message);
         }

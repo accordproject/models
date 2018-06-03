@@ -1,0 +1,9 @@
+<h1>Namespace {{modelFile.getNamespace()}}</h1>
+
+{% for decl in modelFile.getAllDeclarations() %}
+<h2>{{decl.getName()}}</h2>
+{% for property in decl.getProperties() %}
+<p>{{property.getName()}} : {{property.getType()}}</p>
+{% endfor %}
+{% endfor %}
+</ul>
