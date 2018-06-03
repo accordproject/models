@@ -16,7 +16,8 @@
 
 const ModelManager = require('composer-common').ModelManager;
 const rimraf = require('rimraf');
-    
+const path = require('path');
+
 const {
     promisify
 } = require('util');
@@ -28,6 +29,7 @@ const readdir = promisify(fs.readdir);
 const rename = promisify(fs.rename);
 const stat = promisify(fs.stat);
 const mkdirp = require('mkdirp');
+const showdown  = require('showdown');
 
 async function getFiles(dir) {
     const subdirs = await readdir(dir);
@@ -39,19 +41,24 @@ async function getFiles(dir) {
 }
 
 const rootDir = resolve(__dirname, './src/');
+const buildDir = resolve(__dirname, './build/');
 
 (async function () {
 
     // delete build directory
     rimraf.sync('./build');
 
-    // copy the README.md
+    // convert README.md to html
     await fs.ensureDir('./build');
+    const readme = fs.readFileSync('README.md', 'utf8');
+    const converter = new showdown.Converter();
+    let indexHtml = converter.makeHtml(readme);
     await fs.copy('./README.md', './build/README.md');
+    indexHtml += '<table>'
 
     // validate and copy all the files
     const files = await getFiles(rootDir);
-    files.forEach(async (file) => {
+    for( const file of files ) {
         const modelText = fs.readFileSync(file, 'utf8');
         const mm = new ModelManager();
         try {
@@ -62,12 +69,22 @@ const rootDir = resolve(__dirname, './src/');
 
             // passed validation, so copy to build dir
             const dest = file.replace('/src/', '/build/');
-            const destPath = require('path').dirname(dest);
+            const destPath = path.dirname(dest);
+            const fileName = path.basename(file);
+            const relative = path.relative(buildDir, destPath);
             await fs.ensureDir(destPath);
             await fs.copy(file, dest);
             console.log('Copied ' + file);
+            indexHtml += `<tr><td><a href="${relative}/${fileName}">${relative}/${fileName}</a></td></tr>`
         } catch (err) {
             console.log(err.message);
+        }
+    };
+
+    indexHtml += '</table>'
+    fs.writeFile('./build/index.html', indexHtml, function (err) {
+        if (err) {
+            return console.log(err);
         }
     });
 })();
