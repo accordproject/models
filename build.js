@@ -56,7 +56,7 @@ const rootDir = resolve(__dirname, './src/');
         const mm = new ModelManager();
         try {
             if(process.env.VALIDATE) {
-                mm.addModelFile(modelText, file, false);
+                mm.addModelFile(modelText, file, true);
                 mm.updateExternalModels();
             }
 
