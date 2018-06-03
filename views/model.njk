@@ -1,21 +1,15 @@
 <h1>Namespace <a href="{{modelFilePath}}">{{modelFile.getNamespace()}}</a></h1>
 
+<h2>Importable Types</h2>
+<ul>
+{% for decl in modelFile.getAllDeclarations() %}
+<li>
+<pre>import {{decl.getFullyQualifiedName()}} from {{modelFilePath}}</pre>
+</li>
+{% endfor %}
+</ul>
+
 <h2>Source</h2>
 <pre>
 {{modelFile.getDefinitions()}}
 </pre>
-
-{% for decl in modelFile.getAllDeclarations() %}
-<h2>{{decl.getName()}}</h2>
-
-<p>
-<pre>
-import {{decl.getFullyQualifiedName()}} from {{modelFilePath}}
-</pre>
-</p>
-
-{% for property in decl.getProperties() %}
-<p>{{property.getName()}} : {{property.getType()}}</p>
-{% endfor %}
-{% endfor %}
-</ul>
