@@ -85,7 +85,7 @@ const buildDir = resolve(__dirname, './build/');
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile });
+            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}` });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);

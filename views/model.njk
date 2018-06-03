@@ -1,7 +1,14 @@
-<h1>Namespace {{modelFile.getNamespace()}}</h1>
+<h1>Namespace <a href="{{modelFile.getName()}}">{{modelFile.getNamespace()}}</a></h1>
 
 {% for decl in modelFile.getAllDeclarations() %}
 <h2>{{decl.getName()}}</h2>
+
+<p>
+<pre>
+import {{decl.getFullyQualifiedName()}} from {{modelFilePath}}
+</pre>
+</p>
+
 {% for property in decl.getProperties() %}
 <p>{{property.getName()}} : {{property.getType()}}</p>
 {% endfor %}
