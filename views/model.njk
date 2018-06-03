@@ -1,5 +1,10 @@
 <h1>Namespace <a href="{{modelFilePath}}">{{modelFile.getNamespace()}}</a></h1>
 
+<h2>Source</h2>
+<pre>
+{{modelFile.getDefinitions()}}
+</pre>
+
 {% for decl in modelFile.getAllDeclarations() %}
 <h2>{{decl.getName()}}</h2>
 
