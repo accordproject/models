@@ -45,18 +45,21 @@ async function getFiles(dir) {
     return files.reduce((a, f) => a.concat(f), []);
 }
 
-const rootDir = resolve(__dirname, './src/');
-const buildDir = resolve(__dirname, './build/');
+const rootDir = resolve(__dirname, './src');
+const buildDir = resolve(__dirname, './build');
+
+// console.log('build: ' + buildDir);
+// console.log('rootDir: ' + rootDir);
 
 (async function () {
 
     // delete build directory
-    rimraf.sync('./build');
+    rimraf.sync(buildDir);
 
     nunjucks.configure('./views', { autoescape: true });
     
     // convert README.md to html
-    await fs.ensureDir('./build');
+    await fs.ensureDir(buildDir);
     const readme = fs.readFileSync('README.md', 'utf8');
     const converter = new showdown.Converter();
     let indexHtml = converter.makeHtml(readme);
@@ -73,43 +76,42 @@ const buildDir = resolve(__dirname, './build/');
         // passed validation, so copy to build dir
         const dest = file.replace('/src/', '/build/');
         const destPath = path.dirname(dest);
+        const relative = destPath.slice(buildDir.length);
+        // console.log('dest: ' + dest);
+        // console.log('destPath: ' + destPath);
+        // console.log('relative: ' + relative);
+        
         const fileName = path.basename(file);
         const fileNameNoExt = path.parse(fileName).name;
-        const relative = path.relative(buildDir, destPath);
+
         await fs.ensureDir(destPath);
-        const generatedPumlFile = `./${relative}/${fileNameNoExt}.puml`;
+        const generatedPumlFile = `${destPath}/${fileNameNoExt}.puml`;
         let umlURL = '';
         try {
-            if(process.env.VALIDATE) {
-                modelManager.addModelFile(modelFile, modelFile.getName(), true);
-                modelManager.updateExternalModels();
+            modelManager.addModelFile(modelFile, modelFile.getName(), true);
+            modelManager.updateExternalModels();
 
-                // generate the PlantUML for the ModelFile
-                const visitor = new CodeGen.PlantUMLVisitor();
-                const fileWriter = new CodeGen.FileWriter(buildDir);
-                fileWriter.closeFile = () => {
-                    modelFilePlantUML = fileWriter.getBuffer();
-                };
-                fileWriter.openFile(generatedPumlFile);
-                fileWriter.writeLine(0, '@startuml');
-                fileWriter.writeLine(0, 'title' );
-                fileWriter.writeLine(0, 'Model' );
-                fileWriter.writeLine(0, 'endtitle' );
-                const params = {fileWriter : fileWriter};
-                modelFile.accept(visitor, params);
-                fileWriter.writeLine(0, '@enduml');
-                fileWriter.closeFile();
+            // generate the PlantUML for the ModelFile
+            const visitor = new CodeGen.PlantUMLVisitor();
+            const fileWriter = new CodeGen.FileWriter(buildDir);
+            fileWriter.openFile(generatedPumlFile);
+            fileWriter.writeLine(0, '@startuml');
+            const params = {fileWriter : fileWriter};
+            modelFile.accept(visitor, params);
+            fileWriter.writeLine(0, '@enduml');
+            fileWriter.closeFile();
 
-                const encoded = plantumlEncoder.encode(modelFilePlantUML)
-                umlURL = `http://www.plantuml.com/plantuml/img/${encoded}`;
-            }
+            const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
+            const encoded = plantumlEncoder.encode(modelFilePlantUML)
+            umlURL = `http://www.plantuml.com/plantuml/svg/${encoded}`;
 
             await fs.copy(file, dest);
             console.log('Copied ' + file);
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}`, umlURL: umlURL });
+            const serverRoot = 'https://accordproject-models.netlify.com';
+            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, umlFilePath: `${relative}/${fileNameNoExt}.puml`, modelFilePath: `${relative}/${fileName}`, umlURL: umlURL });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);

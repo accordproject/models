@@ -1,13 +1,19 @@
-<h1>Namespace <a href="{{modelFilePath}}">{{modelFile.getNamespace()}}</a></h1>
+<h1>Namespace {{modelFile.getNamespace()}}</h1>
 
 <h2>Diagram</h2>
 <img src="{{umlURL}}"/>
+
+<h2>Downloads</h2>
+<ul>
+  <li><a href="{{modelFilePath}}">CTO File</a></li>
+  <li><a href="{{umlFilePath}}">PlantUML</a></li>
+</ul>
 
 <h2>Importable Types</h2>
 <ul>
 {% for decl in modelFile.getAllDeclarations() %}
 <li>
-<pre>import {{decl.getFullyQualifiedName()}} from {{modelFilePath}}</pre>
+<pre>import {{decl.getFullyQualifiedName()}} from {{serverRoot}}{{modelFilePath}}</pre>
 </li>
 {% endfor %}
 </ul>
