@@ -6,7 +6,7 @@ namespace org.accordproject.cicero.contract
  */
 
 /* A state is a concept with a contract status */
-abstract asset AccordContractState identified by stateId {
+asset AccordContractState identified by stateId {
   o String stateId
   --> AccordContract contract optional // TODO (DCS) this should be required
 }

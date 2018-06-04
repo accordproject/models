@@ -65,12 +65,17 @@ const buildDir = resolve(__dirname, './build/');
     for( const file of files ) {
         const modelText = fs.readFileSync(file, 'utf8');
         const modelManager = new ModelManager();
-        const modelFile  = new ModelFile(modelManager, modelText, file);
+        const modelFile  = new ModelFile(modelManager, modelText, file);        
 
         try {
             if(process.env.VALIDATE) {
                 modelManager.addModelFile(modelFile, modelFile.getName(), true);
                 modelManager.updateExternalModels();
+
+                // generate the PlantUML for the ModelFile
+                const visitor = new PlantUMLVisitor();
+                const fileWriter = new InMemoryFileWriter();
+                const params = {fileWriter : fileWriter};
             }
 
             // passed validation, so copy to build dir

@@ -1,5 +1,8 @@
 <h1>Namespace <a href="{{modelFilePath}}">{{modelFile.getNamespace()}}</a></h1>
 
+<h2>Diagram</h2>
+<img src="https://g.gravizo.com/svg?{{modelFilePlantUML}}"/>
+
 <h2>Importable Types</h2>
 <ul>
 {% for decl in modelFile.getAllDeclarations() %}
