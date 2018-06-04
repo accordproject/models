@@ -45,6 +45,120 @@ async function getFiles(dir) {
     return files.reduce((a, f) => a.concat(f), []);
 }
 
+async function generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile) {
+    // generate the PlantUML for the ModelFile
+    try {
+        const generatedPumlFile = `${destPath}/${fileNameNoExt}.puml`;
+        const visitor = new CodeGen.PlantUMLVisitor();
+        const fileWriter = new CodeGen.FileWriter(buildDir);
+        fileWriter.openFile(generatedPumlFile);
+        fileWriter.writeLine(0, '@startuml');
+        const params = {fileWriter : fileWriter};
+        modelFile.accept(visitor, params);
+        fileWriter.writeLine(0, '@enduml');
+        fileWriter.closeFile();
+        // save the UML
+        const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
+        const encoded = plantumlEncoder.encode(modelFilePlantUML)
+        return `http://www.plantuml.com/plantuml/svg/${encoded}`;        
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
+async function generateTypescript(buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+        // generate the Typescript for the ModelFile
+        const visitor = new CodeGen.TypescriptVisitor();
+        const fileWriter = new CodeGen.FileWriter(buildDir);
+        const params = {fileWriter : fileWriter};
+        modelFile.accept(visitor, params);
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
+async function generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+            // generate the JSON Schema
+            const visitor = new CodeGen.JSONSchemaVisitor();
+            const params = {};
+            const jsonSchemas = modelFile.accept(visitor, params);
+            const generatedJsonFile = `${destPath}/${fileNameNoExt}.json`;
+            // save JSON Schema
+            fs.writeFile( `${generatedJsonFile}`, JSON.stringify(jsonSchemas), function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+    }
+    catch(err) {
+        console.log(err);
+    }
+}
+
+async function generateJava(buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+            // generate the Java for the ModelFile
+            const visitor = new CodeGen.JavaVisitor();
+            const fileWriter = new CodeGen.FileWriter(buildDir);
+            const zip = new AdmZip();
+            
+            // override closeFile to aggregate all the files into a single zip
+            fileWriter.closeFile = function() {
+                if (!this.fileName) {
+                    throw new Error('No file open');
+                }
+        
+                // add file to zip
+                const content = fileWriter.getBuffer();
+                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+                zip.writeZip(`${destPath}/${fileNameNoExt}.jar`);
+
+                this.fileName = null;
+                this.relativeDir = null;
+                this.clearBuffer();
+            };
+            const params = {fileWriter : fileWriter};
+            modelFile.getModelManager().accept(visitor, params);
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
+async function generateGo(buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+            // generate the Go Lang for the ModelFile
+            const visitor = new CodeGen.GoLangVisitor();
+            const fileWriter = new CodeGen.FileWriter(buildDir);
+            const zip = new AdmZip();
+            
+            // override closeFile to aggregate all the files into a single zip
+            fileWriter.closeFile = function() {
+                if (!this.fileName) {
+                    throw new Error('No file open');
+                }
+        
+                // add file to zip
+                const content = fileWriter.getBuffer();
+                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+                zip.writeZip(`${destPath}/${fileNameNoExt}.zip`);
+
+                this.fileName = null;
+                this.relativeDir = null;
+                this.clearBuffer();
+            };
+            const params = {fileWriter : fileWriter};
+            modelFile.getModelManager().accept(visitor, params);
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
 const rootDir = resolve(__dirname, './src');
 const buildDir = resolve(__dirname, './build');
 let modelFileIndex = [];
@@ -81,88 +195,16 @@ let modelFileIndex = [];
         const fileNameNoExt = path.parse(fileName).name;
 
         await fs.ensureDir(destPath);
-        const generatedPumlFile = `${destPath}/${fileNameNoExt}.puml`;
         let umlURL = '';
         try {
             modelManager.addModelFile(modelFile, modelFile.getName(), true);
             modelManager.updateExternalModels();
 
-            // generate the PlantUML for the ModelFile
-            let visitor = new CodeGen.PlantUMLVisitor();
-            let fileWriter = new CodeGen.FileWriter(buildDir);
-            fileWriter.openFile(generatedPumlFile);
-            fileWriter.writeLine(0, '@startuml');
-            let params = {fileWriter : fileWriter};
-            modelFile.accept(visitor, params);
-            fileWriter.writeLine(0, '@enduml');
-            fileWriter.closeFile();
-            // save the UML
-            const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
-            const encoded = plantumlEncoder.encode(modelFilePlantUML)
-            umlURL = `http://www.plantuml.com/plantuml/svg/${encoded}`;
-
-            // generate the Typescript for the ModelFile
-            visitor = new CodeGen.TypescriptVisitor();
-            fileWriter = new CodeGen.FileWriter(buildDir);
-            params = {fileWriter : fileWriter};
-            modelFile.accept(visitor, params);
-
-            // generate the JSON Schema
-            visitor = new CodeGen.JSONSchemaVisitor();
-            const jsonSchemas = modelFile.accept(visitor, params);
-            const generatedJsonFile = `${destPath}/${fileNameNoExt}.json`;
-            // save JSON Schema
-            fs.writeFile( `${generatedJsonFile}`, JSON.stringify(jsonSchemas), function (err) {
-                if (err) {
-                    return console.log(err);
-                }
-            });
-
-            // generate the Java for the ModelFile
-            visitor = new CodeGen.JavaVisitor();
-            fileWriter = new CodeGen.FileWriter(buildDir);
-            let zip = new AdmZip();
-            
-            // override closeFile to aggregate all the files into a single zip
-            fileWriter.closeFile = function() {
-                if (!this.fileName) {
-                    throw new Error('No file open');
-                }
-        
-                // add file to zip
-                const content = fileWriter.getBuffer();
-                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
-                zip.writeZip(`${destPath}/${fileNameNoExt}.jar`);
-
-                this.fileName = null;
-                this.relativeDir = null;
-                this.clearBuffer();
-            };
-            params = {fileWriter : fileWriter};
-            modelManager.accept(visitor, params);
-
-            // generate the Go Lang for the ModelFile
-            visitor = new CodeGen.GoLangVisitor();
-            fileWriter = new CodeGen.FileWriter(buildDir);
-            zip = new AdmZip();
-            
-            // override closeFile to aggregate all the files into a single zip
-            fileWriter.closeFile = function() {
-                if (!this.fileName) {
-                    throw new Error('No file open');
-                }
-        
-                // add file to zip
-                const content = fileWriter.getBuffer();
-                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
-                zip.writeZip(`${destPath}/${fileNameNoExt}.zip`);
-
-                this.fileName = null;
-                this.relativeDir = null;
-                this.clearBuffer();
-            };
-            params = {fileWriter : fileWriter};
-            modelManager.accept(visitor, params);
+            umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
+            await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
+            await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
+            await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
+            await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
             
             // copy the CTO file to the build dir
             await fs.copy(file, dest);
