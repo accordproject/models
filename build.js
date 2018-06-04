@@ -67,6 +67,9 @@ const buildDir = resolve(__dirname, './build');
     await fs.copy('./README.md', './build/README.md');
     indexHtml += '<table>'
 
+    // copy the logo
+    await fs.copy('accord_logo.png', './build/accord_logo.png');
+
     // validate and copy all the files
     const files = await getFiles(rootDir);
     for( const file of files ) {
