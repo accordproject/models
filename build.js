@@ -20,6 +20,7 @@ const CodeGen = require('composer-common').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
+const AdmZip = require('adm-zip');
 
 const plantumlEncoder = require('plantuml-encoder');
 
@@ -92,26 +93,90 @@ const buildDir = resolve(__dirname, './build');
             modelManager.updateExternalModels();
 
             // generate the PlantUML for the ModelFile
-            const visitor = new CodeGen.PlantUMLVisitor();
-            const fileWriter = new CodeGen.FileWriter(buildDir);
+            let visitor = new CodeGen.PlantUMLVisitor();
+            let fileWriter = new CodeGen.FileWriter(buildDir);
             fileWriter.openFile(generatedPumlFile);
             fileWriter.writeLine(0, '@startuml');
-            const params = {fileWriter : fileWriter};
+            let params = {fileWriter : fileWriter};
             modelFile.accept(visitor, params);
             fileWriter.writeLine(0, '@enduml');
             fileWriter.closeFile();
-
+            // save the UML
             const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
             const encoded = plantumlEncoder.encode(modelFilePlantUML)
             umlURL = `http://www.plantuml.com/plantuml/svg/${encoded}`;
 
+            // generate the Typescript for the ModelFile
+            visitor = new CodeGen.TypescriptVisitor();
+            fileWriter = new CodeGen.FileWriter(buildDir);
+            params = {fileWriter : fileWriter};
+            modelFile.accept(visitor, params);
+
+            // generate the JSON Schema
+            visitor = new CodeGen.JSONSchemaVisitor();
+            const jsonSchemas = modelFile.accept(visitor, params);
+            const generatedJsonFile = `${destPath}/${fileNameNoExt}.json`;
+            // save JSON Schema
+            fs.writeFile( `${generatedJsonFile}`, JSON.stringify(jsonSchemas), function (err) {
+                if (err) {
+                    return console.log(err);
+                }
+            });
+
+            // generate the Java for the ModelFile
+            visitor = new CodeGen.JavaVisitor();
+            fileWriter = new CodeGen.FileWriter(buildDir);
+            let zip = new AdmZip();
+            
+            // override closeFile to aggregate all the files into a single zip
+            fileWriter.closeFile = function() {
+                if (!this.fileName) {
+                    throw new Error('No file open');
+                }
+        
+                // add file to zip
+                const content = fileWriter.getBuffer();
+                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+                zip.writeZip(`${destPath}/${fileNameNoExt}.jar`);
+
+                this.fileName = null;
+                this.relativeDir = null;
+                this.clearBuffer();
+            };
+            params = {fileWriter : fileWriter};
+            modelManager.accept(visitor, params);
+
+            // generate the Go Lang for the ModelFile
+            visitor = new CodeGen.GoLangVisitor();
+            fileWriter = new CodeGen.FileWriter(buildDir);
+            zip = new AdmZip();
+            
+            // override closeFile to aggregate all the files into a single zip
+            fileWriter.closeFile = function() {
+                if (!this.fileName) {
+                    throw new Error('No file open');
+                }
+        
+                // add file to zip
+                const content = fileWriter.getBuffer();
+                zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+                zip.writeZip(`${destPath}/${fileNameNoExt}.zip`);
+
+                this.fileName = null;
+                this.relativeDir = null;
+                this.clearBuffer();
+            };
+            params = {fileWriter : fileWriter};
+            modelManager.accept(visitor, params);
+            
+            // copy the CTO file to the build dir
             await fs.copy(file, dest);
             console.log('Copied ' + file);
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
             const serverRoot = 'https://accordproject-models.netlify.com';
-            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, umlFilePath: `${relative}/${fileNameNoExt}.puml`, modelFilePath: `${relative}/${fileName}`, umlURL: umlURL });
+            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);
@@ -121,7 +186,7 @@ const buildDir = resolve(__dirname, './build');
             indexHtml += `<tr><td><a href="${generatedHtmlFile}">${generatedHtmlFile}</a></td></tr>`
 
         } catch (err) {
-            console.log(err.message);
+            console.log(err);
         }
     };
 

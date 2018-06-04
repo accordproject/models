@@ -1,12 +1,16 @@
 <h1>Namespace {{modelFile.getNamespace()}}</h1>
 
-<h2>Diagram</h2>
+<h2>UML Diagram</h2>
 <img src="{{umlURL}}"/>
 
 <h2>Downloads</h2>
 <ul>
-  <li><a href="{{modelFilePath}}">CTO File</a></li>
-  <li><a href="{{umlFilePath}}">PlantUML</a></li>
+  <li><a href="{{filePath}}.cto">CTO</a></li>
+  <li><a href="{{filePath}}.puml">Plant UML</a></li>
+  <li><a href="{{filePath}}.json">JSON Schema</a></li>
+  <li><a href="{{modelFile.getNamespace()}}.ts">Typescript</a></li>
+  <li><a href="{{filePath}}.jar">Java</a></li>
+  <li><a href="{{filePath}}.zip">Go</a></li>
 </ul>
 
 <h2>Importable Types</h2>
