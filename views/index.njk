@@ -32,9 +32,9 @@
             <h2 class="title is-2">Namespaces</h2>
             <p>
                 <ul>
-                    {% for mf in modelFiles %}
+                    {% for e in modelFileIndex %}
                     <li>
-                        <a href="{{mf.getNamespace()}}.html">{{mf.getNamespace()}}</a> ({{mf.getAllDeclarations().length}} types)
+                        <a href="{{e.htmlFile}}">{{e.modelFile.getNamespace()}}</a> ({{e.modelFile.getAllDeclarations().length}} types)
                     </li>
                     {% endfor %}
                 </ul>

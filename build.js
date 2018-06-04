@@ -86,7 +86,6 @@ let modelFileIndex = [];
         try {
             modelManager.addModelFile(modelFile, modelFile.getName(), true);
             modelManager.updateExternalModels();
-            modelFileIndex.push(modelFile);
 
             // generate the PlantUML for the ModelFile
             let visitor = new CodeGen.PlantUMLVisitor();
@@ -171,12 +170,13 @@ let modelFileIndex = [];
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const serverRoot = 'https://accordproject-models.netlify.com';
+            const serverRoot = process.env.SERVER_ROOT;
             const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);
                 }
+            modelFileIndex.push( {htmlFile: generatedHtmlFile, modelFile: modelFile});
             });
         } catch (err) {
             console.log(err);
@@ -184,9 +184,9 @@ let modelFileIndex = [];
     };
 
     // generate the index html page
-    modelFileIndex = modelFileIndex.sort((a, b) => a.getNamespace().localeCompare(b.getNamespace()));
+    modelFileIndex = modelFileIndex.sort((a, b) => a.modelFile.getNamespace().localeCompare(b.modelFile.getNamespace()));
     const serverRoot = 'https://accordproject-models.netlify.com';
-    const templateResult = nunjucks.render('index.njk', { serverRoot: serverRoot, modelFiles: modelFileIndex });
+    const templateResult = nunjucks.render('index.njk', { serverRoot: serverRoot, modelFileIndex: modelFileIndex });
     fs.writeFile( './build/index.html', templateResult, function (err) {
         if (err) {
             return console.log(err);
