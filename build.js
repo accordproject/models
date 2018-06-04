@@ -73,9 +73,9 @@ const buildDir = resolve(__dirname, './build/');
                 modelManager.updateExternalModels();
 
                 // generate the PlantUML for the ModelFile
-                const visitor = new PlantUMLVisitor();
-                const fileWriter = new InMemoryFileWriter();
-                const params = {fileWriter : fileWriter};
+                // const visitor = new PlantUMLVisitor();
+                // const fileWriter = new InMemoryFileWriter();
+                // const params = {fileWriter : fileWriter};
             }
 
             // passed validation, so copy to build dir
