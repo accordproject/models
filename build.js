@@ -66,8 +66,15 @@ const buildDir = resolve(__dirname, './build/');
         const modelText = fs.readFileSync(file, 'utf8');
         const modelManager = new ModelManager();
         const modelFile  = new ModelFile(modelManager, modelText, file);     
-        let modelFilePlantUML = '';   
-
+        let modelFilePlantUML = '';
+        // passed validation, so copy to build dir
+        const dest = file.replace('/src/', '/build/');
+        const destPath = path.dirname(dest);
+        const fileName = path.basename(file);
+        const fileNameNoExt = path.parse(fileName).name;
+        const relative = path.relative(buildDir, destPath);
+        await fs.ensureDir(destPath);
+        const generatedPumlFile = `./${relative}/${fileNameNoExt}.puml`;
         try {
             if(process.env.VALIDATE) {
                 modelManager.addModelFile(modelFile, modelFile.getName(), true);
@@ -76,20 +83,21 @@ const buildDir = resolve(__dirname, './build/');
                 // generate the PlantUML for the ModelFile
                 const visitor = new CodeGen.PlantUMLVisitor();
                 const fileWriter = new CodeGen.FileWriter(buildDir);
-                fileWriter.closeFile = () => {
-                    modelFilePlantUML = fileWriter.getBuffer();
-                };
+                // fileWriter.closeFile = () => {
+                //     modelFilePlantUML = fileWriter.getBuffer();
+                // };
+
+                fileWriter.openFile(generatedPumlFile);
+                fileWriter.writeLine(0, '@startuml');
+                fileWriter.writeLine(0, 'title' );
+                fileWriter.writeLine(0, 'Model' );
+                fileWriter.writeLine(0, 'endtitle' );
                 const params = {fileWriter : fileWriter};
-                modelManager.accept(visitor, params);
+                modelFile.accept(visitor, params);
+                fileWriter.writeLine(0, '@enduml');
+                fileWriter.closeFile();
             }
 
-            // passed validation, so copy to build dir
-            const dest = file.replace('/src/', '/build/');
-            const destPath = path.dirname(dest);
-            const fileName = path.basename(file);
-            const fileNameNoExt = path.parse(fileName).name;
-            const relative = path.relative(buildDir, destPath);
-            await fs.ensureDir(destPath);
             await fs.copy(file, dest);
             console.log('Copied ' + file);
 

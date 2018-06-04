@@ -1,9 +1,0 @@
-namespace org.accordproject.invalid
-
-
-/**
- * An invalid model file - should not get published!
- */
-concept Invalid {
-  o MissingConcept unit
-}
