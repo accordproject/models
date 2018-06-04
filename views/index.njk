@@ -34,7 +34,7 @@
                 <ul>
                     {% for mf in modelFiles %}
                     <li>
-                        <a href="{{mf.getNamespace()}}">{{mf.getNamespace()}}.html</a> ({{mf.getAllDeclarations().length}} types)
+                        <a href="{{mf.getNamespace()}}.html">{{mf.getNamespace()}}</a> ({{mf.getAllDeclarations().length}} types)
                     </li>
                     {% endfor %}
                 </ul>
