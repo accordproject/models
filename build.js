@@ -35,7 +35,6 @@ const readdir = promisify(fs.readdir);
 const rename = promisify(fs.rename);
 const stat = promisify(fs.stat);
 const mkdirp = require('mkdirp');
-const showdown  = require('showdown');
 
 async function getFiles(dir) {
     const subdirs = await readdir(dir);
@@ -48,6 +47,7 @@ async function getFiles(dir) {
 
 const rootDir = resolve(__dirname, './src');
 const buildDir = resolve(__dirname, './build');
+let modelFileIndex = [];
 
 // console.log('build: ' + buildDir);
 // console.log('rootDir: ' + rootDir);
@@ -59,15 +59,7 @@ const buildDir = resolve(__dirname, './build');
 
     nunjucks.configure('./views', { autoescape: true });
     
-    // convert README.md to html
-    await fs.ensureDir(buildDir);
-    const readme = fs.readFileSync('README.md', 'utf8');
-    const converter = new showdown.Converter();
-    let indexHtml = converter.makeHtml(readme);
-    await fs.copy('./README.md', './build/README.md');
-    indexHtml += '<table>'
-
-    // copy the logo
+    // copy the logo to build directory
     await fs.copy('accord_logo.png', './build/accord_logo.png');
 
     // validate and copy all the files
@@ -94,6 +86,7 @@ const buildDir = resolve(__dirname, './build');
         try {
             modelManager.addModelFile(modelFile, modelFile.getName(), true);
             modelManager.updateExternalModels();
+            modelFileIndex.push(modelFile);
 
             // generate the PlantUML for the ModelFile
             let visitor = new CodeGen.PlantUMLVisitor();
@@ -185,16 +178,16 @@ const buildDir = resolve(__dirname, './build');
                     return console.log(err);
                 }
             });
-            
-            indexHtml += `<tr><td><a href="${generatedHtmlFile}">${generatedHtmlFile}</a></td></tr>`
-
         } catch (err) {
             console.log(err);
         }
     };
 
-    indexHtml += '</table>'
-    fs.writeFile('./build/index.html', indexHtml, function (err) {
+    // generate the index html page
+    modelFileIndex = modelFileIndex.sort((a, b) => a.getNamespace().localeCompare(b.getNamespace()));
+    const serverRoot = 'https://accordproject-models.netlify.com';
+    const templateResult = nunjucks.render('index.njk', { serverRoot: serverRoot, modelFiles: modelFileIndex });
+    fs.writeFile( './build/index.html', templateResult, function (err) {
         if (err) {
             return console.log(err);
         }
