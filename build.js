@@ -16,7 +16,7 @@
 
 const ModelManager = require('composer-common').ModelManager;
 const ModelFile = require('composer-common').ModelFile;
-
+const CodeGen = require('composer-common').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
@@ -65,7 +65,8 @@ const buildDir = resolve(__dirname, './build/');
     for( const file of files ) {
         const modelText = fs.readFileSync(file, 'utf8');
         const modelManager = new ModelManager();
-        const modelFile  = new ModelFile(modelManager, modelText, file);        
+        const modelFile  = new ModelFile(modelManager, modelText, file);     
+        let modelFilePlantUML = '';   
 
         try {
             if(process.env.VALIDATE) {
@@ -73,9 +74,13 @@ const buildDir = resolve(__dirname, './build/');
                 modelManager.updateExternalModels();
 
                 // generate the PlantUML for the ModelFile
-                // const visitor = new PlantUMLVisitor();
-                // const fileWriter = new InMemoryFileWriter();
-                // const params = {fileWriter : fileWriter};
+                const visitor = new CodeGen.PlantUMLVisitor();
+                const fileWriter = new CodeGen.FileWriter(buildDir);
+                fileWriter.closeFile = () => {
+                    modelFilePlantUML = fileWriter.getBuffer();
+                };
+                const params = {fileWriter : fileWriter};
+                modelManager.accept(visitor, params);
             }
 
             // passed validation, so copy to build dir
@@ -90,7 +95,7 @@ const buildDir = resolve(__dirname, './build/');
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}`, modelFilePlantUML: 'TBD' });
+            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}`, modelFilePlantUML: modelFilePlantUML });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);
