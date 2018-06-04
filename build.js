@@ -20,6 +20,9 @@ const CodeGen = require('composer-common').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
+
+const plantumlEncoder = require('plantuml-encoder');
+
 const {
     promisify
 } = require('util');
@@ -75,6 +78,7 @@ const buildDir = resolve(__dirname, './build/');
         const relative = path.relative(buildDir, destPath);
         await fs.ensureDir(destPath);
         const generatedPumlFile = `./${relative}/${fileNameNoExt}.puml`;
+        let umlURL = '';
         try {
             if(process.env.VALIDATE) {
                 modelManager.addModelFile(modelFile, modelFile.getName(), true);
@@ -83,10 +87,9 @@ const buildDir = resolve(__dirname, './build/');
                 // generate the PlantUML for the ModelFile
                 const visitor = new CodeGen.PlantUMLVisitor();
                 const fileWriter = new CodeGen.FileWriter(buildDir);
-                // fileWriter.closeFile = () => {
-                //     modelFilePlantUML = fileWriter.getBuffer();
-                // };
-
+                fileWriter.closeFile = () => {
+                    modelFilePlantUML = fileWriter.getBuffer();
+                };
                 fileWriter.openFile(generatedPumlFile);
                 fileWriter.writeLine(0, '@startuml');
                 fileWriter.writeLine(0, 'title' );
@@ -96,6 +99,9 @@ const buildDir = resolve(__dirname, './build/');
                 modelFile.accept(visitor, params);
                 fileWriter.writeLine(0, '@enduml');
                 fileWriter.closeFile();
+
+                const encoded = plantumlEncoder.encode(modelFilePlantUML)
+                umlURL = `http://www.plantuml.com/plantuml/img/${encoded}`;
             }
 
             await fs.copy(file, dest);
@@ -103,7 +109,7 @@ const buildDir = resolve(__dirname, './build/');
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}`, modelFilePlantUML: modelFilePlantUML });
+            const templateResult = nunjucks.render('model.njk', { modelFile: modelFile, modelFilePath: `https://accordproject-models.netlify.com/${relative}/${fileName}`, umlURL: umlURL });
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);
