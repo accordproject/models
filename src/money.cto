@@ -1,5 +1,12 @@
 namespace org.accordproject.money
 
+/**
+ * Represents an amount of money
+ */
+concept MonetaryAmount {
+  o Double doubleValue // convert to fixed-point?
+  o CurrencyCode currencyCode
+}
 
 /**
  * ISO 4217 codes. From https://en.wikipedia.org/wiki/ISO_4217
@@ -184,12 +191,4 @@ o YER
 o ZAR
 o ZMW
 o ZWL
-}
-
-/**
- * Represents an amount of money
- */
-concept MonetaryAmount {
-  o Double doubleValue // convert to fixed-point?
-  o CurrencyCode currencyCode
 }

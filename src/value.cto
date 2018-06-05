@@ -1,9 +1,9 @@
-namespace org.accordproject
+namespace org.accordproject.value
 
 /**
  * http://schema.org/QuantitativeValue
  */
-concept QualtativeValue {
+concept QuantitativeValue {
   o String unitCode
   o String unitText optional
   o Double value

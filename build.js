@@ -198,7 +198,12 @@ let modelFileIndex = [];
         let umlURL = '';
         try {
             modelManager.addModelFile(modelFile, modelFile.getName(), true);
-            modelManager.updateExternalModels();
+
+            // use the FORCE_PUBLISH flag to disable download of
+            // external models and model validation
+            if(!process.env.FORCE_PUBLISH) {
+                modelManager.updateExternalModels();
+            }
 
             umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
             await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
