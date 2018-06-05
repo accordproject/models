@@ -37,10 +37,11 @@
 
             <h2 class="title is-2">Exported Types</h2>
             <div class="content">
-                <pre>
+                <pre style="border: 0; background-color: transparent;">
+<code class="js">
 {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from {{serverRoot}}{{filePath}}.cto
 {% endfor %}
-            </pre>
+</code></pre>
             </div>
 
 
@@ -57,8 +58,10 @@
 
             <h2 class="title is-2">Source</h2>
             <div class="content">
-            <pre>
+            <pre style="border: 0; background-color: transparent;">
+            <code class="js">
 {{modelFile.getDefinitions()}}
+</code>
 </pre>
         </div>
     </section>
