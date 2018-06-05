@@ -227,7 +227,7 @@ let modelFileIndex = [];
 
     // generate the index html page
     modelFileIndex = modelFileIndex.sort((a, b) => a.modelFile.getNamespace().localeCompare(b.modelFile.getNamespace()));
-    const serverRoot = 'https://accordproject-models.netlify.com';
+    const serverRoot = process.env.SERVER_ROOT;
     const templateResult = nunjucks.render('index.njk', { serverRoot: serverRoot, modelFileIndex: modelFileIndex });
     fs.writeFile( './build/index.html', templateResult, function (err) {
         if (err) {

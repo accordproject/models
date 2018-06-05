@@ -1,12 +1,12 @@
 namespace org.accordproject.person
 
-import org.accordproject.QualtativeValue from https://accordproject-models.netlify.com/base.cto
-import org.accordproject.address.PostalAddress from https://accordproject-models.netlify.com/address.cto
-import org.accordproject.organization.Organization from https://accordproject-models.netlify.com/organization.cto
-import org.accordproject.geo.Place from https://accordproject-models.netlify.com/geo.cto
-import org.accordproject.geo.Country from https://accordproject-models.netlify.com/geo.cto
-import org.accordproject.money.MonetaryAmount from https://accordproject-models.netlify.com/money.cto
-import org.accordproject.product.Product from https://accordproject-models.netlify.com/product.cto
+import org.accordproject.QualtativeValue from https://models.accordproject.org/base.cto
+import org.accordproject.address.PostalAddress from https://models.accordproject.org/address.cto
+import org.accordproject.organization.Organization from https://models.accordproject.org/organization.cto
+import org.accordproject.geo.Place from https://models.accordproject.org/geo.cto
+import org.accordproject.geo.Country from https://models.accordproject.org/geo.cto
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
+import org.accordproject.product.Product from https://models.accordproject.org/product.cto
 
 enum Gender {
   o MALE

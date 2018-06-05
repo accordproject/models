@@ -1,8 +1,8 @@
 namespace org.accordproject.cicero.runtime
 
-import org.accordproject.cicero.contract.AccordClause from https://accordproject-models.netlify.com/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContract from https://accordproject-models.netlify.com/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContractState from https://accordproject-models.netlify.com/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContractState from https://models.accordproject.org/cicero/contract.cto
 
 /**
  * Contract API

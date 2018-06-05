@@ -1,6 +1,6 @@
 namespace org.accordproject.business
 
-import org.accordproject.address.PostalAddress from https://accordproject-models.netlify.com/address.cto
+import org.accordproject.address.PostalAddress from https://models.accordproject.org/address.cto
 
 /**
  */
