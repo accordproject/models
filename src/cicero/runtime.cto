@@ -17,8 +17,8 @@ abstract transaction Response {}
 /* An Error is a transaction */
 abstract transaction ErrorResponse {}
 
-/* An Obligation is an event */
-abstract event Obligation {
+/* An event that represents a notice that an obligation needs to be fulfilled */
+abstract event Notice {
   /* A back reference to the governing contract that emitted this obligation */
   --> AccordContract contract
 
@@ -29,12 +29,12 @@ abstract event Obligation {
   --> Participant promisee optional // TODO make this mandatory once proper party support is in place
 }
 
-event Payment extends Obligation{
+event PaymentNotice extends Notice{
   o MonetaryAmount amount
   o String description
 }
 
-event Notification extends Obligation {
+event MessageNotice extends Notice {
   o String title
   o String message
 }
