@@ -18,6 +18,11 @@ abstract transaction Response {}
 /* An Error is a transaction */
 abstract transaction ErrorResponse {}
 
+/* An Obligation is an event */
+abstract event Obligation {
+  --> AccordContract contract
+}
+
 /* A payload has contract data, a request and a state */
 concept Payload {
   o AccordContract contract  // the contract data
