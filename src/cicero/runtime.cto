@@ -1,8 +1,8 @@
 namespace org.accordproject.cicero.runtime
 
-import org.accordproject.cicero.contract.AccordClause from github://accordproject/models/master/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContract from github://accordproject/models/master/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContractState from github://accordproject/models/master/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordContractState from https://models.accordproject.org/cicero/contract.cto
 
 /**
  * Contract API
@@ -22,7 +22,7 @@ abstract transaction ErrorResponse {}
 concept Payload {
   o AccordContract contract  // the contract data
   o Request request
-  o AccordContractState state // TODO (DCS) make this optional so that the logic can instantiate?
+  o AccordContractState state optional
 }
 
 /* If the call to a contract's clause succeeds, it returns a response, a list of events and a new state */
