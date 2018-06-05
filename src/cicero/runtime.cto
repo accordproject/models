@@ -25,8 +25,11 @@ abstract event Notice {
   /* The party that is obligated */
   --> Participant promisor optional // TODO make this mandatory once proper party support is in place
 
-    /* The party that receives the performance */
+  /* The party that receives the performance */
   --> Participant promisee optional // TODO make this mandatory once proper party support is in place
+
+  /* The time before which the obligation is fulfilled */
+  o DateTime deadline optional
 }
 
 event PaymentNotice extends Notice{
