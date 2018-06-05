@@ -22,8 +22,11 @@ abstract event Obligation {
   /* A back reference to the governing contract that emitted this obligation */
   --> AccordContract contract
 
-  /* The party who is bound to fulfil this obligation */
-  --> Participant party optional // TODO make this mandatory once proper party support is in place
+  /* The party that is obligated */
+  --> Participant promisor optional // TODO make this mandatory once proper party support is in place
+
+    /* The party that receives the performance */
+  --> Participant promisee optional // TODO make this mandatory once proper party support is in place
 }
 
 event Payment extends Obligation{
@@ -34,7 +37,6 @@ event Payment extends Obligation{
 event Notification extends Obligation {
   o String title
   o String message
-  o Participant recipient optional // TODO make this mandatory once proper party support is in place
 }
 
 /* A payload has contract data, a request and a state */
