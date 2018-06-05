@@ -21,15 +21,25 @@
 
             <img src="{{umlURL}}" />
 
-            <h2 class="title is-2">Importable Types</h2>
-            <p>
+            <h2 class="title is-2">Exported Types</h2>
+            <div class="content">
                 <pre>
 {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from {{serverRoot}}{{filePath}}.cto
 {% endfor %}
             </pre>
-            </p>
+            </div>
+
+            <h2 class="title is-2">Dependencies</h2>
+            <div class="content">
+                <ul>
+                {% for ns, uri in modelFile.getExternalImports() %}
+                <li><a href="{{uri | replace(".cto", ".html")}}">{{ns}}</a></li>
+                {% endfor %}
+                </ul>
+            </div>
 
             <h2 class="title is-2">Source</h2>
+            <div class="content">
             <pre>
 {{modelFile.getDefinitions()}}
 </pre>
