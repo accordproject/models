@@ -29,11 +29,14 @@
             </pre>
             </div>
 
+
             <h2 class="title is-2">Dependencies</h2>
             <div class="content">
                 <ul>
                 {% for ns, uri in modelFile.getExternalImports() %}
                 <li><a href="{{uri | replace(".cto", ".html")}}">{{ns}}</a></li>
+                {% else %}
+                  <li>None</li>
                 {% endfor %}
                 </ul>
             </div>
