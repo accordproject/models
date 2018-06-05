@@ -1,0 +1,63 @@
+namespace org.accordproject.person
+
+import org.accordproject.value.QuantitativeValue from https://models.accordproject.org/value.cto
+import org.accordproject.address.PostalAddress from https://models.accordproject.org/address.cto
+import org.accordproject.organization.Organization from https://models.accordproject.org/organization.cto
+import org.accordproject.geo.Place from https://models.accordproject.org/geo.cto
+import org.accordproject.geo.Country from https://models.accordproject.org/geo.cto
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
+import org.accordproject.product.Product from https://models.accordproject.org/product.cto
+
+enum Gender {
+  o MALE
+  o FEMALE
+  o OTHER
+  o UNKNOWN
+}
+
+/**
+ * Based on http://schema.org/Person
+ */
+participant Person identified by identifier {
+  o String identifier
+  o String additionalName optional
+  o PostalAddress address optional
+  --> Organization affiliation optional
+  --> Organization alumniOf optional
+  o String award optional
+  o DateTime birthDate optional
+  o DateTime deathDate optional
+  o Place birthPlace optional
+  --> Person[] children optional
+  --> Person[] colleagues optional
+  o String email optional
+  o String familyName optional
+  o String faxNumber optional
+  --> Person[] follows optional
+  --> Organization funder optional
+  o Gender gender optional
+  o String givenName optional
+  o String globalLocationNumber optional
+  o QuantitativeValue height optional
+  o PostalAddress homeLocation optional
+  o String honorificPrefix optional
+  o String honorificSuffix optional
+  o String isicsV4 optional
+  o String jobTitle optional
+  --> Person[] knows optional
+  --> Organization memberOf optional
+  o String naics optional
+  o Country nationality optional
+  o MonetaryAmount netWorth optional
+  --> Product owns optional
+  --> Person parent optional
+  --> Person relatedTo optional
+  --> Person[] sibling optional
+  --> Organization sponsor optional
+  --> Person spouse optional
+  o String taxId optional
+  o String telephone optional
+  o String vatId optional
+  o QuantitativeValue weight optional
+  --> Organization worksFor optional
+}

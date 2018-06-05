@@ -1,0 +1,10 @@
+namespace org.accordproject.value
+
+/**
+ * http://schema.org/QuantitativeValue
+ */
+concept QuantitativeValue {
+  o String unitCode
+  o String unitText optional
+  o Double value
+}
