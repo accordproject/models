@@ -1,5 +1,19 @@
 {% extends "page.njk" %}
 
+{% block unfurl %}
+<!-— facebook open graph tags -->
+<meta property="og:url" content="{{serverRoot}}{{filePath}}.html" />
+<meta property="og:title" content="{{modelFile.getNamespace()}}" />
+<meta property="og:description" content="Accord Project models in the {{modelFile.getNamespace()}} namespace" />
+<meta property="og:image" content="{{umlURL}}" />
+
+<!-— twitter card tags additive with the og: tags -->
+<meta name="twitter:title" value="{{modelFile.getNamespace()}}" />
+<meta name="twitter:description" value="Accord Project models in the {{modelFile.getNamespace()}} namespace" />
+<meta name="twitter:image" content="{{umlURL}}" />
+<meta name="twitter:url" value="{{serverRoot}}{{filePath}}.html" />
+{% endblock %}
+
 {% block body %}
     <section class="section">
         <div class="container">
