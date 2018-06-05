@@ -1,8 +1,7 @@
 namespace org.accordproject.cicero.runtime
 
-import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
-import org.accordproject.cicero.contract.AccordContractState from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.* from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
 
 /**
  * Contract API
@@ -20,7 +19,22 @@ abstract transaction ErrorResponse {}
 
 /* An Obligation is an event */
 abstract event Obligation {
+  /* A back reference to the governing contract that emitted this obligation */
   --> AccordContract contract
+
+  /* The party who is bound to fulfil this obligation */
+  --> Participant party optional // TODO make this mandatory once proper party support is in place
+}
+
+event Payment extends Obligation{
+  o MonetaryAmount amount
+  o String description
+}
+
+event Notification extends Obligation {
+  o String title
+  o String message
+  o Participant recipient optional // TODO make this mandatory once proper party support is in place
 }
 
 /* A payload has contract data, a request and a state */
