@@ -5,19 +5,18 @@ namespace org.accordproject.cicero.contract
  * -- Describes the structure of contracts and clauses
  */
 
-/* A state is a concept with a contract status */
+/* A contract state is an asset -- The runtime state of the contract */
 asset AccordContractState identified by stateId {
   o String stateId
-  --> AccordContract contract
 }
 
-/* A contract is a concept -- This contains the contract data */
+/* A contract is a asset -- This contains the contract data */
 abstract asset AccordContract identified by contractId {
   o String contractId
   o Participant[] parties optional
 }
 
-/* A clause is a concept -- This contains the clause data */
+/* A clause is an asset -- This contains the clause data */
 abstract asset AccordClause identified by clauseId {
   o String clauseId
 }
