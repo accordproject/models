@@ -9,6 +9,9 @@ concept QuantitativeValue {
   o Double value
 }
 
+/**
+ * SI units of mass
+ */
 enum UnitOfMass {
   o GRAM
   o KG
