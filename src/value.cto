@@ -8,3 +8,9 @@ concept QuantitativeValue {
   o String unitText optional
   o Double value
 }
+
+enum UnitOfMass {
+  o GRAM
+  o KG
+  o TONNE
+}
