@@ -1,6 +1,33 @@
 namespace org.accordproject.money
 
 /**
+ * Represents an amount of Cryptocurrency
+ */
+concept CryptoMonetaryAmount {
+  o Double doubleValue //
+  o CryptoCurrencyCode cryptoCurrencyCode
+}
+
+/**
+ * Cyptocurrency codes. From https://en.wikipedia.org/wiki/List_of_cryptocurrencies
+ */
+enum CryptoCurrencyCode {
+o BTC
+o ETH
+o LTC
+o XRP
+o DASH
+o NEO
+o XMR
+o XLM
+o ETC
+o EOS
+o BCH
+o ADA
+o ZEC
+}
+
+/**
  * Represents an amount of money
  */
 concept MonetaryAmount {
