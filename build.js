@@ -60,7 +60,7 @@ async function generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile) {
         // save the UML
         const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
         const encoded = plantumlEncoder.encode(modelFilePlantUML)
-        return `http://www.plantuml.com/plantuml/svg/${encoded}`;        
+        return `https://www.plantuml.com/plantuml/svg/${encoded}`;        
     }
     catch(err) {
         console.log(err.message);
