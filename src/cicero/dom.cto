@@ -4,7 +4,7 @@ import org.accordproject.cicero.contract.AccordParty
 
 /**
  * Describes the structure of the natural language and automated clauses for a template.
- * A contract template is parser into a root `ContractTemplate` instance.
+ * A contract template is parsed into a root `ContractTemplate` instance.
  * 
  * Meta-model:
  * - ContractTemplate: root type
@@ -37,7 +37,24 @@ asset Text extends Element {
 
 asset Parameter extends Element {
   o String name // the name of the parameter
+  o String description optional
   o String type optional // the type of the parameter if defined inline. If not specified the parameter must be in the template model.
+}
+
+/**
+ * An element that must be one of a set of options.
+ */
+asset Choice extends Element {
+ o Element[] options
+ o Boolean required
+}
+
+/**
+ * An element that must be included if a predicate is true
+ */
+asset Conditional extends Element {
+ o Element element
+ o String predicate
 }
 
 abstract asset Clause extends Element {
