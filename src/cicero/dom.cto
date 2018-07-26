@@ -32,7 +32,6 @@ abstract asset Element identified by id {
 /**
  * Root type for contract templates
  */
-@scope(ContractTemplate)
 asset ContractTemplate extends Element {
   o Section content optional
 }
@@ -40,7 +39,6 @@ asset ContractTemplate extends Element {
 /**
  * Root type for clause templates
  */
-@scope(ClauseTemplate)
 asset ClauseTemplate extends Element {
   o Section content optional
 }
