@@ -1,6 +1,6 @@
 namespace org.accordproject.cicero.dom
 
-import org.accordproject.cicero.contract.AccordParty
+import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
 
 /**
  * Describes the structure of the natural language and automated clauses for 
