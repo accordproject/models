@@ -48,7 +48,7 @@ asset ClauseTemplate extends Element {
  */
 @scope(ContractTemplate, ClauseTemplate)
 asset Text extends Element {
-  o String body
+  o String content
 }
 
 /**
