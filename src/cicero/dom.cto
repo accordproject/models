@@ -1,0 +1,77 @@
+namespace org.accordproject.cicero.dom
+
+import org.accordproject.cicero.contract.AccordParty
+
+/**
+ * Describes the structure of the natural language and automated clauses for a template.
+ * A contract template is parser into a root `ContractTemplate` instance.
+ * 
+ * Meta-model:
+ * - ContractTemplate: root type
+ * - Text: natural language text
+ * - Parameter: an embedded parameter
+ * - Clause: an internal or external Clause reference
+ * - SigningParty: a party to the contract along with a text description
+ * - Signatures: a collection of SigningParties
+ * - Link: a link to an internal or external element
+ * - Section: a section of the document with a heading an an optional page break
+ * - List: an ordered or unordered list of elements
+ * - Function: an inline function definition
+ */
+
+
+/**
+ * An abstract base type
+ */
+abstract asset Element identified by id {
+  o String id
+}
+
+asset ContractTemplate extends Element {
+  o Section content optional
+}
+
+asset Text extends Element {
+  o String body
+}
+
+asset Parameter extends Element {
+  o String name // the name of the parameter
+  o String type optional // the type of the parameter if defined inline. If not specified the parameter must be in the template model.
+}
+
+abstract asset Clause extends Element {
+  o String templateUri
+}
+
+concept SigningParty {
+  o Text description
+  --> AccordParty party
+}
+
+asset Signatures extends Element {
+  o SigningParty[] parties
+}
+
+asset Link extends Element {
+  --> Element reference
+}
+
+asset Section extends Element {
+  o TextElement heading
+  o Element[] children optional
+  o Boolean pageBreak default=false
+}
+
+enum ListStyle {
+  o ORDERED
+  o UNORDERED
+}
+
+asset List extends Section {
+  o ListStyle style
+}
+
+asset Function extends Element {
+  o String code
+}
