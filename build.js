@@ -60,7 +60,7 @@ async function generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile) {
         // save the UML
         const modelFilePlantUML = fs.readFileSync(generatedPumlFile, 'utf8');
         const encoded = plantumlEncoder.encode(modelFilePlantUML)
-        return `http://www.plantuml.com/plantuml/svg/${encoded}`;        
+        return `https://www.plantuml.com/plantuml/svg/${encoded}`;        
     }
     catch(err) {
         console.log(err.message);
@@ -175,6 +175,7 @@ let modelFileIndex = [];
     
     // copy the logo to build directory
     await fs.copy('accord_logo.png', './build/accord_logo.png');
+    await fs.copy('_headers', './build/_headers');
 
     // validate and copy all the files
     const files = await getFiles(rootDir);
