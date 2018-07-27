@@ -62,6 +62,7 @@ asset Parameter extends Element {
   o String name // the name of the parameter
   o String description optional
   o String type optional // the type of the parameter if defined inline. If not specified the parameter must be in the template model.
+  o ParameterExpression expr optional // An expression to constrain the parameter. Should return a boolean
 }
 
 /**
@@ -146,9 +147,29 @@ asset List extends Section {
 }
 
 /**
- * An inline function can be included in a contract to perform basic calculations
+ * Ergo inlined in contracts or clauses
+ */
+abstract asset Ergo extends Element {
+}
+
+/**
+ * Inline Ergo declarations (constants, functions) can be included in a contract to perform basic calculations
  */
 @scope(ContractTemplate)
-asset Function extends Element {
+asset Declarations extends Ergo {
   o String code
+}
+
+/**
+ * Inline Ergo expressions can be included to construct part of the output contract or check constraints on parameters
+ */
+abstract asset Expression extends Ergo {
+  o String code
+}
+
+@scope(ContractTemplate, ClauseTemplate)
+asset ElementExpression extends Expression{ // An expression to build part of the contract. Should return an Element
+}
+
+asset ParameterExpression extends Expression{
 }
