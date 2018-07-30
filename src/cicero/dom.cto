@@ -147,23 +147,23 @@ asset List extends Section {
 }
 
 /**
- * Ergo inlined in contracts or clauses
+ * Logic can be inlined in contracts or clauses
  */
-abstract asset Ergo extends Element {
+abstract asset Script extends Element {
 }
 
 /**
- * Inline Ergo declarations (constants, functions) can be included in a contract to perform basic calculations
+ * Logic declarations (constants, functions) can be included in a contract to perform basic calculations
  */
 @scope(ContractTemplate)
-asset Declarations extends Ergo {
+asset Declarations extends Script {
   o String code
 }
 
 /**
- * Inline Ergo expressions can be included to construct part of the output contract or check constraints on parameters
+ * Expressions can be included to construct part of the output contract or check constraints on parameters
  */
-abstract asset Expression extends Ergo {
+abstract asset Expression extends Script {
   o String code
 }
 
@@ -171,5 +171,5 @@ abstract asset Expression extends Ergo {
 asset ElementExpression extends Expression{ // An expression to build part of the contract. Should return an Element
 }
 
-asset ParameterExpression extends Expression{
+asset ParameterExpression extends Expression{ // An expression to assert properties of the parameter
 }
