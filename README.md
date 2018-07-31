@@ -8,3 +8,7 @@ Environment Variables used by the build system:
 
 - SERVER_ROOT : the root URL for the server. Used when generating absolute hyperlinks.
 - FORCE_PUBLISH : disabled the download of external models and model validation. Should be used with care!
+
+## Informational Use
+
+The Accord Project is not a law firm or a substitute for an attorney or law firm. The Accord Project cannot provide any kind of advice, explanation, opinion, or recommendation about possible legal rights, remedies, defenses, options, selection of forms, or strategies. These materials are for informational purposes only and do not constitute legal advice. The information and resources provided are not intended to create, and receipt or use of it does not constitute, a lawyer-client relationship. Users should not act upon the information and resources provided without seeking professional counsel.
