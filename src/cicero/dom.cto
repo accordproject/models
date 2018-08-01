@@ -162,6 +162,8 @@ asset List extends Section {
  * Logic can be inlined in contracts or clauses
  */
 abstract asset Script extends Element {
+    o String language default="ERGO"
+    o String version
     o String code
 }
 
