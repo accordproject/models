@@ -27,6 +27,7 @@ import org.accordproject.cicero.contract.AccordParty from https://models.accordp
  */
 concept Metadata {
   o String version default="1.0" // version of the DOM
+  o String locale default="en-US" // Default locale. IETF Language Tag specification (BCP 47)
 }
 
 /**
@@ -59,6 +60,7 @@ asset ClauseTemplate extends Element {
 @scope(ContractTemplate, ClauseTemplate)
 asset Text extends Element {
   o String content
+  o String locale optional // if not specified inherits the locale of the owning clause or contract
 }
 
 /**
