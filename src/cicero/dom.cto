@@ -160,6 +160,7 @@ asset List extends Section {
  * Logic can be inlined in contracts or clauses
  */
 abstract asset Script extends Element {
+    o String code
 }
 
 /**
@@ -167,14 +168,12 @@ abstract asset Script extends Element {
  */
 @scope(ContractTemplate)
 asset Declarations extends Script {
-  o String code
 }
 
 /**
  * Expressions can be included to construct part of the output contract or check constraints on parameters
  */
 abstract asset Expression extends Script {
-  o String code
 }
 
 
