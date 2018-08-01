@@ -143,19 +143,22 @@ asset Section extends Element {
 }
 
 /**
- * List styles to support both ordered (numbered) lists and unordered (bullet) lists
+ * List styles to support both ordered (numbered) lists, unordered (bullet) lists
+ * and lists displayed on a single line
  */
 enum ListStyle {
-  o ORDERED
-  o UNORDERED
+  o ORDERED     // numbers
+  o UNORDERED   // bullets
+  o SINGLE_LINE // a separated list on a single line
 }
 
-/**
+/** 
  * A list is a section that numbers or bullets its child elements
  */
 @scope(ContractTemplate, ClauseTemplate)
 asset List extends Section {
   o ListStyle style
+  o String separator optional
 }
 
 /**
