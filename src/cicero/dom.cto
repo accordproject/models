@@ -23,6 +23,13 @@ import org.accordproject.cicero.contract.AccordParty from https://models.accordp
  */
 
 /**
+ * DOM metadata
+ */
+concept Metadata {
+  o String version default="1.0" // version of the DOM
+}
+
+/**
  * An abstract base type
  */
 abstract asset Element identified by id {
@@ -33,13 +40,16 @@ abstract asset Element identified by id {
  * Root type for contract templates
  */
 asset ContractTemplate extends Element {
+  o Metadata metadata
   o Section content optional
 }
 
 /**
  * Root type for clause templates
  */
+@scope(ContractTemplate)
 asset ClauseTemplate extends Element {
+  o Metadata metadata
   o Section content optional
 }
 
@@ -62,7 +72,7 @@ asset Parameter extends Element {
   o String name // the name of the parameter
   o String description optional
   o String type optional // the type of the parameter if defined inline. If not specified the parameter must be in the template model.
-  o ParameterExpression expr optional // An expression to constrain the parameter. Should return a boolean
+  o BooleanExpression constraint optional // An expression to constrain the parameter.
 }
 
 /**
@@ -80,7 +90,7 @@ asset Choice extends Element {
 @scope(ContractTemplate, ClauseTemplate)
 asset Conditional extends Element {
  o Element element
- o String predicate
+ o BooleanExpression predicate
 }
 
 /**
@@ -167,9 +177,16 @@ abstract asset Expression extends Script {
   o String code
 }
 
+
+/**
+ * An expression to that returns an element
+ */
 @scope(ContractTemplate, ClauseTemplate)
-asset ElementExpression extends Expression{ // An expression to build part of the contract. Should return an Element
+asset ElementExpression extends Expression{
 }
 
-asset ParameterExpression extends Expression{ // An expression to assert properties of the parameter
+/**
+ * An expression that returns true or false
+ */
+asset BooleanExpression extends Expression{
 }
