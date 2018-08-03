@@ -214,19 +214,21 @@ let modelFileIndex = [];
             
             // copy the CTO file to the build dir
             await fs.copy(file, dest);
-            console.log('Copied ' + file);
 
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
             const serverRoot = process.env.SERVER_ROOT;
             const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
+            modelFileIndex.push( {htmlFile: generatedHtmlFile, modelFile: modelFile});
+            console.log(`Processed ${modelFile.getNamespace()}`);
+
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                 if (err) {
                     return console.log(err);
                 }
-            modelFileIndex.push( {htmlFile: generatedHtmlFile, modelFile: modelFile});
             });
         } catch (err) {
+            console.log(`Error handling ${modelFile.getName()}`);
             console.log(err);
         }
     };
