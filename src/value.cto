@@ -17,3 +17,33 @@ enum UnitOfMass {
   o KG
   o TONNE
 }
+
+/**
+ * Units of Length
+ */
+enum UnitOfLength {
+  o METER
+}
+
+/**
+ * Units of Density
+ */
+enum UnitOfDensity {
+  o KG_PER_CUBIC_METER
+}
+
+/**
+ * Units of Volume
+ */
+enum UnitOfVolume {
+  o CUBIC_METER
+}
+
+/**
+ * Units of Temperature
+ */
+enum UnitOfTemperature {
+  o KELVINS
+  o CELSIUS
+  o FAHRENHEIT
+}
