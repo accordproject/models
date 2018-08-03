@@ -203,7 +203,7 @@ let modelFileIndex = [];
             // use the FORCE_PUBLISH flag to disable download of
             // external models and model validation
             if(!process.env.FORCE_PUBLISH) {
-                modelManager.updateExternalModels();
+                await modelManager.updateExternalModels();
             }
 
             umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
