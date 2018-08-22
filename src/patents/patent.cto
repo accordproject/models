@@ -37,12 +37,7 @@ participant Inventor extends Person {
 /**
  * An Applicant
  */
-concept Applicant {
-  o String applicantName optional
-  o GeoCoordinates mailingAddress optional
-  o String phoneNumber optional
-  o String faxNumber optional
-  o String emailAddress optional
+participant Applicant extends Person {
 }
 
 /**
