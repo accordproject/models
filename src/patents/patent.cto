@@ -4,9 +4,7 @@ import org.accordproject.address.PostalAddress from https://models.accordproject
 import org.accordproject.geo.Country from https://models.accordproject.org/geo.cto
 import org.accordproject.geo.GeoCoordinates from https://models.accordproject.org/geo.cto
 import org.accordproject.person.Person from https://models.accordproject.org/person.cto
-
-import org.accordproject.usa.residency.Residency
-
+import org.accordproject.usa.residency.Residency from https://models.accordproject.org/usa/residency.cto
 
 /** 
  * This smart-contract model describes a United States (US) patent asset that may or may not have foreign counterparts
