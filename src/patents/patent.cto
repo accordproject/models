@@ -1,0 +1,99 @@
+namespace org.accordproject.patent
+
+import org.accordproject.address.PostalAddress from https://models.accordproject.org/address.cto
+import org.accordproject.geo.Country from https://models.accordproject.org/geo.cto
+import org.accordproject.geo.GeoCoordinates from https://models.accordproject.org/geo.cto
+import org.accordproject.person.Person from https://models.accordproject.org/person.cto
+
+import org.accordproject.usa.residency.Residency
+
+
+/** 
+ * This smart-contract model describes a United States (US) patent asset that may or may not have foreign counterparts
+ * Drafted by Perkins-Coie
+ */
+
+/**
+ * A Patent Asset Identifier
+ */
+concept PatentAssetIdentifier {
+  o String assetNumber 
+  o AssetNumberStatus numberStatus
+  o Country assetCountry optional 
+}
+/**
+ * A Patent Classifier
+ */
+concept PatentClassification {
+  o String classificationSymbol optional
+  o String classificationDescription optional
+}
+
+/**
+ * An Inventor
+ */
+participant Inventor extends Person {
+  o Country residentCountry optional
+  o Residency inventorResidency optional
+}
+/**
+ * An Applicant
+ */
+concept Applicant {
+  o String applicantName optional
+  o GeoCoordinates mailingAddress optional
+  o String phoneNumber optional
+  o String faxNumber optional
+  o String emailAddress optional
+}
+
+/**
+ * An Assignee
+ */
+participant Assignee extends Person {
+}
+
+// AssetNumberStatus
+enum AssetNumberStatus {
+   o APP    // Application 
+   o PAT    // Patent 
+   o PUB    // Publication  
+   o REISS  // Reissue 
+   o FOR    // Foreign
+}
+
+// ApplicationType
+enum ApplicationType {
+   o PROV   // Provisional
+   o NONPROV    // Nonprovisional
+}
+// SubjectMatter
+enum SubjectMatter {
+   o UTILITY    // Utility
+   o PLANT  // Plant
+   o DESIGN     // Design
+}
+/**
+ * http://schema.org/PatentAsset
+ */
+concept PatentAsset {
+  o PatentAssetIdentifier[] assetIdentifier
+  o String title optional
+  o Inventor[] inventorIdentifier optional
+  o Applicant applicantIdentifier optional
+  o Assignee currentAssignee optional
+  o Assignee originalAssignee optional
+  o DateTime priorityDate optional
+  o DateTime filingDate optional
+  o DateTime issueDate optional
+  o DateTime publicationDate optional
+  o PatentClassification[] classifier optional
+  o String attorneyDocketNumber optional
+  o String customerNumber optional
+  o String[] emailAddress optional
+  o ApplicationType applicationType optional
+  o SubjectMatter subjectMatter optional
+  o Double numDrawings optional
+  o Double pubFigure optional
+  o PatentAsset[] priorApplication optional
+}

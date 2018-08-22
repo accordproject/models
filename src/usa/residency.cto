@@ -1,0 +1,8 @@
+namespace org.accordproject.usa.residency
+
+// Residency
+enum Residency {
+   o US       // US Residency
+   o NON_US   // Non US Residency
+   o MIL      // Active US Military Service
+}
