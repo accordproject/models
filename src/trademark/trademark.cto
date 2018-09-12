@@ -1,0 +1,112 @@
+namespace org.accordproject.trademark
+
+import org.accordproject.address.PostalAddress from https://models.accordproject.org/address.cto
+import org.accordproject.geo.Country from https://models.accordproject.org/geo.cto
+import org.accordproject.geo.GeoCoordinates from https://models.accordproject.org/geo.cto
+import org.accordproject.person.Person from https://models.accordproject.org/person.cto
+
+import org.accordproject.usa.entity.EntityType
+import org.accordproject.color.Color
+
+/**
+* This smart-contract model describes a United States (US) Trademark Asset that may or may not have foreign counterparts.
+* Drafted by Perkins Coie LLP
+*/
+
+/**
+* A U.S. Trademark Asset Identifier
+*/
+concept TrademarkAssetIdentifier {
+ o String assetSerialNumber
+ o String assetRegistrationNumber optional
+ o Country assetCountry
+}
+
+/**
+* A Goods & Services Description
+*/
+concept GoodsAndServices  {
+ o String gsDescription
+ o String intlClass
+ o String usClass optional
+ o String currentFilingBasis
+ o String origFilingBasis optional
+}
+
+/**
+* An Owner        //Current Owner if different from Registrant
+*/
+participant Owner extends Person {
+}
+
+/**
+* A Registrant
+*/
+participant Registrant extends Person {
+}
+
+
+/**
+* An Assignee
+*/
+participant Assignee extends Person {
+}
+
+/**
+* A Correspondent    //Correspondence Information
+*/
+participant Correspondent extends Person {
+}
+
+/**
+* An Attorney
+*/
+participant Attorney extends Person {
+}
+
+
+// MarkStatus
+enum MarkStatus {
+  o Live     // Live
+  o Dead     // Dead
+}
+
+
+// Mark Type
+enum MarkType {
+  o Standard_Character    // Standard Character
+  o Special_Form        // Special Form (Stylized and/or Design)
+  o Sound            // Sound
+}
+
+
+// Register
+enum Register {
+  o Principal    // Principal Register
+  o Supplemental // Supplemental Register
+}
+
+/**
+* http://schema.org/TrademarkAsset
+*/
+
+concept TrademarkAsset {
+ o TrademarkAssetIdentifier assetIdentifier
+ o String encodedMarkImage
+ o String markDescription
+ o GoodsAndServices[] goodsandServices optional
+ o Owner originalOwner optional
+ o EntityType entityType optional
+ o Registrant originalRegistrant optional
+ o Assignee currentAssignee optional
+ o Correspondent currentCorrespondent optional
+ o Attorney attorneyRepresentative optional
+ o MarkStatus markStatus optional
+ o MarkType markType optional
+ o Register register optional
+ o String literalElement optional
+ o Boolean colorClaim optional
+ o Color[] colorFeature optional
+ o DateTime filingDate optional
+ o DateTime registrationDate optional
+}

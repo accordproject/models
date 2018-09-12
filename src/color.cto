@@ -1,0 +1,9 @@
+namespace org.accordproject.color
+
+enum Color {
+  o Red    // Red
+  o Orange    // Orange
+  o Yellow    // Yellow
+  o Green     // Green
+  o Blue    // Blue
+}

@@ -1,0 +1,15 @@
+namespace org.accordproject.usa.entity
+
+// EntityType
+enum EntityType {
+  o Individual                 // Individual
+  o Corporation             // Corporation
+  o Limited_Liability_Company     // Limited Liability Company
+  o Partnership             // Partnership
+  o Limited_Partnership        // Limited Partnership
+  o Joint_Venture            // Joint Venture
+  o Sole_Proprietorship         // Sole Proprietorship
+  o Trust                 // Trust
+  o Estate                 // Estate
+  o Other                 // Other
+}
