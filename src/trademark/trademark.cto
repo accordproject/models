@@ -5,9 +5,8 @@ import org.accordproject.geo.Country from https://models.accordproject.org/geo.c
 import org.accordproject.geo.GeoCoordinates from https://models.accordproject.org/geo.cto
 import org.accordproject.person.Person from https://models.accordproject.org/person.cto
 
-import org.accordproject.usa.entity.EntityType
-import org.accordproject.color.Color
-
+import org.accordproject.usa.entity.EntityType from https://models.accordproject.org/usa/entity.cto
+import org.accordproject.color.Color from https://models.accordproject.org/color.cto
 /**
 * This smart-contract model describes a United States (US) Trademark Asset that may or may not have foreign counterparts.
 * Drafted by Perkins Coie LLP
