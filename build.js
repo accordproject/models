@@ -80,6 +80,19 @@ async function generateTypescript(buildDir, destPath, fileNameNoExt, modelFile) 
     }
 }
 
+async function generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+        // generate the XML Schema for the ModelFile
+        const visitor = new CodeGen.XmlSchemaVisitor();
+        const fileWriter = new CodeGen.FileWriter(buildDir);
+        const params = {fileWriter : fileWriter};
+        modelFile.accept(visitor, params);
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+}
+
 async function generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile) {
     try {
             // generate the JSON Schema
@@ -208,6 +221,7 @@ let modelFileIndex = [];
 
             umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
             await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
+            await generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile);
             await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
             await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
             await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
