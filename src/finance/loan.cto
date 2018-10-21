@@ -48,17 +48,11 @@ concept Loan {
     o String[] exchangeId
     o String clearanceSystem optional
     o String definition optional
-    o AccordParty borrower 
-    o AccordParty lender 
     o String lein         
     o String facilityType optional
     o DateTime maturity
     o DateTime creditAgreementDate
     o String tranche optional
-    
-    o Double parValue
-    o Double faceAmount
-    o PaymentFrequency paymentFrequency
-    o String dayCountFraction
-    --> Organization issuer
+    --> AccordParty borrower 
+    --> AccordParty lender 
 }
