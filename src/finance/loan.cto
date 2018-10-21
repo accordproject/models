@@ -1,0 +1,64 @@
+namespace org.accordproject.finance.loan
+
+import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.time.Duration from https://models.accordproject.org/time.cto
+import org.accordproject.money.CurrencyCode from https://models.accordproject.org/money.cto
+
+
+/**
+ * Loan Data
+ * -- Describes the structure of the loan and terms
+ */
+
+/* A loan state is an asset -- The runtime state of the contract */
+asset AccordContractState identified by stateId {
+  o String stateId
+}
+
+/* A party to a contract */
+participant AccordParty identified by partyId {
+  o String partyId
+}
+
+/* A contract is a asset -- This contains the contract data */
+abstract asset AccordContract identified by contractId {
+  o String contractId
+  --> AccordParty[] parties optional
+}
+
+/* A term is an asset -- This contains the term(s) data */
+abstract asset AccordClause identified by clauseId {
+  o String clauseId
+}
+
+concept PaymentFrequency {
+    o Integer periodMultiplier
+    o Duration period
+}
+
+/**
+ * Definition of a Loan, based on the FpML schema:
+ * http://www.fpml.org/spec/fpml-5-3-2-wd-2/html/reporting/schemaDocumentation/schemas/fpml-asset-5-3_xsd/complexTypes/Loan.html
+ *
+ */
+concept Loan {
+    o String[] instrumentId
+    o String description optional
+    o CurrencyCode currency optional
+    o String[] exchangeId
+    o String clearanceSystem optional
+    o String definition optional
+    o AccordParty borrower 
+    o AccordParty lender 
+    o String lein         
+    o String facilityType optional
+    o DateTime maturity
+    o DateTime creditAgreementDate
+    o String tranche optional
+    
+    o Double parValue
+    o Double faceAmount
+    o PaymentFrequency paymentFrequency
+    o String dayCountFraction
+    --> Organization issuer
+}
