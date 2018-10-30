@@ -85,8 +85,26 @@ async function generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile) {
         // generate the XML Schema for the ModelFile
         const visitor = new CodeGen.XmlSchemaVisitor();
         const fileWriter = new CodeGen.FileWriter(buildDir);
+
+        const zip = new AdmZip();
+            
+        // override closeFile to aggregate all the files into a single zip
+        fileWriter.closeFile = function() {
+            if (!this.fileName) {
+                throw new Error('No file open');
+            }
+    
+            // add file to zip
+            const content = fileWriter.getBuffer();
+            zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+            zip.writeZip(`${destPath}/${fileNameNoExt}.xsd.zip`);
+
+            this.fileName = null;
+            this.relativeDir = null;
+            this.clearBuffer();
+        };
         const params = {fileWriter : fileWriter};
-        modelFile.accept(visitor, params);
+        modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
         console.log(err.message);
@@ -158,7 +176,7 @@ async function generateGo(buildDir, destPath, fileNameNoExt, modelFile) {
                 // add file to zip
                 const content = fileWriter.getBuffer();
                 zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
-                zip.writeZip(`${destPath}/${fileNameNoExt}.zip`);
+                zip.writeZip(`${destPath}/${fileNameNoExt}.go.zip`);
 
                 this.fileName = null;
                 this.relativeDir = null;
