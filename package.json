@@ -5,7 +5,9 @@
   "dependencies": {
     "adm-zip": "^0.4.11",
     "bulma": "^0.7.1",
-    "composer-common": "^0.20.0",
+    "composer-concerto-tools": "^0.50.3",
+    "composer-concerto": "^0.60.0",
+    "@accordproject/cicero-core": "^0.9.0",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.10",
     "mkdirp": "^0.5.1",
@@ -15,7 +17,7 @@
     "showdown": "^1.8.6"
   },
   "name": "@accordproject/models",
-  "description": "This repository host all Accord Project models. Models are captured using the Hyperledger Composer modeling language; a platform and runtime neutral typed schema language.",
+  "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
   "version": "0.0.1",
   "main": "build.js",
   "devDependencies": {},

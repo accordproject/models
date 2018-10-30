@@ -14,9 +14,9 @@
 
 'use strict';
 
-const ModelManager = require('composer-common').ModelManager;
-const ModelFile = require('composer-common').ModelFile;
-const CodeGen = require('composer-common').CodeGen;
+const ModelManager = require('composer-concerto').ModelManager;
+const ModelFile = require('composer-concerto').ModelFile;
+const CodeGen = require('composer-concerto-tools').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
@@ -181,6 +181,9 @@ let modelFileIndex = [];
 
 (async function () {
 
+    // load system model
+    const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
+
     // delete build directory
     rimraf.sync(buildDir);
 
@@ -195,6 +198,7 @@ let modelFileIndex = [];
     for( const file of files ) {
         const modelText = fs.readFileSync(file, 'utf8');
         const modelManager = new ModelManager();
+        modelManager.addModelFile(systemModel, 'base.cto', false, true);
         const modelFile  = new ModelFile(modelManager, modelText, file);     
         let modelFilePlantUML = '';
         // passed validation, so copy to build dir
@@ -243,7 +247,7 @@ let modelFileIndex = [];
             });
         } catch (err) {
             console.log(`Error handling ${modelFile.getName()}`);
-            console.log(err);
+            console.log(err.message);
         }
     };
 

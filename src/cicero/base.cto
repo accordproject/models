@@ -1,0 +1,17 @@
+namespace org.accordproject.base
+
+/**
+ * System model for Accord Project models. If you use the CiceroModelManager 
+ * from the @accordproject/cicero-core npm module you do not need to import this file.
+ */
+abstract asset Asset {  }
+
+abstract participant Participant {   }
+
+abstract transaction Transaction identified by transactionId {
+  o String transactionId
+}
+
+abstract event Event identified by eventId {
+  o String eventId
+}
