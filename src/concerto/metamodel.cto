@@ -1,0 +1,189 @@
+namespace concerto.metamodel
+
+/**
+ * The metadmodel for Concerto files
+ */
+abstract concept Type {
+}
+
+abstract concept PrimitiveType extends Type {
+}
+
+abstract concept NumberType extends PrimitiveType {
+}
+
+abstract concept WholeNumberType {
+}
+
+abstract concept RealNumberType extends NumberType {
+}
+
+concept IntegerType extends WholeNumberType {
+}
+
+concept DoubleType extends RealNumberType {
+}
+
+concept LongType extends WholeNumberType {
+} 
+
+concept StringType extends PrimitiveType {
+}
+
+concept DateTimeType extends PrimitiveType {
+}
+
+concept BooleanType extends PrimitiveType {
+}
+
+concept ObjectType extends Type {
+  o String typeName
+}
+
+abstract concept DecoratorLiteral {
+}
+
+concept DecoratorString extends DecoratorLiteral {
+  o String value  
+}
+
+concept DecoratorNumber extends DecoratorLiteral {
+  o Double value
+}
+
+concept DecoratorBoolean extends DecoratorLiteral {
+  o Boolean value
+}
+
+concept DecoratorIdentifier extends DecoratorLiteral {
+  o String Identifier
+  o Boolean isArray default=false
+}
+
+
+concept DecoratorArguments {
+  o DecoratorLiteral[] list
+}
+
+concept Decorator {
+  o String name
+  o DecoratorArguments arguments optional
+}
+ 
+concept Decorators {
+  o Decorator[] decorators
+}
+
+concept ClassExtension {
+  o String identifier
+}
+
+abstract concept ClassDeclaration {
+  o Decorators decorators
+  o Boolean isAbstract default=false
+  o String identifier
+  o String identifiedByField optional
+  o ClassExtension classExtension optional
+}
+
+concept AssetDeclaration extends ClassDeclaration {
+}
+
+concept ParticipantDeclaration extends ClassDeclaration {
+}
+
+concept TransactionDeclaration extends ClassDeclaration {
+}
+
+concept EventDeclaration extends ClassDeclaration {
+}
+
+concept ConceptDeclaration extends ClassDeclaration {
+}
+
+concept StringDefault {
+  o String value
+}
+
+concept BooleanDefault {
+  o Boolean value
+}
+
+concept IntegerDefault {
+  o Integer value
+}
+
+concept RealDefault {
+  o Double value
+}
+
+abstract concept FieldDeclaration {
+  o String name
+  o Boolean isArray optional
+  o Boolean isOptional optional 
+  o Decorators decorators optional
+}
+
+concept ObjectFieldDeclaration extends FieldDeclaration {
+  o ObjectType type
+  o StringDefault defaultValue optional
+}
+
+concept BooleanFieldDeclaration extends FieldDeclaration {
+  o BooleanType type
+  o BooleanDefault defaultValue optional
+}
+
+concept DateTimeFieldDeclaration extends FieldDeclaration {
+  o DateTimeType type
+}
+
+concept StringFieldDeclaration extends FieldDeclaration {
+  o StringType type
+  o StringDefault defaultValue optional
+  o StringRegexValidator validator optional
+}
+
+concept StringRegexValidator {
+  o String regex
+}
+
+concept RealDomainValidator {
+  o Double lower optional
+  o Double upper optional
+}
+
+concept IntegerDomainValidator {
+  o Integer lower
+  o Integer upper
+}
+
+concept RealFieldDeclaration extends FieldDeclaration {
+  o RealNumberType type
+  o RealDefault defaultValue optional
+  o RealDomainValidator validator optional
+}
+
+concept IntegerFieldDeclaration extends FieldDeclaration {
+  o WholeNumberType type
+  o IntegerDefault defaultValue optional
+  o IntegerDomainValidator validator optional
+}
+
+concept EnumDeclaration extends ClassDeclaration {
+}
+
+
+concept RelationshipDeclaration extends FieldDeclaration {
+}
+
+concept Import {
+  o String value
+  o String uri optional
+}
+
+concept ModelFile {
+  o String namespace
+  o Import[] imports
+  o ClassDeclaration[] declarations optional
+}
