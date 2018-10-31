@@ -56,6 +56,10 @@ concept EventDeclaration extends ClassDeclaration {
 concept ConceptDeclaration extends ClassDeclaration {
 }
 
+// TODO - enums do not support abstract or super types
+concept EnumDeclaration extends ClassDeclaration {
+}
+
 concept StringDefault {
   o String value
 }
@@ -118,10 +122,6 @@ concept IntegerFieldDeclaration extends FieldDeclaration {
   o IntegerDefault defaultValue optional
   o IntegerDomainValidator validator optional
 }
-
-concept EnumDeclaration extends ClassDeclaration {
-}
-
 
 concept RelationshipDeclaration extends FieldDeclaration {
 }
