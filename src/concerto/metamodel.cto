@@ -85,6 +85,7 @@ abstract concept FieldDeclaration {
 
 concept ObjectFieldDeclaration extends FieldDeclaration {
   o StringDefault defaultValue optional
+  o TypeIdentifier type
 }
 
 concept BooleanFieldDeclaration extends FieldDeclaration {
