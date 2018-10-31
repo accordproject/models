@@ -125,6 +125,7 @@ concept IntegerFieldDeclaration extends FieldDeclaration {
 }
 
 concept RelationshipDeclaration extends FieldDeclaration {
+  o TypeIdentifier type
 }
 
 abstract concept Import {
