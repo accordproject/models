@@ -33,13 +33,6 @@ abstract event Obligation {
   o DateTime deadline optional
 }
 
-/**
- * A request that indicates that a contract has been signed by all parties
- */
-transaction ContractSigned extends Request {
-    --> AccordContract contract
-}
-
 event PaymentObligation extends Obligation{
   o MonetaryAmount amount
   o String description
