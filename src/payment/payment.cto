@@ -1,0 +1,10 @@
+namespace org.accordproject.payment
+
+import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
+import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
+
+/**
+ * A request that indicates that a payment has been received
+ */
+transaction PaymentReceived extends Request {
+}
