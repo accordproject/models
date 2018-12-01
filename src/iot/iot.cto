@@ -1,0 +1,39 @@
+namespace org.accordproject.iot
+
+enum ClickType {
+  o SINGLE
+  o DOUBLE
+  o LONG
+}
+
+/**
+ * Abstract button press from a device
+ */
+abstract transaction GenericButtonPress {
+  o String serialNumber optional
+  o String batteryVoltage optional
+}
+/**
+ * Based on the JSON payload for the AWS IoT Button
+ */
+transaction ButtonPress extends GenericButtonPress {
+  o ClickType clickType optional
+}
+
+/**
+ * A single button press. E.g for Flic.
+ */
+transaction SingleButtonPress extends GenericButtonPress {
+}
+
+/**
+ * A double button press. E.g for Flic.
+ */
+transaction DoubleButtonPress extends GenericButtonPress {
+}
+
+/**
+ * A long button press. E.g for Flic.
+ */
+transaction LongButtonPress extends GenericButtonPress {
+}
