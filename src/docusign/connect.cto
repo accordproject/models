@@ -3,7 +3,7 @@
  */
 namespace com.docusign.connect
 
-import org.accordproject.cicero.runtime.* from https://models.accordproject.org/cicero/runtime.cto
+import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
 
 enum EnvelopeStatusCode {
     o Any
