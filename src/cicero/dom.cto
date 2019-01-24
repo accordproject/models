@@ -183,9 +183,8 @@ asset Declarations extends Script {
 abstract asset Expression extends Script {
 }
 
-
 /**
- * An expression to that returns an element
+ * An expression that returns an element
  */
 @scope(ContractTemplate, ClauseTemplate)
 asset ElementExpression extends Expression{
