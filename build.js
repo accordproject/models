@@ -63,7 +63,7 @@ async function generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile) {
         return `https://www.plantuml.com/plantuml/svg/${encoded}`;        
     }
     catch(err) {
-        console.log(err.message);
+        console.log(`Generating PlantUML for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -76,7 +76,7 @@ async function generateTypescript(buildDir, destPath, fileNameNoExt, modelFile) 
         modelFile.accept(visitor, params);
     }
     catch(err) {
-        console.log(err.message);
+        console.log(`Generating Typescript for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -107,7 +107,7 @@ async function generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile) {
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(err.message);
+        console.log(`Generating XmlSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -126,7 +126,7 @@ async function generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile) 
             });
     }
     catch(err) {
-        console.log(err);
+        console.log(`Generating JsonSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -156,7 +156,7 @@ async function generateJava(buildDir, destPath, fileNameNoExt, modelFile) {
             modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(err.message);
+        console.log(`Generating Java for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -186,7 +186,7 @@ async function generateGo(buildDir, destPath, fileNameNoExt, modelFile) {
             modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(err.message);
+        console.log(`Generating Go for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -254,8 +254,10 @@ let modelFileIndex = [];
             // generate the html page for the model
             const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
             const serverRoot = process.env.SERVER_ROOT;
-            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
-            modelFileIndex.push( {htmlFile: generatedHtmlFile, modelFile: modelFile});
+            const modelVersionStr = relative.match(/v\d+(\.\d+){0,2}/g);
+            const modelVersion = modelVersionStr !== null && modelVersionStr.length === 1 ? ` (${modelVersionStr[0]})` : '';
+            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
+            modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
             console.log(`Processed ${modelFile.getNamespace()}`);
 
             fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {

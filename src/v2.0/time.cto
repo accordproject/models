@@ -1,5 +1,3 @@
-/** This model is deprecated, for Cicero 0.10 or later use v2.0/time.cto instead */
-
 namespace org.accordproject.time
 
 /**
@@ -11,7 +9,6 @@ enum TemporalUnit {
   o hours
   o days
   o weeks
-  o years
 }
 
 /**
@@ -20,4 +17,23 @@ enum TemporalUnit {
 concept Duration {
   o Long amount
   o TemporalUnit unit
+}
+
+/**
+ * Units for a time period.
+ */
+enum PeriodUnit {
+  o days
+  o weeks
+  o months
+  o quarters
+  o years
+}
+
+/**
+ * A time period. For example, 2 months.
+ */
+concept Period {
+  o Long amount
+  o PeriodUnit unit
 }
