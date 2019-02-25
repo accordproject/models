@@ -6,24 +6,60 @@ namespace com.docusign.connect
 import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
 
 enum EnvelopeStatusCode {
-    o Any
-    o Voided
-    o Created
-    o Deleted
-    o Sent
-    o Delivered
-    o Signed
-    o Completed
-    o Declined
-    o TimedOut
-    o Template
-    o Processing
+  o Any
+  o Voided
+  o Created
+  o Deleted
+  o Sent
+  o Delivered
+  o Signed
+  o Completed
+  o Declined
+  o TimedOut
+  o Template
+  o Processing
+}
+
+enum RecipientStatusCode {
+  o Created
+  o Sent
+  o Delivered
+  o Signed
+  o Declined
+  o Completed
+  o FaxPending
+  o AutoResponded
 }
 
 concept EnvelopeStatus {
   o EnvelopeStatusCode status
+  o String envelopeId optional
+  o DateTime created optional
+  o DateTime sent optional
+  o DateTime delivered optional
+  o DateTime signed optional
+  o DateTime completed optional
+  o String email optional
+}
+
+concept Recipient {
+  o RecipientStatusCode status
+  o String email
+  o String userName
+  o DateTime sent optional
+  o DateTime delivered optional
+  o DateTime signed optional
+  o DateTime declined optional
+  o String declineReason optional
+}
+
+concept CustomField  {
+  o String name
+  o String value
 }
 
 transaction DocuSignEnvelopeInformation extends Request {
   o EnvelopeStatus envelopeStatus
+  o Recipient[] recipients optional
+  o CustomField[] customFields optional
 }
