@@ -99,25 +99,36 @@ concept TabStatus {
   o TabTypeCode tabType
   o String status
   o String tabLabel
-  o String tabName
+  o String originalValue optional
   o DateTime signed optional
   o CustomTabTypeCode customTabType optional
 }
 
 concept NumberTabStatus extends TabStatus {
-  o Double tabValue
+  o String tabName optional
+  o Double tabValue optional
 }
 
 concept TextTabStatus extends TabStatus {
-  o String tabValue
+  o String tabName optional
+  o String tabValue optional
 }
 
 concept DateTabStatus extends TabStatus {
-  o DateTime tabValue
+  o String tabName optional
+  o DateTime tabValue optional
 }
 
 concept BooleanTabStatus extends TabStatus {
-  o Boolean tabValue
+  o String tabName optional
+  o Boolean tabValue optional
+}
+
+concept ListTabStatus extends TabStatus {
+  o String[] tabName
+  o String tabValue optional
+  o String[] listValues
+  o String listSelectedValue optional
 }
 
 transaction DocuSignEnvelopeInformation extends Request {
