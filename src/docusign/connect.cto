@@ -95,7 +95,7 @@ concept CustomField {
   o String value
 }
 
-concept TabStatus {
+abstract concept TabStatus {
   o TabTypeCode tabType
   o String status
   o String tabLabel
