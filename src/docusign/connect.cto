@@ -125,7 +125,7 @@ concept BooleanTabStatus extends TabStatus {
 }
 
 concept ListTabStatus extends TabStatus {
-  o String[] tabName
+  o String[] tabNames
   o String tabValue optional
   o String[] listValues
   o String listSelectedValue optional
