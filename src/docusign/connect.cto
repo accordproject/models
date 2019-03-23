@@ -75,6 +75,7 @@ concept EnvelopeStatus {
   o DateTime delivered optional
   o DateTime signed optional
   o DateTime completed optional
+  o DateTime declined optional
   o String email optional
 }
 
