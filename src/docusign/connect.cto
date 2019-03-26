@@ -31,6 +31,42 @@ enum RecipientStatusCode {
   o AutoResponded
 }
 
+enum TabTypeCode {
+  o InitialHere
+  o SignHere
+  o FullName
+  o FirstName
+  o LastName
+  o EmailAddress
+  o Company
+  o Title
+  o DateSigned
+  o InitialHereOptional
+  o EnvelopeID
+  o Custom
+  o SignerAttachment
+  o SignHereOptional
+  o Approve
+  o Decline
+  o SignerAttachmentOptional
+  o DigitalSignature
+}
+
+enum CustomTabTypeCode {
+  o Text
+  o Checkbox
+  o Radio
+  o List
+  o Date
+  o Number
+  o SSN
+  o ZIP5
+  o ZIP5DASH4
+  o Email
+  o Note
+  o Formula
+}
+
 concept EnvelopeStatus {
   o EnvelopeStatusCode status
   o String envelopeId optional
@@ -39,6 +75,7 @@ concept EnvelopeStatus {
   o DateTime delivered optional
   o DateTime signed optional
   o DateTime completed optional
+  o DateTime declined optional
   o String email optional
 }
 
@@ -51,11 +88,48 @@ concept Recipient {
   o DateTime signed optional
   o DateTime declined optional
   o String declineReason optional
+  o TabStatus[] tabStatuses optional
 }
 
-concept CustomField  {
+concept CustomField {
   o String name
   o String value
+}
+
+abstract concept TabStatus {
+  o TabTypeCode tabType
+  o String status
+  o String tabLabel
+  o String originalValue optional
+  o DateTime signed optional
+  o CustomTabTypeCode customTabType optional
+}
+
+concept NumberTabStatus extends TabStatus {
+  o String tabName optional
+  o Double tabValue optional
+}
+
+concept TextTabStatus extends TabStatus {
+  o String tabName optional
+  o String tabValue optional
+}
+
+concept DateTabStatus extends TabStatus {
+  o String tabName optional
+  o DateTime tabValue optional
+}
+
+concept BooleanTabStatus extends TabStatus {
+  o String tabName optional
+  o Boolean tabValue optional
+}
+
+concept ListTabStatus extends TabStatus {
+  o String[] tabNames
+  o String tabValue optional
+  o String[] listValues
+  o String listSelectedValue optional
 }
 
 transaction DocuSignEnvelopeInformation extends Request {
