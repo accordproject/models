@@ -16,6 +16,7 @@
 
 const ModelManager = require('composer-concerto').ModelManager;
 const ModelFile = require('composer-concerto').ModelFile;
+const FileWriter = require('composer-concerto').FileWriter;
 const CodeGen = require('composer-concerto-tools').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
@@ -50,7 +51,7 @@ async function generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile) {
     try {
         const generatedPumlFile = `${destPath}/${fileNameNoExt}.puml`;
         const visitor = new CodeGen.PlantUMLVisitor();
-        const fileWriter = new CodeGen.FileWriter(buildDir);
+        const fileWriter = new FileWriter(buildDir);
         fileWriter.openFile(generatedPumlFile);
         fileWriter.writeLine(0, '@startuml');
         const params = {fileWriter : fileWriter};
@@ -71,7 +72,7 @@ async function generateTypescript(buildDir, destPath, fileNameNoExt, modelFile) 
     try {
         // generate the Typescript for the ModelFile
         const visitor = new CodeGen.TypescriptVisitor();
-        const fileWriter = new CodeGen.FileWriter(buildDir);
+        const fileWriter = new FileWriter(buildDir);
         const params = {fileWriter : fileWriter};
         modelFile.accept(visitor, params);
     }
@@ -84,7 +85,7 @@ async function generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile) {
     try {
         // generate the XML Schema for the ModelFile
         const visitor = new CodeGen.XmlSchemaVisitor();
-        const fileWriter = new CodeGen.FileWriter(buildDir);
+        const fileWriter = new FileWriter(buildDir);
 
         const zip = new AdmZip();
             
@@ -134,7 +135,7 @@ async function generateJava(buildDir, destPath, fileNameNoExt, modelFile) {
     try {
             // generate the Java for the ModelFile
             const visitor = new CodeGen.JavaVisitor();
-            const fileWriter = new CodeGen.FileWriter(buildDir);
+            const fileWriter = new FileWriter(buildDir);
             const zip = new AdmZip();
             
             // override closeFile to aggregate all the files into a single zip
@@ -164,7 +165,7 @@ async function generateGo(buildDir, destPath, fileNameNoExt, modelFile) {
     try {
             // generate the Go Lang for the ModelFile
             const visitor = new CodeGen.GoLangVisitor();
-            const fileWriter = new CodeGen.FileWriter(buildDir);
+            const fileWriter = new FileWriter(buildDir);
             const zip = new AdmZip();
             
             // override closeFile to aggregate all the files into a single zip
