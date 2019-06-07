@@ -1,42 +1,27 @@
 {% extends "page.njk" %}
 
 {% block body %}
-    <section class="section">
+    <section class="hero is-dark">
+      <div class="hero-body">
         <div class="container">
-            <h1 class="title">
-                Accord Project Model Repository
-            </h1>
-            <p class="subtitle">
-                Open Source Data Models for Smart Legal Contracts, DLT and more...
-            </p>
-        </div>
-    </section>
-
-    <section class="section">
-        <div class="container">
-            <h2 class="title is-2">Welcome!</h2>
+          <h1 class="title is-1">
+            Accord Project <span class="has-light">Model Repository</span>
+          </h1>
+          <h2 class="subtitle">
             This repository host all Accord Project models. Models are captured using the
             <a href="https://github.com/hyperledger/composer-concerto">Concerto Modeling Language (CTO)</a>; a platform and runtime neutral typed schema language. The CTO
             <a href="https://models.accordproject.org/concerto/metamodel.html">meta-model</a> provides just-enough functionality to capture most business models and maps naturally to many executions
             languages. The CTO runtime stack is implemented in JavaScript and CTO instances serialize to JSON. CTO models
             can also be exported to Java, Go, XML Schema, Typescript etc using the <a href="https://github.com/hyperledger/composer-concerto-tools">Concerto Tools Project.</a>
+          </h2>
         </div>
+      </div>
     </section>
-
-    <section class="section">
-        <div class="container">
-            <h2 class="title is-2">Contributing</h2>
-            To contribute new models (or fix existing models), importers or exporters, you can fork this GitHub repository and submit
-            pull requests to the maintainers. Please join the
-            <a href="http://accordproject.org">Accord Project</a> Technology Working Group Slack channel.
-        </div>
-    </section>
-
     <section class="section">
         <div class="container">
             <h2 class="title is-2">Model Namespaces</h2>
             <div class="content">
-                <ul>
+                <ul class="namespaces-list">
                     {% for e in modelFileIndex %}
                     <li>
                         <a href="{{e.htmlFile}}">{{e.modelFile.getNamespace()}}{{ e.modelVersion }}</a> ({{e.modelFile.getAllDeclarations().length}} types)

@@ -209,7 +209,9 @@ let modelFileIndex = [];
     nunjucks.configure('./views', { autoescape: true });
     
     // copy the logo to build directory
-    await fs.copy('accord_logo.png', './build/accord_logo.png');
+    await fs.copy('assets', './build/assets');
+    await fs.copy('styles.css', './build/styles.css');
+    await fs.copy('fonts.css', './build/fonts.css');
     await fs.copy('_headers', './build/_headers');
 
     // validate and copy all the files
