@@ -277,6 +277,9 @@ let modelFileIndex = [];
                         return console.log(err);
                     }
                 });
+            } else {
+                // copy the CTO file to the build dir
+                await fs.copy(file, dest);
             }
         } catch (err) {
             console.log(`Error handling ${modelFile.getName()}`);
