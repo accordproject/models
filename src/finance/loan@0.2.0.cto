@@ -1,0 +1,35 @@
+namespace org.accordproject.finance.loan
+
+import org.accordproject.time.Duration from https://models.accordproject.org/time@0.2.0.cto
+import org.accordproject.money.* from https://models.accordproject.org/money@0.2.0.cto
+
+enum CurrencyType {
+  o MONETARY
+  o CRYPTOMONETARY
+}
+
+concept PaymentFrequency {
+    o Integer periodMultiplier
+    o Duration period
+}
+
+/**
+ * Definition of a Loan, based on the FpML schema:
+ * http://www.fpml.org/spec/fpml-5-3-2-wd-2/html/reporting/schemaDocumentation/schemas/fpml-asset-5-3_xsd/complexTypes/Loan.html
+ *
+ */
+concept Loan {
+    o String[] instrumentId
+    o String description optional
+    o CurrencyType currencyType
+    o CurrencyCode currencyCode optional
+    o DigitalCurrencyCode DigitalCurrencyCode optional
+    o String[] exchangeId optional
+    o String clearanceSystem optional
+    o String definition optional
+    o String lien optional         
+    o String facilityType optional
+    o DateTime maturity
+    o DateTime creditAgreementDate
+    o String tranche optional
+}
