@@ -22,6 +22,7 @@ const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const AdmZip = require('adm-zip');
+const semver = require('semver');
 
 const plantumlEncoder = require('plantuml-encoder');
 
@@ -217,10 +218,12 @@ let modelFileIndex = [];
     // validate and copy all the files
     const files = await getFiles(rootDir);
     for( const file of files ) {
+        
         const modelText = fs.readFileSync(file, 'utf8');
         const modelManager = new ModelManager();
         modelManager.addModelFile(systemModel, 'base.cto', false, true);
         const modelFile  = new ModelFile(modelManager, modelText, file);     
+        console.log(`Processing ${modelFile.getNamespace()}`);
         let modelFilePlantUML = '';
         // passed validation, so copy to build dir
         const dest = file.replace('/src/', '/build/');
@@ -236,38 +239,45 @@ let modelFileIndex = [];
         await fs.ensureDir(destPath);
         let umlURL = '';
         try {
-            modelManager.addModelFile(modelFile, modelFile.getName(), true);
-
-            // use the FORCE_PUBLISH flag to disable download of
-            // external models and model validation
-            if(!process.env.FORCE_PUBLISH) {
-                await modelManager.updateExternalModels();
-            }
-
-            umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
-            await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
-            await generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile);
-            await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
-            await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
-            await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
-            
-            // copy the CTO file to the build dir
-            await fs.copy(file, dest);
-
-            // generate the html page for the model
-            const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-            const serverRoot = process.env.SERVER_ROOT;
+            // Find the model version
             const modelVersionStr = relative.match(/v\d+(\.\d+){0,2}/g);
-            const modelVersion = modelVersionStr !== null && modelVersionStr.length === 1 ? ` (${modelVersionStr[0]})` : '';
-            const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
-            modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
-            console.log(`Processed ${modelFile.getNamespace()}`);
+            const isLegacyModelVersionScheme = modelVersionStr !== null && modelVersionStr.length === 1;
+            if (!isLegacyModelVersionScheme) { // Skip indexing models with the old versioning scheme, they have all been migrated now
+                const semverStr = modelFile.getName().split("@").pop().slice(0,-4);
+                const isSemverVersionScheme = semver.valid(semverStr);
+                const modelVersion = isSemverVersionScheme ? `(${semverStr})` : '(0.1.0)';
 
-            fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
-                if (err) {
-                    return console.log(err);
+                modelManager.addModelFile(modelFile, modelFile.getName(), true);
+
+                // use the FORCE_PUBLISH flag to disable download of
+                // external models and model validation
+                if(!process.env.FORCE_PUBLISH) {
+                    await modelManager.updateExternalModels();
                 }
-            });
+
+                umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
+                await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
+                await generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile);
+                await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
+                await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
+                await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
+                
+                // copy the CTO file to the build dir
+                await fs.copy(file, dest);
+
+                // generate the html page for the model
+                const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
+                const serverRoot = process.env.SERVER_ROOT;
+                const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
+                modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
+                console.log(`Processed ${modelFile.getNamespace()}`);
+
+                fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                });
+            }
         } catch (err) {
             console.log(`Error handling ${modelFile.getName()}`);
             console.log(err.message);
