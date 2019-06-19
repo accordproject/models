@@ -68,7 +68,7 @@ The materials on this site are for informational purposes only and do not consti
 [composerconcerto]: https://github.com/hyperledger/composer-concerto
 
 [contribute]: https://github.com/accordproject/models/blob/master/CONTRIBUTING.md
-[apblog]: (https://medium.com/@accordhq)
+[apblog]: https://medium.com/@accordhq
 
 [welcome]: https://docs.accordproject.org/docs/accordproject.html#what-is-accord-project
 [highlevel]: https://docs.accordproject.org/docs/spec-concepts.html
