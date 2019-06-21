@@ -1,6 +1,10 @@
+<a href="https://www.accordproject.org/">
+  <img src="assets/APLogo.png" alt="Accord Project Logo" width="400" />
+</a>
+
 # Accord Project Model Catalog
 
-This repository host all Accord Project models. Models are captured using the <a href="https://github.com/hyperledger/composer-concerto">Concerto modeling language</a>; a platform and runtime neutral typed schema language.
+This repository host all Accord Project models. Models are captured using the [Concerto modeling language][composerconcerto]; a platform and runtime neutral typed schema language.
 
 The build system for this repository publishes the models to: https://models.accordproject.org
 
@@ -9,11 +13,64 @@ Environment Variables used by the build system:
 - SERVER_ROOT : the root URL for the server. Used when generating absolute hyperlinks.
 - FORCE_PUBLISH : disabled the download of external models and model validation. Should be used with care!
 
-## License
+---
 
-All models in this library are made available under the [Apache-2 License](LICENSE).
+Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound].
 
-## Not Legal Advice
+## Learn More About Accord Project
 
-The materials on this site are for informational purposes only and do not constitute legal advice. The Accord Project is not a law firm or a substitute for an attorney or law firm. The Accord Project cannot provide any kind of advice, explanation, opinion, or recommendation about possible legal rights, remedies, defenses, options, selection of forms, or strategies. The information provided is not intended to create, and receipt or use of it does not constitute, a lawyer-client relationship. Users should not act upon this information without seeking professional counsel.
+### Overview
+* [Accord Project][apmain]
+* [Accord Project News][apnews]
+* [Accord Project Blog][apblog]
+* [Accord Project Slack][apslack]
+* [Accord Project Technical Documentation][apdoc]
+* [Accord Project GitHub][apgit]
 
+
+### Documentation
+* [Getting Started with Accord Project][docwelcome]
+* [Concepts and High-level Architecture][dochighlevel]
+* [How to use the Cicero Templating System][doccicero]
+* [How to Author Accord Project Templates][docstudio]
+* [Ergo Language Guide][docergo]
+
+## Contributing
+
+The Accord Project technology is being developed as open source. All the software packages are being actively maintained on GitHub and we encourage organizations and individuals to contribute requirements, documentation, issues, new templates, and code.
+
+Find out what’s coming on our [blog][apblog].
+
+Join the Accord Project Technology Working Group [Slack channel][apslack] to get involved!
+
+For code contributions, read our [CONTRIBUTING guide][contributing] and information for [DEVELOPERS][developers].
+
+## License <a name="license"></a>
+
+Accord Project source code files are made available under the [Apache License, Version 2.0][apache].
+Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
+
+[composerconcerto]: https://github.com/hyperledger/composer-concerto
+
+[linuxfound]: https://www.linuxfoundation.org
+[apmain]: https://accordproject.org/ 
+[apworkgroup]: https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=MjZvYzIzZHVrYnI1aDVzbjZnMHJqYmtwaGlfMjAxNzExMTVUMjEwMDAwWiBkYW5AY2xhdXNlLmlv&tmsrc=dan%40clause.io
+[apblog]: https://medium.com/@accordhq
+[apnews]: https://www.accordproject.org/news/
+[apgit]:  https://github.com/accordproject/
+[apdoc]: https://docs.accordproject.org/
+[apslack]: https://accord-project-slack-signup.herokuapp.com
+
+[docspec]: https://docs.accordproject.org/docs/spec-overview.html
+[docwelcome]: https://docs.accordproject.org/docs/accordproject.html
+[dochighlevel]: https://docs.accordproject.org/docs/spec-concepts.html
+[docergo]: https://docs.accordproject.org/docs/logic-ergo.html
+[docstart]: https://docs.accordproject.org/docs/accordproject.html
+[doccicero]: https://docs.accordproject.org/docs/basic-use.html
+[docstudio]: https://docs.accordproject.org/docs/advanced-latedelivery.html
+
+[contributing]: https://github.com/accordproject/ergo/blob/master/CONTRIBUTING.md
+[developers]: https://github.com/accordproject/ergo/blob/master/DEVELOPERS.md
+
+[apache]: https://github.com/accordproject/template-studio-v2/blob/master/LICENSE
+[creativecommons]: http://creativecommons.org/licenses/by/4.0/
