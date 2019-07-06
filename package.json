@@ -5,8 +5,8 @@
   "dependencies": {
     "adm-zip": "^0.4.11",
     "bulma": "^0.7.1",
-    "composer-concerto-tools": "^0.60.5",
-    "composer-concerto": "^0.70.5",
+    "composer-concerto-tools": "^0.61.1",
+    "composer-concerto": "^0.71.6",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
@@ -20,8 +20,7 @@
   "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
   "version": "0.0.1",
   "main": "build.js",
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/accordproject/models.git"
