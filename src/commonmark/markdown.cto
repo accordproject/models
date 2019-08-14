@@ -5,62 +5,67 @@ namespace org.accordproject.commonmark
  */
 
 abstract concept Node {
+    o String text optional
     o Node[] nodes optional
 }
 
-concept Text extends Node {
-    o String text
+abstract concept Root extends Node {
 }
 
-concept CodeBlock extends Node {
+abstract concept Child extends Node {
+}
+
+concept Text extends Child {
+}
+
+concept CodeBlock extends Child {
     o String info optional
 }
 
-concept Code extends Node {
+concept Code extends Child {
     o String info optional
 }
 
-concept HtmlInline extends Node {
+concept HtmlInline extends Child {
 }
 
-concept HtmlBlock extends Node {
+concept HtmlBlock extends Child {
 }
 
-concept Emph extends Node {
+concept Emph extends Child {
 }
 
-concept Strong extends Node {
+concept Strong extends Child {
 }
 
-concept BlockQuote extends Node {
+concept BlockQuote extends Child {
 }
 
-concept Heading extends Node {
+concept Heading extends Child {
     o String level
 }
 
-concept ThematicBreak extends Node {
+concept ThematicBreak extends Child {
 }
 
-concept Link extends Node {
+concept Link extends Child {
     o String destination
     o String title
 }
 
-concept Paragraph extends Node {
+concept Paragraph extends Child {
 }
 
-concept List extends Node {
+concept List extends Child {
     o String type
     o String start optional
     o String tight
     o String delimiter optional
 }
 
-concept Item extends Node {
+concept Item extends Child {
 }
 
-concept Document {
+concept Document extends Root {
     o String xmlns
-    o Node[] nodes
 }
