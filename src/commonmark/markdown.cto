@@ -5,7 +5,7 @@ namespace org.accordproject.commonmark
  */
 
 abstract concept Node {
-    o Node nodes[]
+    o Node[] nodes
 }
 
 concept Text extends Node {
