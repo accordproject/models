@@ -5,7 +5,7 @@ namespace org.accordproject.commonmark
  */
 
 abstract concept Node {
-    o Node[] nodes
+    o Node[] nodes optional
 }
 
 concept Text extends Node {
@@ -13,7 +13,11 @@ concept Text extends Node {
 }
 
 concept CodeBlock extends Node {
-    o String info
+    o String info optional
+}
+
+concept Code extends Node {
+    o String info optional
 }
 
 concept HtmlInline extends Node {
@@ -47,11 +51,13 @@ concept Paragraph extends Node {
 }
 
 concept List extends Node {
+    o String type
+    o String start optional
+    o String tight
+    o String delimiter optional
 }
 
 concept Item extends Node {
-    o String type
-    o String tight
 }
 
 concept Document {
