@@ -54,7 +54,7 @@ concept Item extends Node {
     o String tight
 }
 
-concept Document extends Node {
+concept Document {
     o String xmlns
+    o Node[] nodes
 }
-
