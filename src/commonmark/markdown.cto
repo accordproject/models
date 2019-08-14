@@ -1,0 +1,60 @@
+namespace org.accordproject.commonmark
+
+/**
+ * A model for a commonmark format markdown file
+ */
+
+abstract concept Node {
+    o Node nodes[]
+}
+
+concept Text extends Node {
+    o String text
+}
+
+concept CodeBlock extends Node {
+    o String info
+}
+
+concept HtmlInline extends Node {
+}
+
+concept HtmlBlock extends Node {
+}
+
+concept Emph extends Node {
+}
+
+concept Strong extends Node {
+}
+
+concept BlockQuote extends Node {
+}
+
+concept Heading extends Node {
+    o String level
+}
+
+concept ThematicBreak extends Node {
+}
+
+concept Link extends Node {
+    o String destination
+    o String title
+}
+
+concept Paragraph extends Node {
+}
+
+concept List extends Node {
+}
+
+concept Item extends Node {
+    o String type
+    o String tight
+}
+
+concept Document extends Node {
+    o String xmlns
+}
+
