@@ -7,6 +7,10 @@ namespace org.accordproject.commonmark
 abstract concept Node {
     o String text optional
     o Node[] nodes optional
+    o Integer line optional
+    o Integer column optional
+    o Integer position optional
+    o Integer startTagPosition optional
 }
 
 abstract concept Root extends Node {
