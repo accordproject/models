@@ -4,7 +4,7 @@
 
 # Accord Project Model Catalog
 
-This repository host all Accord Project models. Models are captured using the [Concerto modeling language][composerconcerto]; a platform and runtime neutral typed schema language.
+This repository host all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
 The build system for this repository publishes the models to: https://models.accordproject.org
 
@@ -50,7 +50,7 @@ For code contributions, read our [CONTRIBUTING guide][contributing] and informat
 Accord Project source code files are made available under the [Apache License, Version 2.0][apache].
 Accord Project documentation files are made available under the [Creative Commons Attribution 4.0 International License][creativecommons] (CC-BY-4.0).
 
-[composerconcerto]: https://github.com/hyperledger/composer-concerto
+[concerto]: https://github.com/accordproject/concerto
 
 [linuxfound]: https://www.linuxfoundation.org
 [charter]: https://github.com/accordproject/models/blob/master/CHARTER.md
