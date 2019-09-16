@@ -1,0 +1,191 @@
+namespace org.accordproject.language
+
+/**
+ * List of all major languages
+ */
+ concept GoverningLanguage
+  o Language inLanguage optional // Language in which the contract is written
+  o Language translatedLanguage optional // Language in which the contract is or may be translated to
+  o Language governingLanguage // Language that will govern the contract in the event of translation/multiple versions 
+
+/**
+ * List of all major languages
+ */
+
+enum Language {
+  o Acholi
+  o Afrikaans
+  o Albanian
+  o Amharic
+  o Arabic
+  o Ashante
+  o Assyrian
+  o Azerbaijani
+  o Azeri
+  o Bajuni
+  o Basque
+  o Behdini
+  o Belorussian
+  o Bengali
+  o Berber
+  o Bosnian
+  o Bravanese
+  o Bulgarian
+  o Burmese
+  o Cakchiquel
+  o Cambodian
+  o Cantonese
+  o Catalan
+  o Chaldean
+  o Chamorro
+  o Chao-chow
+  o Chavacano
+  o Chuukese
+  o Croatian
+  o Czech
+  o Danish
+  o Dari
+  o Dinka
+  o Diula
+  o Dutch
+  o English
+  o Estonian
+  o Espanol
+  o Fante
+  o Farsi
+  o Finnish
+  o Flemish
+  o French
+  o Fukienese
+  o Fula
+  o Fulani
+  o Fuzhou
+  o Gaddang
+  o Gaelic
+  o Gaelic-irish
+  o Gaelic-scottish
+  o Georgian
+  o German
+  o Gorani
+  o Greek
+  o Gujarati
+  o Haitian Creole
+  o Hakka
+  o Hakka-chinese
+  o Hausa
+  o Hebrew
+  o Hindi
+  o Hmong
+  o Hungarian
+  o Ibanag
+  o Icelandic
+  o Igbo
+  o Ilocano
+  o Indonesian
+  o Inuktitut
+  o Italian
+  o Jakartanese
+  o Japanese
+  o Javanese
+  o Kanjobal
+  o Karen
+  o Karenni
+  o Kashmiri
+  o Kazakh
+  o Kikuyu
+  o Kinyarwanda
+  o Kirundi
+  o Korean
+  o Kosovan
+  o Kotokoli
+  o Krio
+  o Kurdish
+  o Kurmanji
+  o Kyrgyz
+  o Lakota
+  o Laotian
+  o Latvian
+  o Lingala
+  o Lithuanian
+  o Luganda
+  o Maay
+  o Macedonian
+  o Malay
+  o Malayalam
+  o Maltese
+  o Mandarin
+  o Mandingo
+  o Mandinka
+  o Marathi
+  o Marshallese
+  o Mirpuri
+  o Mixteco
+  o Moldavan
+  o Mongolian
+  o Montenegrin
+  o Navajo
+  o Neapolitan
+  o Nepali
+  o Nigerian Pidgin
+  o Norwegian
+  o Oromo
+  o Pahari
+  o Papago
+  o Papiamento
+  o Pashto
+  o Patois
+  o Pidgin English
+  o Polish
+  o Portug.creole
+  o Portuguese
+  o Pothwari
+  o Pulaar
+  o Punjabi
+  o Putian
+  o Quichua
+  o Romanian
+  o Russian
+  o Samoan
+  o Serbian
+  o Shanghainese
+  o Shona
+  o Sichuan
+  o Sicilian
+  o Sinhalese
+  o Slovak
+  o Somali
+  o Sorani
+  o Spanish
+  o Sudanese Arabic
+  o Sundanese
+  o Susu
+  o Swahili
+  o Swedish
+  o Sylhetti
+  o Tagalog
+  o Taiwanese
+  o Tajik
+  o Tamil
+  o Telugu
+  o Thai
+  o Tibetan
+  o Tigre
+  o Tigrinya
+  o Toishanese
+  o Tongan
+  o Toucouleur
+  o Trique
+  o Tshiluba
+  o Turkish
+  o Ukrainian
+  o Urdu
+  o Uyghur
+  o Uzbek
+  o Vietnamese
+  o Visayan
+  o Welsh
+  o Wolof
+  o Yiddish
+  o Yoruba
+  o Yupik
+} 
