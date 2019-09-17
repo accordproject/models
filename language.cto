@@ -365,7 +365,7 @@ enum Language {
   o Yakut
   o SouthAmericanIndian
   o SalishanLanguages
-  o Samaritan Aramaic
+  o SamaritanAramaic
   o Sanskrit
   o Sasak
   o Santali
@@ -458,12 +458,12 @@ enum Language {
   o Vietnamese
   o Volapük
   o Votic
-  o Wakashan languages
+  o WakashanLanguages
   o Walamo
   o Waray
   o Washo
   o Welsh
-  o Sorbian languages
+  o SorbianLanguages
   o Walloon
   o Wolof
   o Kalmyk
@@ -472,7 +472,7 @@ enum Language {
   o Yapese
   o Yiddish
   o Yoruba
-  o Yupik languages
+  o YupikLanguages
   o Zapotec
   o Zenaga
   o StandardMoroccanTamazight
