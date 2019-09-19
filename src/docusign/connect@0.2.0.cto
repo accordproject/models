@@ -68,6 +68,12 @@ enum CustomTabTypeCode {
   o Formula
 }
 
+enum DocumentType {
+  o Principal
+  o CertificateOfCompletion
+  o SignerAttachment
+}
+
 concept EnvelopeStatus {
   o EnvelopeStatusCode status
   o String envelopeId optional
@@ -134,8 +140,7 @@ concept ListTabStatus extends TabStatus {
 }
 
 asset Attachment extends BinaryResource {
-  o Boolean signed
-  o Boolean principal // Whether this is the DocuSign contract
+  o DocumentType docType
 }
 
 transaction DocuSignEnvelopeInformation extends Request {
