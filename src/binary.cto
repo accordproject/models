@@ -1,0 +1,15 @@
+namespace org.accordproject.binary
+
+abstract asset BinaryResource identified by identifier {
+   o String identifier
+   o String name
+   o String mimeType 
+   o String encoding default="base64"
+}
+  
+asset BinaryReference extends BinaryResource {
+}
+
+asset BinaryFile extends BinaryResource {
+   o String content
+}

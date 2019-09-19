@@ -1,0 +1,146 @@
+/**
+ * Based on https://www.docusign.net/api/3.0/schema/dsx.xsd
+ */
+namespace com.docusign.connect
+
+import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
+import org.accordproject.cicero.BinaryResource from https://models.accordproject.org/cicero/binary.cto
+
+enum EnvelopeStatusCode {
+  o Any
+  o Voided
+  o Created
+  o Deleted
+  o Sent
+  o Delivered
+  o Signed
+  o Completed
+  o Declined
+  o TimedOut
+  o Template
+  o Processing
+}
+
+enum RecipientStatusCode {
+  o Created
+  o Sent
+  o Delivered
+  o Signed
+  o Declined
+  o Completed
+  o FaxPending
+  o AutoResponded
+}
+
+enum TabTypeCode {
+  o InitialHere
+  o SignHere
+  o FullName
+  o FirstName
+  o LastName
+  o EmailAddress
+  o Company
+  o Title
+  o DateSigned
+  o InitialHereOptional
+  o EnvelopeID
+  o Custom
+  o SignerAttachment
+  o SignHereOptional
+  o Approve
+  o Decline
+  o SignerAttachmentOptional
+  o DigitalSignature
+}
+
+enum CustomTabTypeCode {
+  o Text
+  o Checkbox
+  o Radio
+  o List
+  o Date
+  o Number
+  o SSN
+  o ZIP5
+  o ZIP5DASH4
+  o Email
+  o Note
+  o Formula
+}
+
+concept EnvelopeStatus {
+  o EnvelopeStatusCode status
+  o String envelopeId optional
+  o DateTime created optional
+  o DateTime sent optional
+  o DateTime delivered optional
+  o DateTime signed optional
+  o DateTime completed optional
+  o DateTime declined optional
+  o String email optional
+}
+
+concept Recipient {
+  o RecipientStatusCode status
+  o String email
+  o String userName
+  o DateTime sent optional
+  o DateTime delivered optional
+  o DateTime signed optional
+  o DateTime declined optional
+  o String declineReason optional
+  o TabStatus[] tabStatuses optional
+}
+
+concept CustomField {
+  o String name
+  o String value
+}
+
+abstract concept TabStatus {
+  o TabTypeCode tabType
+  o String status
+  o String tabLabel
+  o String originalValue optional
+  o DateTime signed optional
+  o CustomTabTypeCode customTabType optional
+}
+
+concept NumberTabStatus extends TabStatus {
+  o String tabName optional
+  o Double tabValue optional
+}
+
+concept TextTabStatus extends TabStatus {
+  o String tabName optional
+  o String tabValue optional
+}
+
+concept DateTabStatus extends TabStatus {
+  o String tabName optional
+  o DateTime tabValue optional
+}
+
+concept BooleanTabStatus extends TabStatus {
+  o String tabName optional
+  o Boolean tabValue optional
+}
+
+concept ListTabStatus extends TabStatus {
+  o String[] tabNames
+  o String tabValue optional
+  o String[] listValues
+  o String listSelectedValue optional
+}
+
+asset Attachment extends BinaryResource {
+  o Boolean signed
+  o Boolean principal // Whether this is the DocuSign contract
+}
+
+transaction DocuSignEnvelopeInformation extends Request {
+  o EnvelopeStatus envelopeStatus
+  o Recipient[] recipients optional
+  o CustomField[] customFields optional
+  o Attachment[] attachments optional
+}
