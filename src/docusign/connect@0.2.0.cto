@@ -4,7 +4,7 @@
 namespace com.docusign.connect
 
 import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
-import org.accordproject.cicero.BinaryResource from https://models.accordproject.org/cicero/binary.cto
+import org.accordproject.binary.BinaryResource from https://models.accordproject.org/binary.cto
 
 enum EnvelopeStatusCode {
   o Any
