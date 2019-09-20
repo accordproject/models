@@ -3,10 +3,10 @@
     "build": "node build.js"
   },
   "dependencies": {
+    "@accordproject/concerto": "^0.80.0",
+    "@accordproject/concerto-tools": "^0.80.0",
     "adm-zip": "^0.4.11",
     "bulma": "^0.7.1",
-    "composer-concerto-tools": "^0.61.1",
-    "composer-concerto": "^0.71.6",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",

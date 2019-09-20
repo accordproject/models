@@ -14,10 +14,10 @@
 
 'use strict';
 
-const ModelManager = require('composer-concerto').ModelManager;
-const ModelFile = require('composer-concerto').ModelFile;
-const FileWriter = require('composer-concerto').FileWriter;
-const CodeGen = require('composer-concerto-tools').CodeGen;
+const ModelManager = require('@accordproject/concerto').ModelManager;
+const ModelFile = require('@accordproject/concerto').ModelFile;
+const FileWriter = require('@accordproject/concerto').FileWriter;
+const CodeGen = require('@accordproject/concerto-tools').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
 const nunjucks = require('nunjucks');
@@ -270,7 +270,7 @@ let modelFileIndex = [];
                 const serverRoot = process.env.SERVER_ROOT;
                 const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
                 modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
-                console.log(`Processed ${modelFile.getNamespace()}`);
+                console.log(`Processed ${modelFile.getNamespace()} (${modelVersion})`);
 
                 fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                     if (err) {
