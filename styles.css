@@ -207,6 +207,10 @@ a.navbar-item img{
   text-transform: uppercase;
 }
 
+.footer a:hover {
+  color: #fff;
+}
+
 /* Dropdown */
 
 .dropdown {
