@@ -1,0 +1,105 @@
+namespace org.accordproject.calendar
+
+import org.accordproject.time.Duration from https://models.accordproject.org/time@0.2.0.cto
+import org.accordproject.geo.GeoCoordinates from https://models.accordproject.org/geo.cto
+
+/**
+ * This is based on RFC 5545
+ * Credit to https://github.com/rianjs/ical.net/blob/master/v2/ical.NET/Interfaces/Components/IEvent.cs
+ * for the basic structure of the model
+ */
+
+/**
+ * An abstract type
+ */
+ abstract asset CalendarComponent identified by uid {
+    o String uid
+ }
+
+/**
+ * An abstract type
+ */
+abstract asset UniqueComponent extends CalendarComponent {
+    o String[] attendee optional
+    o String[] comment optional
+    o DateTime dtstamp optional
+    o String organizer optional
+    o String[] requestStatuses optional
+    o String url optional
+}
+
+/**
+ * An abstract type
+ */
+abstract asset RecurringComponent extends UniqueComponent {
+    o String[] attachements optional
+    o String[] categories optional
+    o String classType optional
+    o String[] contacts optional
+    o DateTime created optional
+    o String description optional
+    o DateTime lastModified optional
+    o Integer priority optional
+    o String[] related optional
+    o Integer sequence optional
+    o String summary optional
+}
+
+/**
+ * An alarm in a calendar
+ */
+asset VAlarm extends CalendarComponent {
+    o String alarmAction optional
+    o String attachment optional
+    o String[] attendees optional
+    o String description optional
+    o Duration duration optional
+    o Integer repeat optional
+    o String summary optional
+}
+
+/**
+ * An event in a calendar
+ */
+asset VEvent extends RecurringComponent {
+    o DateTime dtend optional
+    o Duration duration optional
+    o DateTime end optional
+
+    o Boolean isAllDay optional
+    o GeoCoordinates geo optional
+    o String location optional
+    o String[] resources optional
+    o String transparency optional
+    o Boolean isActive optional
+}
+
+/**
+ * An freebusy in a calendar
+ */
+asset VFreebusy extends UniqueComponent {
+    o DateTime dtstart optional
+    o DateTime dtend optional
+    o DateTime start optional
+    o DateTime end optional
+}
+
+/**
+ * An journal entry in a calendar
+ */
+asset VJournal extends RecurringComponent {
+}
+
+/**
+ * An todo entry in a calendar
+ */
+asset VTodo extends RecurringComponent {
+    o DateTime completed optional
+    o DateTime due optional
+    o Duration duration optional
+    o GeoCoordinates geo optional
+    o String location optional
+    o Integer percentComplete optional
+    o String[] resources optional
+    o String todo optional
+}
