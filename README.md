@@ -71,7 +71,7 @@ Accord Project documentation files are made available under the [Creative Common
 [docstudio]: https://docs.accordproject.org/docs/advanced-latedelivery.html
 
 [contributing]: https://github.com/accordproject/models/blob/master/CONTRIBUTING.md
-[developers]: https://github.com/accordproject/techdocs/blob/master/DEVELOPERS.md
+[developers]: https://github.com/accordproject/models/blob/master/DEVELOPERS.md
 
 [apache]: https://github.com/accordproject/template-studio-v2/blob/master/LICENSE
 [creativecommons]: http://creativecommons.org/licenses/by/4.0/
