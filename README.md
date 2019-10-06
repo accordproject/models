@@ -1,8 +1,10 @@
-<a href="https://www.accordproject.org/">
-  <img src="assets/images/APLogo.png" alt="Accord Project Logo" width="400" />
-</a>
+<p align="center">
+  <a href="https://www.accordproject.org/">
+    <img src="assets/images/APLogo.png" alt="Accord Project Logo" width="400" />
+  </a>
+</p>  
 
-# Accord Project Model Catalog
+<h1 align="center">Accord Project Model Catalog</h1>
 
 This repository host all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
