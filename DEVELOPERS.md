@@ -7,12 +7,12 @@
 
 ## <a name="setup"></a> Development Setup 
 
-This document describes how to set up your development environment to build and test Cicero-UI, and
+This document describes how to set up your development environment to build and test Accord Project Models, and
 explains the basic mechanics of using `git`, `node`, `npm`.
 
 ### Installing Dependencies
 
-Before you can build Cicero-UI, you must install and configure the following dependencies on your
+Before you can build Models, you must install and configure the following dependencies on your
 machine:
 
 * [Git][git]: The [Github Guide to Installing Git][git-setup] is a good source of information.
@@ -41,28 +41,14 @@ To build a project, you clone the source code repository and use npm to build:
 git clone https://github.com/<github username>/<repository>.git
 
 # Go to the directory:
-cd <repository>
+cd models
 
 # Add the main repository as an upstream remote to your repository:
-git remote add upstream "https://github.com/acccordproject/<repository>.git"
+git remote add upstream "https://github.com/acccordproject/models.git"
 
 # Install node.js dependencies:
 npm install
 ```
-
-### Running the Project Locally
-
-This project uses [Docusaurus][docusaurus] to build and manage the public Accord Project documentation website. To run the documentation website on your local machine, first, follow the instructions above to [build the project](#building-a-project).
-
-```shell
-# Change to the website directory
-cd website
-
-# Start the docusaurus server
-npm start
-```
-
-Changes that you make to markdown files in the `/docs` folder will automatically be reflected in your local running version of the documentation website. 
 
 ### Keeping In Sync
 
@@ -73,15 +59,6 @@ It is good practice to always keep your `origin/master` in sync with `upstream/m
     git checkout master
     git merge --ff-only upstream/master
     git push origin master
-```
-
-### <a name="unit-tests"></a> Running the Unit Test Suite
-
-We write unit and integration tests with Enzyme and execute them with Jest. To run all of the
-tests once on Chrome run:
-
-```shell
-    npm run test
 ```
 
 ## <a name="rules"></a> Coding Rules
