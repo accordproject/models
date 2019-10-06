@@ -75,7 +75,7 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 We have very precise rules over how our git commit messages can be formatted.  This leads to **more
 readable messages** that are easy to follow when looking through the **project history** and **git logs**.  
-But also, we use the git commit messages to **generate the Cicero-UI change log**.
+But also, we use the git commit messages to **generate the Models change log**.
 
 The commit message formatting can be added using a version of typical git workflow.
 
@@ -161,7 +161,7 @@ This means that all the docs are stored inline in the source code and so are kep
 changes.
 
 This means that since we generate the documentation from the source code, we can easily provide
-version-specific documentation by simply checking out a version of Cicero-UI and running the build.
+version-specific documentation by simply checking out a version of models and running the build.
 
 ## License <a name="license"></a>
 
@@ -187,5 +187,5 @@ Accord Project documentation files are made available under the [Creative Common
 [jsdoc]: http://usejsdoc.org/
 [docusaurus]: https://docusaurus.io
 
-[apache]: https://github.com/accordproject/cicero-ui/blob/master/LICENSE
+[apache]: https://github.com/accordproject/models/blob/master/LICENSE
 [creativecommons]: http://creativecommons.org/licenses/by/4.0/
