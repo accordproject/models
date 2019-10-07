@@ -5,6 +5,11 @@
 </p>  
 
 <h1 align="center">Accord Project Model Catalog</h1>
+<p align="center">
+  <a href="https://github.com/accordproject/models/blob/master/LICENSE"><img src="https://img.shields.io/github/license/accordproject/models" alt="GitHub license"></a>
+  <a href="https://accord-project-slack-signup.herokuapp.com/"><img src="https://img.shields.io/badge/Slack-Join%20Slack-blue" alt="slack"></a>
+  <br>
+</p>
 
 This repository hosts all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
