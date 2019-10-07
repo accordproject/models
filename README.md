@@ -6,7 +6,7 @@
 
 <h1 align="center">Accord Project Model Catalog</h1>
 
-This repository host all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
+This repository hosts all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
 The build system for this repository publishes the models to: https://models.accordproject.org
 
@@ -41,7 +41,7 @@ Accord Project is an open source, non-profit, initiative working to transform co
 
 The Accord Project technology is being developed as open source. All the software packages are being actively maintained on GitHub and we encourage organizations and individuals to contribute requirements, documentation, issues, new templates, and code.
 
-Find out what’s coming on our [blog][apblog].
+Find out what’s happening on our [blog][apblog].
 
 Join the Accord Project Technology Working Group [Slack channel][apslack] to get involved!
 
