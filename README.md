@@ -11,7 +11,7 @@
   <br>
 </p>
 
-This repository hosts all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
+This repository hosts all Accord Project model's. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
 The build system for this repository publishes the models to: https://models.accordproject.org
 
