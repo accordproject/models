@@ -1,14 +1,6 @@
 namespace org.accordproject.language
 
 /**
- * Model to define the governing language
- */
- concept GoverningLanguage
-  o Language inLanguage optional // Language in which the contract is written
-  o Language translatedLanguage optional // Language in which the contract is or may be translated to
-  o Language governingLanguage // Language that will govern the contract in the event of translation/multiple versions 
-
-/**
  * ISO Language Codes (639-1 and 693-2)
  */
 enum Language {
@@ -18,7 +10,7 @@ enum Language {
   o Acoli
   o Adangme
   o Adyghe
-  o Afro-Asiatic
+  o AfroAsiatic
   o Afrihili
   o Afrikaans
   o Ainu
@@ -140,7 +132,7 @@ enum Language {
   o Fijian
   o Filipino
   o Finnish
-  o Finno-UgrianLanguages
+  o FinnoUgrianLanguages
   o Fon
   o French
   o Northern Frisian
@@ -166,7 +158,7 @@ enum Language {
   o Guarani
   o SwissGerman
   o Gujarati
-  o Gwich'in
+  o Gwichin
   o Haida
   o Haitian
   o Hausa
@@ -195,7 +187,7 @@ enum Language {
   o Interlingua
   o IndicLanguages
   o Indonesian
-  o Indo-EuropeanLanguages
+  o IndoEuropeanLanguages
   o Ingush
   o Inupiaq
   o IranianLanguages
@@ -204,9 +196,9 @@ enum Language {
   o Javanese
   o Lojban
   o Japanese
-  o Judeo-Persian
-  o Judeo-Arabic
-  o Kara-Kalpak
+  o JudeoPersian
+  o JudeoArabic
+  o KaraKalpak
   o Kabyle
   o Kachin
   o Kalaallisut
@@ -232,7 +224,7 @@ enum Language {
   o Korean
   o Kosraean
   o Kpelle
-  o Karachay-Balkar
+  o KarachayBalkar
   o Karelian
   o KruLanguages
   o Kurukh
@@ -253,8 +245,8 @@ enum Language {
   o Mongo
   o Lozi
   o Luxembourgish
-  o Luba-Lulua
-  o Luba-Katanga
+  o LubaLulua
+  o LubaKatanga
   o Ganda
   o Luiseno
   o Lunda
@@ -277,10 +269,10 @@ enum Language {
   o Mandar
   o Mende
   o Irish
-  o Mi'kmaq
+  o Mikmaq
   o Minangkabau
   o UncodedLanguages
-  o Mon-KhmerLanguages
+  o MonKhmerLanguages
   o Malagasy
   o Maltese
   o Manchu
@@ -308,14 +300,14 @@ enum Language {
   o Nepali
   o NepalBhasa
   o Nias
-  o Niger-KordofanianLanguages
+  o NigerKordofanianLanguages
   o Niuean
   o NorwegianNynorsk
   o BokmålNorwegian
   o Nogai
   o Norse
   o Norwegian
-  o N'Ko
+  o NKo
   o Pedi
   o NubianLanguages
   o ClassicalNewari
@@ -365,7 +357,7 @@ enum Language {
   o Yakut
   o SouthAmericanIndian
   o SalishanLanguages
-  o SamaritanAramaic
+  o Samaritan Aramaic
   o Sanskrit
   o Sasak
   o Santali
@@ -379,7 +371,7 @@ enum Language {
   o Sidamo
   o Sinhala
   o SiouanLanguages
-  o Sino-TibetanLanguages
+  o SinoTibetanLanguages
   o Slaviclanguages
   o Slovak
   o Slovenian
@@ -402,7 +394,7 @@ enum Language {
   o Sranan Tongo
   o Serbian
   o Serer
-  o Nilo-SaharanLanguages
+  o NiloSaharanLanguages
   o Swati
   o Sukuma
   o Sundanese
@@ -458,12 +450,12 @@ enum Language {
   o Vietnamese
   o Volapük
   o Votic
-  o WakashanLanguages
+  o Wakashan languages
   o Walamo
   o Waray
   o Washo
   o Welsh
-  o SorbianLanguages
+  o Sorbian languages
   o Walloon
   o Wolof
   o Kalmyk
@@ -472,7 +464,7 @@ enum Language {
   o Yapese
   o Yiddish
   o Yoruba
-  o YupikLanguages
+  o Yupik languages
   o Zapotec
   o Zenaga
   o StandardMoroccanTamazight
