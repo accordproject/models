@@ -21,6 +21,11 @@ a:hover {
 .content h6 {
   color: rgb(27, 37, 64);
 }
+.linux-foundation-logo{
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+  
 
 .content h1:not(:first-child) {
   margin-top: 1em;
