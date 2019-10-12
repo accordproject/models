@@ -50,20 +50,6 @@ git remote add upstream "https://github.com/acccordproject/<repository>.git"
 npm install
 ```
 
-### Running the Project Locally
-
-This project uses [Docusaurus][docusaurus] to build and manage the public Accord Project documentation website. To run the documentation website on your local machine, first, follow the instructions above to [build the project](#building-a-project).
-
-```shell
-# Change to the website directory
-cd website
-
-# Start the docusaurus server
-npm start
-```
-
-Changes that you make to markdown files in the `/docs` folder will automatically be reflected in your local running version of the documentation website. 
-
 ### Keeping In Sync
 
 It is good practice to always keep your `origin/master` in sync with `upstream/master`. You don’t have to, but it makes your life easier. Do your work in branches of your fork, and periodically sync up your `master` with the `master` of `upstream` as follows. You should definitely do this before creating a pull request.
