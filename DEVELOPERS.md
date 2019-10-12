@@ -5,14 +5,14 @@
 * [Commit Message Guidelines][developers.commits]
 * [Writing Documentation][developers.documentation]
 
-## <a name="setup"> Development Setup
+## <a name="setup"></a> Development Setup
 
-This document describes how to set up your development environment to build and test Cicero-UI, and
+This document describes how to set up your development environment to build and test Accord Project Models, and
 explains the basic mechanics of using `git`, `node`, `npm`.
 
 ### Installing Dependencies
 
-Before you can build Cicero-UI, you must install and configure the following dependencies on your
+Before you can build Models, you must install and configure the following dependencies on your
 machine:
 
 * [Git][git]: The [Github Guide to Installing Git][git-setup] is a good source of information.
@@ -41,10 +41,10 @@ To build a project, you clone the source code repository and use npm to build:
 git clone https://github.com/<github username>/<repository>.git
 
 # Go to the directory:
-cd <repository>
+cd models
 
 # Add the main repository as an upstream remote to your repository:
-git remote add upstream "https://github.com/acccordproject/<repository>.git"
+git remote add upstream "https://github.com/acccordproject/models.git"
 
 # Install node.js dependencies:
 npm install
@@ -61,15 +61,6 @@ It is good practice to always keep your `origin/master` in sync with `upstream/m
     git push origin master
 ```
 
-### <a name="unit-tests"></a> Running the Unit Test Suite
-
-We write unit and integration tests with Enzyme and execute them with Jest. To run all of the
-tests once on Chrome run:
-
-```shell
-    npm run test
-```
-
 ## <a name="rules"></a> Coding Rules
 
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
@@ -82,9 +73,9 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 ## <a name="commits"></a> Git Commit Guidelines
 
-We have very precise rules over how our git commit messages can be formatted.  This leads to **more
-readable messages** that are easy to follow when looking through the **project history** and **git logs**.  
-But also, we use the git commit messages to **generate the Cicero-UI change log**.
+We have very precise rules over how our git commit messages can be formatted. This leads to **more
+readable messages** that are easy to follow when looking through the **project history** and **git logs**.
+But also, we use the git commit messages to **generate the Models change log**.
 
 The commit message formatting can be added using a version of typical git workflow.
 
@@ -98,7 +89,7 @@ Each commit message consists of a mandatory **type**, **scope**, **subject**, an
 This allows the message to be easier to read on GitHub as well as in various git tools.
 
 ### Revert
-If the commit reverts a previous commit, it should begin with `revert: `, followed by the subject, where it 
+If the commit reverts a previous commit, it should begin with `revert: `, followed by the subject, where it
 should say: `this reverts commit <hash>.`, where the hash is the SHA of the commit being reverted.
 A commit with this format is automatically created by the [`git revert`][git-revert] command.
 
@@ -117,7 +108,7 @@ Must be one of the following:
   generation
 
 ### Scope
-The scope will be specifying the place of the commit change; the focal point of new code or best 
+The scope will be specifying the place of the commit change; the focal point of new code or best
 description for where changes can be found.
 
 You can use `*` when the change affects more than a single scope.
@@ -134,7 +125,7 @@ The subject contains succinct description of the change:
 The footer should contain reference GitHub Issues that this commit addresses.
 
 ## <a name="pullrequests"></a> GitHub Pull Request Guidelines
-Pull Requests should consist of a complete addition to the code which contains value. 
+Pull Requests should consist of a complete addition to the code which contains value.
 Because the commits inside follow a pattern, the title should be an extension or summary of all the commits inside.
 
 Pull Request titles should follow [commit message formatting][developers.commits].
@@ -170,7 +161,7 @@ This means that all the docs are stored inline in the source code and so are kep
 changes.
 
 This means that since we generate the documentation from the source code, we can easily provide
-version-specific documentation by simply checking out a version of Cicero-UI and running the build.
+version-specific documentation by simply checking out a version of models and running the build.
 
 ## License <a name="license"></a>
 
@@ -196,5 +187,5 @@ Accord Project documentation files are made available under the [Creative Common
 [jsdoc]: http://usejsdoc.org/
 [docusaurus]: https://docusaurus.io
 
-[apache]: https://github.com/accordproject/cicero-ui/blob/master/LICENSE
+[apache]: https://github.com/accordproject/models/blob/master/LICENSE
 [creativecommons]: http://creativecommons.org/licenses/by/4.0/
