@@ -65,3 +65,7 @@ jspm_packages
 
 #Build
 build
+
+# windows junk
+thumbs.db
+
