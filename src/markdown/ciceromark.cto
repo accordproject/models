@@ -1,0 +1,22 @@
+namespace org.accordproject.ciceromark
+
+import org.accordproject.commonmark.* from https://models.accordproject.org/markdown/commonmark.cto
+
+/**
+ * A model for Accord Project extensions to commonmark
+ */
+
+concept Clause extends Child {
+    o String clauseid
+    o String src
+    o String clauseText
+}
+
+concept Variable extends Child {
+    o String id
+    o String value
+}
+
+concept ComputedVariable extends Child {
+    o String value
+}
