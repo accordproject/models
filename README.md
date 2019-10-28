@@ -14,16 +14,16 @@
 
 This repository hosts all Accord Project models. Models are captured using the [Concerto][concerto] modeling language; a platform and runtime neutral typed schema language.
 
-The build system for this repository publishes the models to: https://models.accordproject.org
+The build system for this repository publishes the models to https://models.accordproject.org
 
 Environment Variables used by the build system:
 
 - SERVER_ROOT : the root URL for the server. Used when generating absolute hyperlinks.
-- FORCE_PUBLISH : disabled the download of external models and model validation. Should be used with care!
+- FORCE_PUBLISH : disabled the download of external models and model validation. It should be used with care!
 
 ---
 
-Accord Project is an open source, non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
+Accord Project is an open source, a non-profit, initiative working to transform contract management and contract automation by digitizing contracts. Accord Project operates under the umbrella of the [Linux Foundation][linuxfound]. The technical charter for the Accord Project can be found [here][charter].
 
 ## Learn More About Accord Project
 
