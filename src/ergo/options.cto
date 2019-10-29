@@ -15,7 +15,6 @@
 namespace org.accordproject.ergo.options
 
 concept Options {
-	o Boolean wrapVariables
-	o Boolean template
+  o Boolean wrapVariables
+  o Boolean template
 }
-
