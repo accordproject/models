@@ -33,3 +33,9 @@ concept Variable extends Child {
 concept ComputedVariable extends Child {
     o String value
 }
+
+concept ConditionalVariable extends Child {
+    o String id
+    o String value
+}
+
