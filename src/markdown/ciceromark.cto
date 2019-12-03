@@ -39,3 +39,6 @@ concept ConditionalVariable extends Child {
     o String value
 }
 
+concept ListVariable extends List {
+}
+
