@@ -14,7 +14,7 @@
     "plantuml-encoder": "^1.4.0",
     "rimraf": "^2.7.1",
     "semver": "^6.3.0",
-    "showdown": "^1.8.6"
+    "showdown": "^1.9.1"
   },
   "name": "@accordproject/models",
   "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
