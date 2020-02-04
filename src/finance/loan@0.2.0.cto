@@ -15,7 +15,8 @@
 namespace org.accordproject.finance.loan
 
 import org.accordproject.time.Duration from https://models.accordproject.org/time@0.2.0.cto
-import org.accordproject.money.* from https://models.accordproject.org/money@0.2.0.cto
+import org.accordproject.money.CurrencyCode from https://models.accordproject.org/money@0.2.0.cto
+import org.accordproject.money.DigitalCurrencyCode from https://models.accordproject.org/money@0.2.0.cto
 
 enum CurrencyType {
   o MONETARY
