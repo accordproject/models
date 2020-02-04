@@ -14,7 +14,8 @@
 
 namespace org.accordproject.ciceromark
 
-import org.accordproject.commonmark.* from https://models.accordproject.org/markdown/commonmark.cto
+import org.accordproject.commonmark.Child from https://models.accordproject.org/markdown/commonmark.cto
+import org.accordproject.commonmark.List from https://models.accordproject.org/markdown/commonmark.cto
 
 /**
  * A model for Accord Project extensions to commonmark
@@ -25,18 +26,21 @@ concept Clause extends Child {
     o String src
 }
 
-concept Variable extends Child {
-    o String id
+abstract concept VariableValue extends Child {
     o String value
 }
 
-concept ComputedVariable extends Child {
-    o String value
+abstract concept IdentifiedVariableValue extends VariableValue {
+    o String id
 }
 
-concept ConditionalVariable extends Child {
-    o String id
-    o String value
+concept Variable extends IdentifiedVariableValue {
+}
+
+concept ComputedVariable extends VariableValue {
+}
+
+concept ConditionalVariable extends IdentifiedVariableValue {
 }
 
 concept ListVariable extends List {
