@@ -4,11 +4,11 @@
   </a>
 </p>  
 
-<h1 align="center">Accord Project Model Catalog</h1>
+<h1 align="center">Accord Project Model Repository</h1>
 <p align="center">
   <a href="https://github.com/accordproject/models/blob/master/LICENSE"><img src="https://img.shields.io/github/license/accordproject/models" alt="GitHub license"></a>
-  <a href="https://accord-project-slack-signup.herokuapp.com/">
-    <img src="https://img.shields.io/badge/Accord%20Project-Join%20Slack-blue" alt="Join the Accord Project Slack" />
+  <a href="https://www.accordproject.org/">
+    <img src="https://img.shields.io/badge/powered%20by-accord%20project-19C6C8.svg" alt="Accord Project" />
   </a>
 </p>
 
@@ -269,6 +269,14 @@ Find out what’s happening on our [blog][apblog].
 Join the Accord Project Technology Working Group [Slack channel][apslack] to get involved!
 
 For code contributions, read our [CONTRIBUTING guide][contributing] and information for [DEVELOPERS][developers].
+
+### README Badge
+
+Using Accord Project? Add a README badge to let everyone know: [![accord project](https://img.shields.io/badge/powered%20by-accord%20project-19C6C8.svg)](https://www.accordproject.org/)
+
+```
+[![accord project](https://img.shields.io/badge/powered%20by-accord%20project-19C6C8.svg)](https://www.accordproject.org/)
+```
 
 ## License <a name="license"></a>
 
