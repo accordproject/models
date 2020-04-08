@@ -28,6 +28,7 @@ concept Clause extends Child {
 
 abstract concept VariableValue extends Child {
     o String value
+    o String format optional
 }
 
 abstract concept IdentifiedVariableValue extends VariableValue {
