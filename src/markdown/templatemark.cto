@@ -1,0 +1,76 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.accordproject.templatemark
+
+import org.accordproject.commonmark.Node from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
+import org.accordproject.commonmark.Child from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
+
+/**
+ * A model for Accord Project template extensions to commonmark
+ */
+abstract concept ElementDefinition extends Child {
+  o String name // Add Concerto regex
+  o String elementType optional
+}
+
+concept VariableDefinition extends ElementDefinition {
+  o String identifiedBy optional
+}
+
+concept FormattedVariableDefinition extends VariableDefinition {
+  o String format
+}
+
+concept EnumVariableDefinition extends VariableDefinition {
+  o String[] enumValues
+}
+
+concept FormulaDefinition extends ElementDefinition {
+  o String[] dependencies optional // name of variables on which the formula depends
+  o String code // Ergo expression
+}
+
+abstract concept BlockDefinition extends ElementDefinition {
+}
+
+concept ClauseDefinition extends BlockDefinition {
+}
+
+concept ContractDefinition extends BlockDefinition {
+}
+
+concept WithDefinition extends BlockDefinition {
+}
+
+concept ConditionalDefinition extends BlockDefinition {
+    o Node[] whenTrue
+    o Node[] whenFalse
+}
+
+concept OptionalDefinition extends BlockDefinition {
+    o Node[] whenSome
+    o Node[] whenNone
+}
+
+concept ListBlockDefinition extends BlockDefinition {
+    o String type
+    o String tight
+    o String start optional
+    o String delimiter optional
+}
+
+concept JoinDefinition extends BlockDefinition {
+    o String separator
+}
