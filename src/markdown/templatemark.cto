@@ -15,37 +15,32 @@
 namespace org.accordproject.templatemark
 
 import org.accordproject.commonmark.Child from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
-import org.accordproject.commonmark.List from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
 
 /**
  * A model for Accord Project template extensions to commonmark
  */
-abstract concept Definition extends Child {
-	o String name // Add Concerto regex
-  o String type optional
+abstract concept ElementDefinition extends Child {
+  o String name // Add Concerto regex
+  o String elementType optional
 }
 
-concept VariableDefinition extends Definition {
+concept VariableDefinition extends ElementDefinition {
 }
 
 concept FormattedVariableDefinition extends VariableDefinition {
-	o String format
-}
-
-concept EnumValue {
-  o String value // Add Concerto regex
+  o String format
 }
 
 concept EnumVariableDefinition extends VariableDefinition {
-  o EnumValue[] values
+  o String[] enumValues
 }
 
-concept FormulaDefinition extends Definition {
-	o String[] dependencies optional // name of variables on which the formula depends
-	o String code // Ergo expression
+concept FormulaDefinition extends ElementDefinition {
+  o String[] dependencies optional // name of variables on which the formula depends
+  o String code // Ergo expression
 }
 
-abstract concept BlockDefinition extends Definition {
+abstract concept BlockDefinition extends ElementDefinition {
 }
 
 concept ClauseDefinition extends BlockDefinition {
@@ -62,16 +57,9 @@ concept ConditionalDefinition extends BlockDefinition {
     o String whenFalse
 }
 
-concept UnorderedListDefinition extends BlockDefinition {
+concept ListBlockDefinition extends BlockDefinition {
+    o String type
+    o String tight
+    o String start optional
+    o String delimiter optional
 }
-
-concept OrderedListDefinition extends BlockDefinition {
-}
-
-// Notes
-
-/*
-`{{name}}` -- variable
-`{{% code %}}` -- formula
-`{{#blockKind name}}...{{/blockKind}}` -- block
-*/
