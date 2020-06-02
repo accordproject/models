@@ -25,6 +25,7 @@ abstract concept ElementDefinition extends Child {
 }
 
 concept VariableDefinition extends ElementDefinition {
+  o String identifiedBy optional
 }
 
 concept FormattedVariableDefinition extends VariableDefinition {
