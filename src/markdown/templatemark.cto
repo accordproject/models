@@ -14,6 +14,7 @@
 
 namespace org.accordproject.templatemark
 
+import org.accordproject.commonmark.Node from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
 import org.accordproject.commonmark.Child from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
 
 /**
@@ -54,8 +55,13 @@ concept WithDefinition extends BlockDefinition {
 }
 
 concept ConditionalDefinition extends BlockDefinition {
-    o String whenTrue
-    o String whenFalse
+    o Node[] whenTrue
+    o Node[] whenFalse
+}
+
+concept OptionalDefinition extends BlockDefinition {
+    o Node[] whenSome
+    o Node[] whenNone
 }
 
 concept ListBlockDefinition extends BlockDefinition {
@@ -63,4 +69,8 @@ concept ListBlockDefinition extends BlockDefinition {
     o String tight
     o String start optional
     o String delimiter optional
+}
+
+concept JoinDefinition extends BlockDefinition {
+    o String separator
 }

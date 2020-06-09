@@ -14,6 +14,7 @@
 
 namespace org.accordproject.ciceromark
 
+import org.accordproject.commonmark.Node from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
 import org.accordproject.commonmark.Child from https://js-new-ciceromark--accordproject-models.netlify.app/markdown/commonmark@0.2.0.cto
 
 /**
@@ -27,6 +28,7 @@ abstract concept Element extends Child {
 
 concept Variable extends Element {
   o String value
+  o String identifiedBy optional
 }
 
 concept FormattedVariable extends Variable {
@@ -51,9 +53,8 @@ concept Clause extends Block {
 }
 
 concept Conditional extends Block {
-  o String value
-  o String whenTrue
-  o String whenFalse
+  o Node[] whenTrue
+  o Node[] whenFalse
 }
 
 concept ListBlock extends Block {
