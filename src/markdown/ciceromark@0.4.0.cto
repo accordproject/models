@@ -53,6 +53,7 @@ concept Clause extends Block {
 }
 
 concept Conditional extends Block {
+  o Boolean isTrue
   o Node[] whenTrue
   o Node[] whenFalse
 }
