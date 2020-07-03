@@ -58,6 +58,12 @@ concept Conditional extends Block {
   o Node[] whenFalse
 }
 
+concept Optional extends Block {
+  o Boolean hasSome
+  o Node[] whenSome
+  o Node[] whenNone
+}
+
 concept ListBlock extends Block {
     o String type
     o String tight
