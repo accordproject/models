@@ -14,7 +14,6 @@
 
 namespace org.accordproject.ciceromark
 
-import org.accordproject.commonmark.Node from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
 import org.accordproject.commonmark.Child from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
 
 /**
@@ -54,14 +53,14 @@ concept Clause extends Block {
 
 concept Conditional extends Block {
   o Boolean isTrue
-  o Node[] whenTrue
-  o Node[] whenFalse
+  o Child[] whenTrue
+  o Child[] whenFalse
 }
 
 concept Optional extends Block {
   o Boolean hasSome
-  o Node[] whenSome
-  o Node[] whenNone
+  o Child[] whenSome
+  o Child[] whenNone
 }
 
 concept ListBlock extends Block {

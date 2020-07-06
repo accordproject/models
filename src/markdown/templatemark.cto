@@ -14,7 +14,6 @@
 
 namespace org.accordproject.templatemark
 
-import org.accordproject.commonmark.Node from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
 import org.accordproject.commonmark.Child from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
 
 /**
@@ -55,13 +54,13 @@ concept WithDefinition extends BlockDefinition {
 }
 
 concept ConditionalDefinition extends BlockDefinition {
-    o Node[] whenTrue
-    o Node[] whenFalse
+    o Child[] whenTrue
+    o Child[] whenFalse
 }
 
 concept OptionalDefinition extends BlockDefinition {
-    o Node[] whenSome
-    o Node[] whenNone
+    o Child[] whenSome
+    o Child[] whenNone
 }
 
 concept ListBlockDefinition extends BlockDefinition {
