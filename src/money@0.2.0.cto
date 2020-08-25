@@ -233,3 +233,12 @@ o ZAR
 o ZMW
 o ZWL
 }
+
+/**
+ * Represents a currency conversion pair and exchange rate
+ */
+concept CurrencyConversion {
+   o CurrencyCode from
+   o CurrencyCode to
+   o Double rate
+}
