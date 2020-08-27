@@ -16,10 +16,20 @@ namespace org.accordproject.signature
 
 import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
 import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
+import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
 
 /**
  * A request that indicates that a contract has been signed by all parties
  */
 transaction ContractSigned extends Request {
     --> AccordContract contract
+}
+
+/**
+ * An abstract clause for a party scoped signature block
+ */
+abstract asset SignatureBlock extends AccordClause {
+    @PdfStyle("background")
+  --> AccordParty signatory
 }

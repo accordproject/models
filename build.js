@@ -14,9 +14,9 @@
 
 'use strict';
 
-const ModelManager = require('@accordproject/concerto').ModelManager;
-const ModelFile = require('@accordproject/concerto').ModelFile;
-const FileWriter = require('@accordproject/concerto').FileWriter;
+const ModelManager = require('@accordproject/concerto-core').ModelManager;
+const ModelFile = require('@accordproject/concerto-core').ModelFile;
+const FileWriter = require('@accordproject/concerto-tools').FileWriter;
 const CodeGen = require('@accordproject/concerto-tools').CodeGen;
 const rimraf = require('rimraf');
 const path = require('path');
