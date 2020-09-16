@@ -31,5 +31,6 @@ transaction ContractSigned extends Request {
  */
 abstract asset SignatureBlock extends AccordClause {
     @PdfStyle("background")
+    @ContractEditor("readOnly")
   --> AccordParty signatory
 }
