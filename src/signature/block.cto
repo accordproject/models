@@ -12,16 +12,16 @@
  * limitations under the License.
  */
 
-namespace org.accordproject.signature
+namespace org.accordproject.signature.block
 
-import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
-import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
 
 /**
- * A request that indicates that a contract has been signed by all parties
+ * An abstract clause for a party scoped signature block
  */
-transaction ContractSigned extends Request {
-    --> AccordContract contract
+abstract asset SignatureClause extends AccordClause {
+    @PdfStyle("background")
+    @ContractEditor("readOnly")
+  --> AccordParty signatory
 }
