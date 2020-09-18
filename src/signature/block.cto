@@ -21,7 +21,7 @@ import org.accordproject.cicero.contract.AccordParty from https://models.accordp
  * An abstract clause for a party scoped signature block
  */
 abstract asset SignatureClause extends AccordClause {
-    @PdfStyle("background")
-    @ContractEditor("readOnly")
+    @Pdf("style", "background")
+  @ContractEditor("readOnly", true, "opacity", 0)
   --> AccordParty signatory
 }
