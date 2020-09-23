@@ -118,7 +118,7 @@ async function generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile) 
             // generate the JSON Schema
             const visitor = new CodeGen.JSONSchemaVisitor();
             const params = {};
-            const jsonSchemas = modelFile.accept(visitor, params);
+            const jsonSchemas = modelFile.getModelManager().accept(visitor, params);
             const generatedJsonFile = `${destPath}/${fileNameNoExt}.json`;
             // save JSON Schema
             fs.writeFile( `${generatedJsonFile}`, JSON.stringify(jsonSchemas), function (err) {
