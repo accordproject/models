@@ -11,14 +11,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:~0.82.11
+// requires: concerto-core:>= 1.0.0-20210215133932
 
 /**
  * Based on https://www.docusign.net/api/3.0/schema/dsx.xsd
  */
 namespace com.docusign.connect
 
-import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
+import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime@0.2.0.cto
+import org.accordproject.binary.BinaryResource from https://models.accordproject.org/binary.cto
 
 enum EnvelopeStatusCode {
   o Any
@@ -80,6 +81,12 @@ enum CustomTabTypeCode {
   o Email
   o Note
   o Formula
+}
+
+enum DocumentType {
+  o Principal
+  o CertificateOfCompletion
+  o SignerAttachment
 }
 
 concept EnvelopeStatus {
@@ -147,8 +154,13 @@ concept ListTabStatus extends TabStatus {
   o String listSelectedValue optional
 }
 
+asset Attachment extends BinaryResource {
+  o DocumentType docType
+}
+
 transaction DocuSignEnvelopeInformation extends Request {
   o EnvelopeStatus envelopeStatus
   o Recipient[] recipients optional
   o CustomField[] customFields optional
+  o Attachment[] attachments optional
 }
