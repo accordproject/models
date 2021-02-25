@@ -12,6 +12,8 @@
  * limitations under the License.
  */
 
+// requires: concerto-core:~0.82.11
+
 /**
  * Based on https://www.docusign.net/api/3.0/schema/dsx.xsd
  */

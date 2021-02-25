@@ -15,6 +15,7 @@
 'use strict';
 
 const ModelManager = require('@accordproject/concerto-core').ModelManager;
+const concertoVersion = require('@accordproject/concerto-core').version.version;
 const ModelFile = require('@accordproject/concerto-core').ModelFile;
 const FileWriter = require('@accordproject/concerto-tools').FileWriter;
 const CodeGen = require('@accordproject/concerto-tools').CodeGen;
@@ -196,13 +197,31 @@ const rootDir = resolve(__dirname, './src');
 const buildDir = resolve(__dirname, './build');
 let modelFileIndex = [];
 
+/**
+ * Returns true if the Concerto model is compatible with the version of concerto core being used
+ * based on a comment like: // requires: concerto-core:0.82
+ * @param {string} concertoVersion the current version of concerto-core, listed in package.json
+ * @param {*} modelText the CTO model text
+ */
+function isCompatible(concertoVersion, modelText) {
+    const regex = /^\/\/.*requires:.*concerto-core:(.*)$/gm;
+    let m;
+    let versionRange = null;
+    while ((m = regex.exec(modelText)) !== null) {
+        if (m.index === regex.lastIndex) {
+            regex.lastIndex++;
+        }
+        if(m && m.length > 1) {
+            versionRange = m[1];
+        }
+    }
+    return versionRange ? semver.satisfies( concertoVersion, versionRange ) : true;
+}
+
 // console.log('build: ' + buildDir);
 // console.log('rootDir: ' + rootDir);
 
 (async function () {
-
-    // load system model
-    const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
 
     // delete build directory
     rimraf.sync(buildDir);
@@ -218,74 +237,84 @@ let modelFileIndex = [];
     // validate and copy all the files
     const files = await getFiles(rootDir);
     for( const file of files ) {
-        
         const modelText = fs.readFileSync(file, 'utf8');
-        const modelManager = new ModelManager();
-        modelManager.addModelFile(systemModel, 'base.cto', false, true);
-        const modelFile  = new ModelFile(modelManager, modelText, file);     
-        console.log(`Processing ${modelFile.getNamespace()}`);
-        let modelFilePlantUML = '';
-        // passed validation, so copy to build dir
-        const dest = file.replace('/src/', '/build/');
-        const destPath = path.dirname(dest);
-        const relative = destPath.slice(buildDir.length);
-        // console.log('dest: ' + dest);
-        // console.log('destPath: ' + destPath);
-        // console.log('relative: ' + relative);
         
-        const fileName = path.basename(file);
-        const fileNameNoExt = path.parse(fileName).name;
-
-        await fs.ensureDir(destPath);
-        let umlURL = '';
-        try {
-            // Find the model version
-            const modelVersionStr = relative.match(/v\d+(\.\d+){0,2}/g);
-            const isLegacyModelVersionScheme = modelVersionStr !== null && modelVersionStr.length === 1;
-            if (!isLegacyModelVersionScheme) { // Skip indexing models with the old versioning scheme, they have all been migrated now
-                const semverStr = modelFile.getName().split("@").pop().slice(0,-4);
-                const isSemverVersionScheme = semver.valid(semverStr);
-                const modelVersion = isSemverVersionScheme ? `(${semverStr})` : '(0.1.0)';
-
-                modelManager.addModelFile(modelFile, modelFile.getName(), true);
-
-                // use the FORCE_PUBLISH flag to disable download of
-                // external models and model validation
-                if(!process.env.FORCE_PUBLISH) {
-                    await modelManager.updateExternalModels();
-                }
-
-                umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
-                await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
-                await generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile);
-                await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
-                await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
-                await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
-                
-                // copy the CTO file to the build dir
-                await fs.copy(file, dest);
-
-                // generate the html page for the model
-                const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
-                const serverRoot = process.env.SERVER_ROOT;
-                const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
-                modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
-                console.log(`Processed ${modelFile.getNamespace()} (${modelVersion})`);
-
-                fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
-                    if (err) {
-                        return console.log(err);
-                    }
-                });
-            } else {
-                // copy the CTO file to the build dir
-                await fs.copy(file, dest);
+        // skip if this CTO file is not compatible with the current runtime
+        if( isCompatible(concertoVersion, modelText) ) {
+            const modelManager = new ModelManager();
+            if(semver.satisfies(concertoVersion, '0.82.x')) {
+                // load system model if we are using 0.82
+                const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
+                modelManager.addModelFile(systemModel, 'base.cto', false, true);
             }
-        } catch (err) {
-            console.log(`Error handling ${modelFile.getName()}`);
-            console.log(err.message);
+            const modelFile  = new ModelFile(modelManager, modelText, file);     
+            console.log(`Processing ${modelFile.getNamespace()}`);
+            let modelFilePlantUML = '';
+            // passed validation, so copy to build dir
+            const dest = file.replace('/src/', '/build/');
+            const destPath = path.dirname(dest);
+            const relative = destPath.slice(buildDir.length);
+            // console.log('dest: ' + dest);
+            // console.log('destPath: ' + destPath);
+            // console.log('relative: ' + relative);
+            
+            const fileName = path.basename(file);
+            const fileNameNoExt = path.parse(fileName).name;
+    
+            await fs.ensureDir(destPath);
+            let umlURL = '';
+            try {
+                // Find the model version
+                const modelVersionStr = relative.match(/v\d+(\.\d+){0,2}/g);
+                const isLegacyModelVersionScheme = modelVersionStr !== null && modelVersionStr.length === 1;
+                if (!isLegacyModelVersionScheme) { // Skip indexing models with the old versioning scheme, they have all been migrated now
+                    const semverStr = modelFile.getName().split("@").pop().slice(0,-4);
+                    const isSemverVersionScheme = semver.valid(semverStr);
+                    const modelVersion = isSemverVersionScheme ? `(${semverStr})` : '(0.1.0)';
+    
+                    modelManager.addModelFile(modelFile, modelFile.getName(), true);
+    
+                    // use the FORCE_PUBLISH flag to disable download of
+                    // external models and model validation
+                    if(!process.env.FORCE_PUBLISH) {
+                        await modelManager.updateExternalModels();
+                    }
+    
+                    umlURL = await generatePlantUML(buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateTypescript(buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateXmlSchema(buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateJsonSchema(buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateJava(buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateGo(buildDir, destPath, fileNameNoExt, modelFile);
+                    
+                    // copy the CTO file to the build dir
+                    await fs.copy(file, dest);
+    
+                    // generate the html page for the model
+                    const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
+                    const serverRoot = process.env.SERVER_ROOT;
+                    const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
+                    modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
+                    console.log(`Processed ${modelFile.getNamespace()} (${modelVersion})`);
+    
+                    fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
+                        if (err) {
+                            return console.log(err);
+                        }
+                    });
+                } else {
+                    // copy the CTO file to the build dir
+                    await fs.copy(file, dest);
+                }
+            } catch (err) {
+                console.log(`Error handling ${modelFile.getName()}`);
+                console.log(err.message);
+            }
         }
-    };
+        else {
+            console.log(`Skipped ${file} due to incompatability.`);
+        }
+    }; // for
 
     // generate the index html page
     modelFileIndex = modelFileIndex.sort((a, b) => a.modelFile.getNamespace().localeCompare(b.modelFile.getNamespace()));
@@ -296,4 +325,5 @@ let modelFileIndex = [];
             return console.log(err);
         }
     });
-})();
+}
+)();

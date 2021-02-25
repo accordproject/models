@@ -12,6 +12,7 @@
  * limitations under the License.
  */
 
+// requires: concerto-core:~0.82.11
 namespace org.accordproject.signature
 
 import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
