@@ -11,13 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// requires: concerto-core:~0.82.11
+// requires: concerto-core:>= 1.0.0-20210215133932
 namespace org.accordproject.cicero.runtime
 
 import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.contract.AccordContractState from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money.cto
+import concerto.Participant
+import concerto.Event
 
 /**
  * Contract API
