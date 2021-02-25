@@ -11,11 +11,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:~0.82.11
-
+// requires: concerto-core:>= 1.0.0-20210215133932
 namespace org.accordproject.signature
 
-import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime.cto
+import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime@0.2.0.cto
 import org.accordproject.cicero.contract.AccordContract from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.contract.AccordClause from https://models.accordproject.org/cicero/contract.cto
 import org.accordproject.cicero.contract.AccordParty from https://models.accordproject.org/cicero/contract.cto
