@@ -204,22 +204,11 @@ let modelFileIndex = [];
  * @param {*} modelText the CTO model text
  */
 function isCompatible(concertoVersion, modelText) {
-    const regex = /^\/\/.*requires:.*concerto-core:(.*)$/gm;
-    let m;
-    let versionRange = null;
-    while ((m = regex.exec(modelText)) !== null) {
-        if (m.index === regex.lastIndex) {
-            regex.lastIndex++;
-        }
-        if(m && m.length > 1) {
-            versionRange = m[1];
-        }
-    }
+    const regex = /^\/\/.*requires:.*concerto-core:(?<versionRange>.*)$/m;
+    const match = modelText.match(regex);
+    const versionRange = match ? match.groups.versionRange : null;
     return versionRange ? semver.satisfies( concertoVersion, versionRange ) : true;
 }
-
-// console.log('build: ' + buildDir);
-// console.log('rootDir: ' + rootDir);
 
 (async function () {
 
@@ -254,9 +243,6 @@ function isCompatible(concertoVersion, modelText) {
             const dest = file.replace('/src/', '/build/');
             const destPath = path.dirname(dest);
             const relative = destPath.slice(buildDir.length);
-            // console.log('dest: ' + dest);
-            // console.log('destPath: ' + destPath);
-            // console.log('relative: ' + relative);
             
             const fileName = path.basename(file);
             const fileNameNoExt = path.parse(fileName).name;
