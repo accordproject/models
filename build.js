@@ -281,7 +281,7 @@ function isCompatible(concertoVersion, modelText) {
                     const serverRoot = process.env.SERVER_ROOT;
                     const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
                     modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
-                    console.log(`Processed ${modelFile.getNamespace()} (${modelVersion})`);
+                    console.log(`✓ Processed ${modelFile.getNamespace()} (${modelVersion})`);
     
                     fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                         if (err) {
@@ -293,12 +293,12 @@ function isCompatible(concertoVersion, modelText) {
                     await fs.copy(file, dest);
                 }
             } catch (err) {
-                console.log(`Error handling ${modelFile.getName()}`);
+                console.log(`❗ Error handling ${modelFile.getName()}`);
                 console.log(err.message);
             }
         }
         else {
-            console.log(`Skipped ${file} due to incompatability.`);
+            console.log(`✋ Skipped ${file} due to incompatability.`);
         }
     }; // for
 
