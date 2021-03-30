@@ -222,6 +222,7 @@ function isCompatible(concertoVersion, modelText) {
     await fs.copy('styles.css', './build/styles.css');
     await fs.copy('fonts.css', './build/fonts.css');
     await fs.copy('_headers', './build/_headers');
+    await fs.copy('_redirects', './build/_redirects');
 
     // validate and copy all the files
     const files = await getFiles(rootDir);
