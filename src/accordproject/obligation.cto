@@ -11,15 +11,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:>= 1.0.0-alpha.3
-namespace org.accordproject.signature
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
-import org.accordproject.contract.ContractData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
+// requires: concerto-core:>= 1.0.0-alpha.3
+
+namespace org.accordproject.obligation
+
+import org.accordproject.runtime.Obligation from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
+import org.accordproject.money.MonetaryAmount from https://concerto-1-0--accordproject-models.netlify.com/money@0.2.0.cto
 
 /**
- * A request that indicates that a contract has been signed by all parties
+ * Useful Obligations
+ * -- Predefined obligations for general use in Accord Project templates
  */
-transaction ContractSigned extends Request {
-    --> ContractData contract
+
+event PaymentObligation extends Obligation {
+  o MonetaryAmount amount
+  o String description
+}
+
+event NotificationObligation extends Obligation {
+  o String title
+  o String message
 }

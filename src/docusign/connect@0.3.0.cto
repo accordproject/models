@@ -11,14 +11,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:>= 1.0.0-20210215133932
+// requires: concerto-core:>= 1.0.0-alpha.3
 
 /**
  * Based on https://www.docusign.net/api/3.0/schema/dsx.xsd
  */
 namespace com.docusign.connect
 
-import org.accordproject.cicero.runtime.Request from https://models.accordproject.org/cicero/runtime@0.2.0.cto
+import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
 import org.accordproject.binary.BinaryResource from https://models.accordproject.org/binary.cto
 
 enum EnvelopeStatusCode {

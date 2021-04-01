@@ -299,7 +299,7 @@ function isCompatible(concertoVersion, modelText) {
             }
         }
         else {
-            console.log(`✋ Skipped ${file} due to incompatability.`);
+            console.log(`✋ Skipped ${file} due to incompatibility.`);
         }
     }; // for
 
