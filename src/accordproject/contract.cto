@@ -11,15 +11,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:>= 1.0.0-alpha.3
-namespace org.accordproject.signature
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
-import org.accordproject.contract.ContractData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
+// requires: concerto-core:>= 1.0.0-alpha.3
+
+namespace org.accordproject.contract
 
 /**
- * A request that indicates that a contract has been signed by all parties
+ * Contract Data
+ * -- Describes the structure of contracts and clauses
  */
-transaction ContractSigned extends Request {
-    --> ContractData contract
+
+/* A party to a contract */
+participant Party identified by partyId {
+  o String partyId
+}
+
+/* A contract is a asset -- This contains the contract data */
+abstract asset ContractData identified by contractId {
+  o String contractId
+  --> Party[] parties optional
+}
+
+/* A clause is an asset -- This contains the clause data */
+abstract asset ClauseData identified by clauseId {
+  o String clauseId
 }
