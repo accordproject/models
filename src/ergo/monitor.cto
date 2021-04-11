@@ -31,4 +31,3 @@ concept Phase {
 concept Monitor {
   o Phase[] phases
 }
-

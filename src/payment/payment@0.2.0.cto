@@ -11,7 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-// requires: concerto-core:>= 1.0.0-alpha.3
+
+concerto version ">= 1.0.0-alpha.3"
+
 namespace org.accordproject.payment
 
 import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
