@@ -12,50 +12,41 @@
  * limitations under the License.
  */
 
-// requires: concerto-core:>= 1.0.0-alpha.3
+concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.runtime
 
 import org.accordproject.contract.Party from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
-import org.accordproject.contract.ContractData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
+import org.accordproject.contract.Contract from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
 
 /**
  * Runtime API
  * -- Describes input and output of calls to a contract's clause
  */
 
-// XXX Is this really needed, could just be any transaction
 /* A request is a transaction */
 transaction Request {
 }
 
-// XXX Is this really needed, could just be any transaction
 /* A response is a transaction */
 transaction Response {
-}
-
-// XXX Is this really needed, could just be any concept
-/* An Error is a concept */
-abstract concept ErrorResponse {
 }
 
 /* An event that represents an obligation that needs to be fulfilled */
 abstract event Obligation identified {
   /* A back reference to the governing contract that emitted this obligation */
-  --> ContractData contractData
+  --> Contract contract
 
   /* The party that is obligated */
-  --> Party promisor
+  --> Party promisor optional
 
   /* The party that receives the performance */
-  --> Party promisee
+  --> Party promisee optional
 
   /* The time before which the obligation is fulfilled */
   o DateTime deadline optional
 }
 
 /* A contract state is an asset -- The runtime state of the contract */
-asset ContractState {
-// XXX Adding obligations may or may not be the right thing, it's overlapping with emits
-// --> Obligation[] obligations // Should we allow for a standard way to store obligations on the contract in the state?
+asset State {
 }
