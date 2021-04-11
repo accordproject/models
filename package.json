@@ -7,8 +7,10 @@
     "npm": ">=5"
   },
   "dependencies": {
-    "@accordproject/concerto-core": "1.0.0-alpha.3",
-    "@accordproject/concerto-tools": "1.0.0-alpha.3",
+    "concerto-core-1.0": "npm:@accordproject/concerto-core@1.0.0-alpha.5",
+    "concerto-tools-1.0": "npm:@accordproject/concerto-tools@1.0.0-alpha.5",
+    "concerto-core-0.82": "npm:@accordproject/concerto-core@0.82.11",
+    "concerto-tools-0.82": "npm:@accordproject/concerto-tools@0.82.11",
     "adm-zip": "^0.4.16",
     "bulma": "^0.7.5",
     "fs-extra": "^6.0.1",

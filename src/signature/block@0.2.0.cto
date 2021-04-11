@@ -12,7 +12,8 @@
  * limitations under the License.
  */
 
-// requires: concerto-core:>= 1.0.0-alpha.3
+concerto version ">= 1.0.0-alpha.3"
+
 namespace org.accordproject.signature.block
 
 import org.accordproject.contract.ClauseData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto

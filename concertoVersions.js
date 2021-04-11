@@ -12,16 +12,18 @@
  * limitations under the License.
  */
 
-concerto version ">= 1.0.0-alpha.3"
+'use strict';
 
-namespace org.accordproject.signature
+const concertoFromVersion = (version) => ({
+    ModelManager: require(`concerto-core-${version}`).ModelManager,
+    concertoVersion: require(`concerto-core-${version}`).version.version,
+    ModelFile: require(`concerto-core-${version}`).ModelFile,
+    FileWriter: require(`concerto-tools-${version}`).FileWriter,
+    CodeGen: require(`concerto-tools-${version}`).CodeGen,
+});
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
-import org.accordproject.contract.ContractData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
-
-/**
- * A request that indicates that a contract has been signed by all parties
- */
-transaction ContractSigned extends Request {
-    --> ContractData contract
-}
+module.exports = {
+    defaultVersion: '1.0.0',
+    '1.0.0': concertoFromVersion('1.0'),
+    '0.82.11': concertoFromVersion('0.82'),
+};
