@@ -16,13 +16,13 @@ concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.signature.block
 
-import org.accordproject.contract.ClauseData from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
+import org.accordproject.contract.Clause from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
 import org.accordproject.contract.Party from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
 
 /**
  * An abstract clause for a party scoped signature block
  */
-abstract asset SignatureClause extends ClauseData {
+abstract asset SignatureClause extends Clause {
     @Pdf("style", "background")
   @ContractEditor("readOnly", true, "opacity", 0)
   --> Party signatory
