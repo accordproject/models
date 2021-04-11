@@ -12,7 +12,7 @@
  * limitations under the License.
  */
 
-// requires: concerto-core:>= 1.0.0-alpha.3
+concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.contract
 
@@ -27,12 +27,12 @@ participant Party identified by partyId {
 }
 
 /* A contract is a asset -- This contains the contract data */
-abstract asset ContractData identified by contractId {
+abstract asset Contract identified by contractId {
   o String contractId
   --> Party[] parties optional
 }
 
 /* A clause is an asset -- This contains the clause data */
-abstract asset ClauseData identified by clauseId {
+abstract asset Clause identified by clauseId {
   o String clauseId
 }
