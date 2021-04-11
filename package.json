@@ -1,12 +1,21 @@
 {
-  "scripts": {
-    "build": "node build.js"
-  },
+  "name": "@accordproject/models",
+  "version": "0.1.0",
+  "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
   "engines": {
     "node": ">=12",
     "npm": ">=5"
   },
-  "dependencies": {
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/accordproject/models.git"
+  },
+  "dependencies": {},
+  "devDependencies": {
     "concerto-core-1.0": "npm:@accordproject/concerto-core@1.0.0-alpha.5",
     "concerto-tools-1.0": "npm:@accordproject/concerto-tools@1.0.0-alpha.5",
     "concerto-core-0.82": "npm:@accordproject/concerto-core@0.82.11",
@@ -21,15 +30,6 @@
     "rimraf": "^2.7.1",
     "semver": "^6.3.0",
     "showdown": "^1.9.1"
-  },
-  "name": "@accordproject/models",
-  "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
-  "version": "0.1.0",
-  "main": "build.js",
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/accordproject/models.git"
   },
   "keywords": [
     "accord",
