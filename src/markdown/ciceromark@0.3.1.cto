@@ -14,8 +14,8 @@
 
 namespace org.accordproject.ciceromark
 
-import org.accordproject.commonmark.Child from https://concerto-1-0--accordproject-models.netlify.com/markdown/commonmark@0.2.0.cto
-import concerto.metamodel.Decorator from https://concerto-1-0--accordproject-models.netlify.com/concerto/metamodel.cto
+import org.accordproject.commonmark.Child from https://models.accordproject.org/markdown/commonmark@0.2.0.cto
+import concerto.metamodel.Decorator from https://models.accordproject.org/concerto/metamodel.cto
 
 /**
  * A model for Accord Project extensions to commonmark
