@@ -16,7 +16,7 @@ concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.payment
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
+import org.accordproject.runtime.Request from https://models.accordproject.org/accordproject/runtime.cto
 
 /**
  * A request that indicates that a payment has been received

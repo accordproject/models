@@ -16,8 +16,8 @@ concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.signature
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
-import org.accordproject.contract.Contract from https://concerto-1-0--accordproject-models.netlify.com/accordproject/contract.cto
+import org.accordproject.runtime.Request from https://models.accordproject.org/accordproject/runtime.cto
+import org.accordproject.contract.Contract from https://models.accordproject.org/accordproject/contract.cto
 
 /**
  * A request that indicates that a contract has been signed by all parties

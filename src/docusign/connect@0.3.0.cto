@@ -19,7 +19,7 @@ concerto version ">= 1.0.0-alpha.3"
  */
 namespace com.docusign.connect
 
-import org.accordproject.runtime.Request from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
+import org.accordproject.runtime.Request from https://models.accordproject.org/accordproject/runtime.cto
 import org.accordproject.binary.BinaryResource from https://models.accordproject.org/binary.cto
 
 enum EnvelopeStatusCode {
