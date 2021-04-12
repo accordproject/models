@@ -16,8 +16,8 @@ concerto version ">= 1.0.0-alpha.3"
 
 namespace org.accordproject.obligation
 
-import org.accordproject.runtime.Obligation from https://concerto-1-0--accordproject-models.netlify.com/accordproject/runtime.cto
-import org.accordproject.money.MonetaryAmount from https://concerto-1-0--accordproject-models.netlify.com/money@0.2.0.cto
+import org.accordproject.runtime.Obligation from https://models.accordproject.org/accordproject/runtime.cto
+import org.accordproject.money.MonetaryAmount from https://models.accordproject.org/money@0.2.0.cto
 
 /**
  * Useful Obligations
