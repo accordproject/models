@@ -17,7 +17,7 @@ concerto version ">= 1.0.0-alpha.3"
 namespace org.accordproject.signature.block
 
 import org.accordproject.contract.Clause from https://models.accordproject.org/accordproject/contract.cto
-import org.accordproject.contract.Party from https://models.accordproject.org/accordproject/contract.cto
+import org.accordproject.party.Party from https://models.accordproject.org/accordproject/party.cto
 
 /**
  * An abstract clause for a party scoped signature block

@@ -14,19 +14,9 @@
 
 concerto version ">= 1.0.0-alpha.3"
 
-namespace org.accordproject.contract
+namespace org.accordproject.party
 
-/**
- * Contract Data
- * -- Describes the structure of contracts and clauses
- */
-
-/* A contract is a asset -- This contains the contract data */
-abstract asset Contract identified by contractId {
-  o String contractId
-}
-
-/* A clause is an asset -- This contains the clause data */
-abstract asset Clause identified by clauseId {
-  o String clauseId
+/* A party to a contract */
+participant Party identified by partyId {
+  o String partyId
 }
