@@ -16,8 +16,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "concerto-core-1.0": "npm:@accordproject/concerto-core@1.1.0",
-    "concerto-tools-1.0": "npm:@accordproject/concerto-tools@1.1.0",
+    "concerto-core-1.0": "npm:@accordproject/concerto-core@1.1.1",
+    "concerto-tools-1.0": "npm:@accordproject/concerto-tools@1.1.1",
     "concerto-core-0.82": "npm:@accordproject/concerto-core@0.82.11",
     "concerto-tools-0.82": "npm:@accordproject/concerto-tools@0.82.11",
     "adm-zip": "^0.4.16",
