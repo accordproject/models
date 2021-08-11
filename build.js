@@ -155,13 +155,13 @@ async function generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, 
 
 async function generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
     try {
-        // generate the GraphQL for the ModelFile
+        // generate the Json Abstract Syntax Tree (AST) based on Concerto Metamodel
         const generatedJsonFile = `${destPath}/${fileNameNoExt}.ast.json`;
         const modelManager = modelFile.getModelManager();
         const modelText = modelFile.getDefinitions();
         const ast = thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true);
         const fileWriter = new thisConcerto.FileWriter(buildDir);
-        // save JSON Schema
+        // save JSON AST
         fs.writeFile( `${generatedJsonFile}`, JSON.stringify(ast), function (err) {
             if (err) {
                 return console.log(err);
