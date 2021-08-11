@@ -25,19 +25,19 @@
     </p>
 
     <p>
-      <a href="{{filePath}}.cto" class="button is-rounded is-primary">Concerto</a>
-      <a href="{{filePath}}.puml" class="button is-rounded is-primary">UML</a>
-      <a href="{{filePath}}.json" class="button is-rounded is-primary">JSON Schema</a>
-      <a href="/{{modelFile.getNamespace()}}.ts" class="button is-rounded is-primary">Typescript</a>
-      <a href="{{filePath}}.jar" class="button is-rounded is-primary">Java</a>
-      <a href="{{filePath}}.go.zip" class="button is-rounded is-primary">Go</a>
-      <a href="{{filePath}}.xsd.zip" class="button is-rounded is-primary">XML Schema</a>
-      {% if concerto.CodeGen.GraphQLVisitor %}
-      <a href="{{filePath}}.gql" class="button is-rounded is-primary">GraphQL</a>
-      {% endif %}    
+      <a href="{{filePath}}.cto" alt="Concerto File" title="Concerto File" class="button is-rounded is-primary">Concerto</a>
       {% if concerto.MetaModel %}
-      <a href="{{filePath}}.metamodel.json" class="button is-rounded is-primary">MetaModel</a>
+      <a href="{{filePath}}.ast.json" alt="JSON Syntax Tree" title="JSON" class="button is-rounded is-primary">JSON AST</a>
       {% endif %}    
+      <a href="{{filePath}}.puml" alt="UML Diagram" title="UML Diagram" class="button is-rounded is-primary">UML</a>
+      <a href="{{filePath}}.json" alt="JSON Schema" title="JSON Schema" class="button is-rounded is-primary">JSON Schema</a>
+      <a href="{{filePath}}.xsd.zip" alt="XML Schema" title="XML Schema" class="button is-rounded is-primary">XML Schema</a>
+      {% if concerto.CodeGen.GraphQLVisitor %}
+      <a href="{{filePath}}.gql" alt="GraphQL Schema" title="GraphQL Schema" class="button is-rounded is-primary">GraphQL</a>
+      {% endif %}    
+      <a href="/{{modelFile.getNamespace()}}.ts" alt="TypeScript Interface" title="TypeScript Interface" class="button is-rounded is-primary">TypeScript</a>
+      <a href="{{filePath}}.jar" alt="Java Source Code" title="Java Source Code" class="button is-rounded is-primary">Java</a>
+      <a href="{{filePath}}.go.zip" alt="Go Source Code" title="Go Source Code" class="button is-rounded is-primary">Go</a>
     </p>
     <img src="{{umlURL}}" class="box" style="margin-top:40px;"  />
 

@@ -153,23 +153,23 @@ async function generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, 
     }
 }
 
-async function generateMetaModel(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
+async function generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
     try {
         // generate the GraphQL for the ModelFile
-        const generatedJsonFile = `${destPath}/${fileNameNoExt}.metamodel.json`;
+        const generatedJsonFile = `${destPath}/${fileNameNoExt}.ast.json`;
         const modelManager = modelFile.getModelManager();
         const modelText = modelFile.getDefinitions();
-        const metaModel = thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true);
+        const ast = thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true);
         const fileWriter = new thisConcerto.FileWriter(buildDir);
         // save JSON Schema
-        fs.writeFile( `${generatedJsonFile}`, JSON.stringify(metaModel), function (err) {
+        fs.writeFile( `${generatedJsonFile}`, JSON.stringify(ast), function (err) {
             if (err) {
                 return console.log(err);
             }
         });
     }
     catch(err) {
-        console.log(`Generating MetaModel for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`Generating JSON Syntax Tree for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -322,7 +322,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
                     await generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 }
                 if(thisConcerto.MetaModel) {
-                    await generateMetaModel(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
+                    await generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 }
 
                 // copy the CTO file to the build dir
