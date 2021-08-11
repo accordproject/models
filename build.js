@@ -131,6 +131,28 @@ async function generateJsonSchema(thisConcerto, buildDir, destPath, fileNameNoEx
     }
 }
 
+async function generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+        // generate the GraphQL for the ModelFile
+        const generatedFile = `${destPath}/${fileNameNoExt}.gql`;
+        const visitor = new thisConcerto.CodeGen.GraphQLVisitor();
+        const fileWriter = new thisConcerto.FileWriter(buildDir);
+        // override closeFile to rename the output file
+        fileWriter.closeFile = function() {
+            if (!this.fileName) {
+                throw new Error('No file open');
+            }    
+            const content = fileWriter.getBuffer();
+            fs.writeFileSync(generatedFile, content);
+        };
+        const params = {fileWriter : fileWriter};
+        modelFile.getModelManager().accept(visitor, params);
+    }
+    catch(err) {
+        console.log(`Generating GraphQL for ${destPath}/${fileNameNoExt}: ${err.message}`);
+    }
+}
+
 async function generateJava(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
     try {
             // generate the Java for the ModelFile
@@ -276,6 +298,9 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 await generateJsonSchema(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 await generateJava(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 await generateGo(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
+                if(thisConcerto.CodeGen.GraphQLVisitor) {
+                    await generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
+                }
 
                 // copy the CTO file to the build dir
                 await fs.copy(file, dest);
