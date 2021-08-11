@@ -153,6 +153,26 @@ async function generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, 
     }
 }
 
+async function generateMetaModel(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+        // generate the GraphQL for the ModelFile
+        const generatedJsonFile = `${destPath}/${fileNameNoExt}.metamodel.json`;
+        const modelManager = modelFile.getModelManager();
+        const modelText = modelFile.getDefinitions();
+        const metaModel = thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true);
+        const fileWriter = new thisConcerto.FileWriter(buildDir);
+        // save JSON Schema
+        fs.writeFile( `${generatedJsonFile}`, JSON.stringify(metaModel), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+        });
+    }
+    catch(err) {
+        console.log(`Generating MetaModel for ${destPath}/${fileNameNoExt}: ${err.message}`);
+    }
+}
+
 async function generateJava(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
     try {
             // generate the Java for the ModelFile
@@ -300,6 +320,9 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 await generateGo(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 if(thisConcerto.CodeGen.GraphQLVisitor) {
                     await generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
+                }
+                if(thisConcerto.MetaModel) {
+                    await generateMetaModel(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 }
 
                 // copy the CTO file to the build dir

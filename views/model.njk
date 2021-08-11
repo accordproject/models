@@ -35,6 +35,9 @@
       {% if concerto.CodeGen.GraphQLVisitor %}
       <a href="{{filePath}}.gql" class="button is-rounded is-primary">GraphQL</a>
       {% endif %}    
+      {% if concerto.MetaModel %}
+      <a href="{{filePath}}.metamodel.json" class="button is-rounded is-primary">MetaModel</a>
+      {% endif %}    
     </p>
     <img src="{{umlURL}}" class="box" style="margin-top:40px;"  />
 

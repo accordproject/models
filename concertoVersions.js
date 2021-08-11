@@ -18,6 +18,7 @@ const concertoFromVersion = (version) => ({
     ModelManager: require(`concerto-core-${version}`).ModelManager,
     concertoVersion: require(`concerto-core-${version}`).version.version,
     ModelFile: require(`concerto-core-${version}`).ModelFile,
+    MetaModel: require(`concerto-core-${version}`).MetaModel,
     FileWriter: require(`concerto-tools-${version}`).FileWriter,
     CodeGen: require(`concerto-tools-${version}`).CodeGen,
 });
