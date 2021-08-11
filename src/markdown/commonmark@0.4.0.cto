@@ -1,0 +1,159 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace org.accordproject.commonmark
+
+// XXX New optional styling information
+concept Style {
+    o String align optional
+    o Double width optional
+    o Double lineHeight optional
+    o Double fontSize optional
+    o String color optional
+    o String backgroundColor optional
+}
+
+/**
+ * A model for a commonmark format markdown file
+ */
+abstract concept Node {
+    o String text optional
+    o Node[] nodes optional
+    o Integer startLine optional
+    o Integer endLine optional
+    o Style style optional // XXX New support for optional styling
+}
+
+abstract concept Root extends Node {
+}
+
+abstract concept Child extends Node {
+}
+
+concept Text extends Child {
+}
+
+// XXX New Span node on which a style can be used
+concept Span extends Child {
+}
+
+concept Attribute {
+    o String name
+    o String value
+}
+concept TagInfo {
+    o String tagName
+    o String attributeString
+    o Attribute[] attributes
+    o String content
+    o Boolean closed
+}
+
+concept CodeBlock extends Child {
+    o String info optional
+    o TagInfo tag optional
+}
+
+concept Code extends Child {
+    o String info optional
+}
+
+concept HtmlInline extends Child {
+    o TagInfo tag optional
+}
+
+concept HtmlBlock extends Child {
+    o TagInfo tag optional
+}
+
+concept Emph extends Child {
+}
+
+concept Strong extends Child {
+}
+
+concept Strikethrough extends Child {
+}
+
+concept Underline extends Child {
+}
+
+concept BlockQuote extends Child {
+}
+
+concept Heading extends Child {
+    o String level
+}
+
+concept ThematicBreak extends Child {
+}
+
+concept Softbreak extends Child {
+}
+
+concept Linebreak extends Child {
+}
+
+concept Link extends Child {
+    o String destination
+    o String title
+}
+
+concept Image extends Child {
+    o String destination
+    o String title
+}
+
+concept Paragraph extends Child {
+}
+
+concept List extends Child {
+    o String type
+    o String start optional
+    o String tight
+    o String delimiter optional
+}
+
+concept Item extends Child {
+}
+
+// XXX New support for admonitions
+concept Admonition extends Child {
+    o String kind
+    o String title optional
+}
+
+// XXX New support for tables
+abstract concept TableCell extends Child {
+}
+concept TableHeader extends TableCell {
+}
+concept TableData extends TableCell {
+}
+
+concept TableColumn extends Child {
+}
+concept TableRow extends Child {
+}
+
+concept Table extends Child {
+    o Boolean compact optional
+    o TableColumn[] colGroup optional
+    o TableRow[] head optional
+    o TableRow[] body
+}
+
+concept Document extends Root {
+    o String xmlns
+}

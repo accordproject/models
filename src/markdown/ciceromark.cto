@@ -45,4 +45,3 @@ concept ConditionalVariable extends IdentifiedVariableValue {
 
 concept ListVariable extends List {
 }
-
