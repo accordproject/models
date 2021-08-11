@@ -308,7 +308,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 // generate the html page for the model
                 const generatedHtmlFile = `${relative}/${fileNameNoExt}.html`;
                 const serverRoot = process.env.SERVER_ROOT;
-                const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL });
+                const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL, concerto: thisConcerto });
                 modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
                 console.log(`✓ Processed ${modelFile.getNamespace()} version ${modelVersion} (for Concerto ${thisConcerto.concertoVersion})`);
 

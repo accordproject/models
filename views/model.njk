@@ -32,9 +32,10 @@
       <a href="{{filePath}}.jar" class="button is-rounded is-primary">Java</a>
       <a href="{{filePath}}.go.zip" class="button is-rounded is-primary">Go</a>
       <a href="{{filePath}}.xsd.zip" class="button is-rounded is-primary">XML Schema</a>
+      {% if concerto.CodeGen.GraphQLVisitor %}
       <a href="{{filePath}}.gql" class="button is-rounded is-primary">GraphQL</a>
+      {% endif %}    
     </p>
-
     <img src="{{umlURL}}" class="box" style="margin-top:40px;"  />
 
     <h2 class="title is-2">Declared Types</h2>
