@@ -17,6 +17,13 @@ namespace concerto.metamodel
 /**
  * The metadmodel for Concerto files
  */
+concept TypeIdentifier {
+  @FormEditor("selectOptions", "types")
+  o String name default="Concept"
+  @FormEditor( "hide", true)
+  o String fullyQualifiedName optional
+}
+
 abstract concept DecoratorLiteral {
 }
 
@@ -32,11 +39,9 @@ concept DecoratorBoolean extends DecoratorLiteral {
   o Boolean value
 }
 
-concept TypeIdentifier {
-  @FormEditor("selectOptions", "types")
-  o String name default="Concept"
-  @FormEditor( "hide", true)
-  o String fullyQualifiedName optional
+concept DecoratorTypeReference extends DecoratorLiteral {
+  o TypeIdentifier type
+  o Boolean isArray default=false
 }
 
 concept Decorator {
