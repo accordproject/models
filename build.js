@@ -73,8 +73,26 @@ async function generateTypescript(thisConcerto, buildDir, destPath, fileNameNoEx
         // generate the Typescript for the ModelFile
         const visitor = new thisConcerto.CodeGen.TypescriptVisitor();
         const fileWriter = new thisConcerto.FileWriter(buildDir);
+
+        const zip = new AdmZip();
+            
+        // override closeFile to aggregate all the files into a single zip
+        fileWriter.closeFile = function() {
+            if (!this.fileName) {
+                throw new Error('No file open');
+            }
+    
+            // add file to zip
+            const content = fileWriter.getBuffer();
+            zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+            zip.writeZip(`${destPath}/${fileNameNoExt}.ts.zip`);
+
+            this.fileName = null;
+            this.relativeDir = null;
+            this.clearBuffer();
+        };
         const params = {fileWriter : fileWriter};
-        modelFile.accept(visitor, params);
+        modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
         console.log(`Generating Typescript for ${destPath}/${fileNameNoExt}: ${err.message}`);
