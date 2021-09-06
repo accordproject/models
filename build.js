@@ -99,6 +99,37 @@ async function generateTypescript(thisConcerto, buildDir, destPath, fileNameNoEx
     }
 }
 
+async function generateCSharp(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
+    try {
+        // generate the Typescript for the ModelFile
+        const visitor = new thisConcerto.CodeGen.CSharpVisitor();
+        const fileWriter = new thisConcerto.FileWriter(buildDir);
+
+        const zip = new AdmZip();
+            
+        // override closeFile to aggregate all the files into a single zip
+        fileWriter.closeFile = function() {
+            if (!this.fileName) {
+                throw new Error('No file open');
+            }
+    
+            // add file to zip
+            const content = fileWriter.getBuffer();
+            zip.addFile(this.fileName, Buffer.alloc(content.length, content), `Generated from ${modelFile.getName()}`);
+            zip.writeZip(`${destPath}/${fileNameNoExt}.cs.zip`);
+
+            this.fileName = null;
+            this.relativeDir = null;
+            this.clearBuffer();
+        };
+        const params = {fileWriter : fileWriter};
+        modelFile.getModelManager().accept(visitor, params);
+    }
+    catch(err) {
+        console.log(`Generating CSharp for ${destPath}/${fileNameNoExt}: ${err.message}`);
+    }
+}
+
 async function generateXmlSchema(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile) {
     try {
         // generate the XML Schema for the ModelFile
@@ -341,6 +372,9 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 }
                 if(thisConcerto.MetaModel) {
                     await generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
+                }
+                if(thisConcerto.CodeGen.CSharpVisitor) {
+                    await generateCSharp(thisConcerto, buildDir, destPath, fileNameNoExt, modelFile);
                 }
 
                 // copy the CTO file to the build dir
