@@ -1,0 +1,191 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+namespace concerto.metamodel
+
+/**
+ * The metadmodel for Concerto files
+ */
+concept TypeIdentifier {
+  @FormEditor("selectOptions", "types")
+  o String name default="Concept"
+  @FormEditor( "hide", true)
+  o String fullyQualifiedName optional
+}
+
+abstract concept DecoratorLiteral {
+}
+
+concept DecoratorString extends DecoratorLiteral {
+  o String value
+}
+
+concept DecoratorNumber extends DecoratorLiteral {
+  o Double value
+}
+
+concept DecoratorBoolean extends DecoratorLiteral {
+  o Boolean value
+}
+
+concept DecoratorTypeReference extends DecoratorLiteral {
+  o TypeIdentifier type
+  o Boolean isArray default=false
+}
+
+concept Decorator {
+  o String name
+  o DecoratorLiteral[] arguments optional
+}
+
+concept Identified {
+}
+
+concept IdentifiedBy extends Identified {
+  o String name
+}
+
+concept EnumDeclaration {
+  @FormEditor("title", "Enum Name")
+  o String name default="EnumName" regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
+  o EnumProperty[] properties
+}
+
+concept EnumProperty {
+  o String name default="propertyName" regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
+  @FormEditor("hide", true)
+  o Decorator[] decorators optional
+}
+
+concept ConceptDeclaration {
+  @FormEditor("title", "Concept Name")
+  o String name default="ConceptName" regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
+  @FormEditor("hide", true)
+  o Decorator[] decorators optional
+  o Boolean isAbstract default=false
+  o Identified identified optional
+  @FormEditor("title", "Super Type")
+  o TypeIdentifier superType optional
+  o Property[] properties
+}
+
+concept AssetDeclaration extends ConceptDeclaration {
+}
+
+concept ParticipantDeclaration extends ConceptDeclaration {
+}
+
+concept TransactionDeclaration extends ConceptDeclaration {
+}
+
+concept EventDeclaration extends ConceptDeclaration {
+}
+
+@FormEditor("defaultSubconcept","concerto.metamodel.StringProperty")
+abstract concept Property {
+  o String name default="propertyName" regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
+  @FormEditor("title", "Is Array?")
+  o Boolean isArray default=false
+  @FormEditor("title", "Is Optional?")
+  o Boolean isOptional default=false
+  @FormEditor("hide", true)
+  o Decorator[] decorators optional
+}
+
+concept RelationshipProperty extends Property {
+  @FormEditor("title", "Type Name", "selectOptions", "types")
+  o TypeIdentifier type
+}
+
+concept ObjectProperty extends Property {
+  @FormEditor("hide", true)
+  o String defaultValue optional
+  @FormEditor("title", "Type Name", "selectOptions", "types")
+  o TypeIdentifier type
+}
+
+concept BooleanProperty extends Property {
+  @FormEditor("hide", true)
+  o Boolean defaultValue optional
+}
+
+concept DateTimeProperty extends Property {
+}
+
+concept StringProperty extends Property {
+  @FormEditor("hide", true)
+  o String defaultValue optional
+  @FormEditor("hide", true)
+  o StringRegexValidator validator optional
+}
+
+concept StringRegexValidator {
+  o String regex
+}
+
+concept DoubleProperty extends Property {
+  o Double defaultValue optional
+  o DoubleDomainValidator validator optional
+}
+
+concept DoubleDomainValidator {
+  o Double lower optional
+  o Double upper optional
+}
+
+concept IntegerProperty extends Property {
+  @FormEditor("hide", true)
+  o Integer defaultValue optional
+  @FormEditor("hide", true)
+  o IntegerDomainValidator validator optional
+}
+
+concept IntegerDomainValidator {
+  o Integer lower optional
+  o Integer upper optional
+}
+
+concept LongProperty extends Property {
+  @FormEditor("hide", true)
+  o Long defaultValue optional
+  @FormEditor("hide", true)
+  o LongDomainValidator validator optional
+}
+
+concept LongDomainValidator {
+  o Long lower optional
+  o Long upper optional
+}
+
+abstract concept Import {
+  o String namespace
+  o String uri optional
+}
+
+concept ImportAll extends Import {
+}
+
+concept ImportType extends Import {
+  o String name
+}
+
+concept ModelFile {
+  o String namespace default="my.namespace"
+  @FormEditor("hide", true)
+  o Import[] imports optional
+  @FormEditor("title", "Enums")
+  o EnumDeclaration[] enums optional
+  @FormEditor("title", "Concepts")
+  o ConceptDeclaration[] concepts optional
+}
