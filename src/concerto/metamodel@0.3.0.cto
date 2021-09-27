@@ -75,7 +75,6 @@ concept ConceptDeclaration {
   o Decorator[] decorators optional
   o Boolean isAbstract default=false
   o Identified identified optional
-  @FormEditor("title", "Super Type")
   o TypeIdentifier superType optional
   o Property[] properties
 }
@@ -95,9 +94,9 @@ concept EventDeclaration extends ConceptDeclaration {
 @FormEditor("defaultSubconcept","concerto.metamodel.StringProperty")
 abstract concept Property {
   o String name default="propertyName" regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
-  @FormEditor("title", "Is Array?")
+  @FormEditor("title", "List")
   o Boolean isArray default=false
-  @FormEditor("title", "Is Optional?")
+  @FormEditor("title", "Optional")
   o Boolean isOptional default=false
   @FormEditor("hide", true)
   o Decorator[] decorators optional
