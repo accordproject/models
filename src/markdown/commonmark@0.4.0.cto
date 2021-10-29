@@ -44,6 +44,10 @@ abstract concept Child extends Node {
 concept Text extends Child {
 }
 
+// XXX New Span node on which a style can be used
+concept Span extends Child {
+}
+
 concept Attribute {
     o String name
     o String value
