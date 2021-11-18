@@ -15,6 +15,20 @@
 namespace concerto.metamodel
 
 /**
+ * File location
+ */
+concept LocationPoint {
+  o Integer line
+  o Integer column
+  o Integer offset
+}
+concept Location {
+  o LocationPoint start
+  o LocationPoint end
+  o String source optional
+}
+
+/**
  * The metadmodel for Concerto files
  */
 concept TypeIdentifier {
@@ -23,6 +37,7 @@ concept TypeIdentifier {
 }
 
 abstract concept DecoratorLiteral {
+  o Location location optional
 }
 
 concept DecoratorString extends DecoratorLiteral {
@@ -45,6 +60,7 @@ concept DecoratorTypeReference extends DecoratorLiteral {
 concept Decorator {
   o String name
   o DecoratorLiteral[] arguments optional
+  o Location location optional
 }
 
 concept Identified {
@@ -54,21 +70,23 @@ concept IdentifiedBy extends Identified {
   o String name
 }
 
-abstract concept Declaration {}
+abstract concept Declaration {
+  o String name regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
+  o Decorator[] decorators optional
+  o Location location optional
+}
 
 concept EnumDeclaration extends Declaration {
-  o String name regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
   o EnumProperty[] properties
 }
 
 concept EnumProperty {
   o String name regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
   o Decorator[] decorators optional
+  o Location location optional
 }
 
 concept ConceptDeclaration extends Declaration {
-  o String name regex=/^(?!null|true|false)(\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4})(?:\p{Lu}|\p{Ll}|\p{Lt}|\p{Lm}|\p{Lo}|\p{Nl}|\$|_|\\u[0-9A-Fa-f]{4}|\p{Mn}|\p{Mc}|\p{Nd}|\p{Pc}|\u200C|\u200D)*$/u
-  o Decorator[] decorators optional
   o Boolean isAbstract default=false
   o Identified identified optional
   o TypeIdentifier superType optional
@@ -92,6 +110,7 @@ abstract concept Property {
   o Boolean isArray default=false
   o Boolean isOptional default=false
   o Decorator[] decorators optional
+  o Location location optional
 }
 
 concept RelationshipProperty extends Property {
@@ -116,7 +135,8 @@ concept StringProperty extends Property {
 }
 
 concept StringRegexValidator {
-  o String regex
+  o String pattern
+  o String flags
 }
 
 concept DoubleProperty extends Property {
@@ -163,6 +183,7 @@ concept ImportType extends Import {
 
 concept Model {
   o String namespace
+  o String concertoVersion optional
   o Import[] imports optional
   o Declaration[] declarations optional
 }
