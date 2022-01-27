@@ -1,4 +1,4 @@
-name: Build and Deploy (beNEXT)
+name: Build and Deploy
 
 on:
   push:
