@@ -28,6 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: NPM Install
+        if: github.ref == 'refs/heads/master'
         run: npm install
 
       - name: NPM Build
