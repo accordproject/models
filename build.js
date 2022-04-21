@@ -363,7 +363,12 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 const isSemverVersionScheme = semver.valid(semverStr);
                 const modelVersion = isSemverVersionScheme ? `${semverStr}` : '0.1.0';
     
-                modelManager.addModelFile(modelFile, modelText, modelFile.getName(), true);
+                if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
+                    modelManager.addModelFile(modelFile, modelFile.getName(), true);
+                }
+                else {
+                    modelManager.addModelFile(modelFile, modelText, modelFile.getName(), true);
+                }
     
                 // use the FORCE_PUBLISH flag to disable download of
                 // external models and model validation
