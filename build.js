@@ -208,7 +208,8 @@ async function generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, 
         const generatedJsonFile = `${destPath}/${fileNameNoExt}.ast.json`;
         const modelManager = modelFile.getModelManager();
         const modelText = modelFile.getDefinitions();
-        const ast = thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true);
+        const ast = thisConcerto.MetaModel.ctoToMetaModelAndResolve ? thisConcerto.MetaModel.ctoToMetaModelAndResolve(modelManager, modelText, true) :
+            thisConcerto.Parser.parse(modelText);
         const fileWriter = new thisConcerto.FileWriter(buildDir);
         // save JSON AST
         fs.writeFile( `${generatedJsonFile}`, JSON.stringify(ast), function (err) {
@@ -331,7 +332,16 @@ function findCompatibleVersion(concertoVersions, modelText) {
             const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
             modelManager.addModelFile(systemModel, 'base.cto', false, true);
         }
-        const modelFile  = new thisConcerto.ModelFile(modelManager, modelText, file);     
+
+        let modelFile = null;
+
+        if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
+            modelFile  = new thisConcerto.ModelFile(modelManager, modelText, file);     
+        }
+        else {
+            const ast = thisConcerto.Parser.parse(modelText, file);
+            modelFile  = new thisConcerto.ModelFile(modelManager, ast, modelText, file);         
+        }
         console.log(`Processing ${modelFile.getNamespace()}`);
         let modelFilePlantUML = '';
         // passed validation, so copy to build dir
@@ -353,7 +363,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 const isSemverVersionScheme = semver.valid(semverStr);
                 const modelVersion = isSemverVersionScheme ? `${semverStr}` : '0.1.0';
     
-                modelManager.addModelFile(modelFile, modelFile.getName(), true);
+                modelManager.addModelFile(modelFile, modelText, modelFile.getName(), true);
     
                 // use the FORCE_PUBLISH flag to disable download of
                 // external models and model validation
@@ -399,6 +409,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
         } catch (err) {
             console.log(`❗ Error handling ${modelFile.getName()}`);
             console.log(err.message);
+            console.log(err);
         }
     }; // for
 
