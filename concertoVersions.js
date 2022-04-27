@@ -19,12 +19,19 @@ const concertoFromVersion = (version) => ({
     concertoVersion: require(`concerto-core-${version}`).version.version,
     ModelFile: require(`concerto-core-${version}`).ModelFile,
     MetaModel: require(`concerto-core-${version}`).MetaModel,
-    FileWriter: require(`concerto-tools-${version}`).FileWriter,
+    FileWriter: version !== '0.82' ? require(`concerto-util-${version}`).FileWriter : require(`concerto-tools-${version}`).FileWriter,
     CodeGen: require(`concerto-tools-${version}`).CodeGen,
+    Parser: version !== '0.82' ? require(`concerto-cto-${version}`).Parser : null,
 });
 
+/**
+ * This is a little confusing, because we conflate CTO syntax version
+ * with the version of the Concerto library that can be used to parse the CTO synax.
+ * So the default version is now 2.0.0, because anything other than 0.82 CTO syntax or lower
+ * should be compatible with version 2.0.x of the CTO parser
+ */
 module.exports = {
-    defaultVersion: '1.0.0',
-    '1.0.0': concertoFromVersion('1.0'),
+    defaultVersion: '2.0.0',
+    '2.0.0': concertoFromVersion('2.0'),
     '0.82.11': concertoFromVersion('0.82'),
 };
