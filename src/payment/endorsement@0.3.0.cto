@@ -1,0 +1,47 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0-beta.2"
+namespace org.accordproject.payment.endorsement@0.3.0
+
+import org.accordproject.money@0.4.0.DigitalMonetaryAmount from https://models.accordproject.org/money@0.4.0.cto
+
+/** This smart-contract model describes a routine that would transfer a cryptocurrency payment to be made by a separate smart contract (a “payment smart contract”) on a specified date to a payee to a transferee authorized by the payee. This can be thought of as equivalent to flipping a check or note over and writing “Pay to the order of” on the back, hence it is referred to as an “endorsement smart contract”.
+ */
+
+/**
+* http://schema.org/endorsement
+*
+* paymentAmount - includes value and cryptocurrency code that define the
+*   output transmitted from payorAddress to be transferred.
+* payeeAddress - Beginning on the Due Date/Block No., the endorsement smart
+*   contract would look for outputs sent to the payee’s Ethereum address.
+* smartContractAddress - The endorsement smart contract would check whether
+*   outputs to the payeeAddress originated from the payment smart contract’s
+*   Ethereum address. If so, the endorsement smart contract would check
+*   whether the output matches the paymentAmount field value
+* transfereeAddress - If an output to the payeeAddress sent from the
+*   smartContractAddress matches the paymentAmount field value, the
+*   endorsement smart contract would generate a transaction transferring the
+*   paymentAmount to the transferee’s Ethereum address using the output
+*   received by the payeeAddress as the input for the transaction
+*/
+
+transaction Endorsement {
+ o DigitalMonetaryAmount paymentAmount
+ o DateTime dueDate
+ o Double dueBlockNumber optional
+ o String payeeAddress
+ o String smartContractAddress
+ o String transfereeAddress
+}

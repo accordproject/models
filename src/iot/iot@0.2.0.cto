@@ -1,0 +1,53 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0-beta.2"
+namespace org.accordproject.iot@0.2.0
+
+enum ClickType {
+  o SINGLE
+  o DOUBLE
+  o LONG
+}
+
+/**
+ * Abstract button press from a device
+ */
+abstract transaction GenericButtonPress {
+  o String serialNumber optional
+  o String batteryVoltage optional
+}
+/**
+ * Based on the JSON payload for the AWS IoT Button
+ */
+transaction ButtonPress extends GenericButtonPress {
+  o ClickType clickType optional
+}
+
+/**
+ * A single button press. E.g for Flic.
+ */
+transaction SingleButtonPress extends GenericButtonPress {
+}
+
+/**
+ * A double button press. E.g for Flic.
+ */
+transaction DoubleButtonPress extends GenericButtonPress {
+}
+
+/**
+ * A long button press. E.g for Flic.
+ */
+transaction LongButtonPress extends GenericButtonPress {
+}

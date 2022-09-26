@@ -1,0 +1,105 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0-beta.2"
+namespace org.accordproject.patent@0.2.0
+
+import org.accordproject.address@0.2.0.PostalAddress from https://models.accordproject.org/address@0.2.0.cto
+import org.accordproject.geo@0.2.0.{Country, GeoCoordinates} from https://models.accordproject.org/geo@0.2.0.cto
+import org.accordproject.person@0.2.0.Person from https://models.accordproject.org/person@0.2.0.cto
+import org.accordproject.usa.residency@0.2.0.Residency from https://models.accordproject.org/usa/residency@0.2.0.cto
+
+/** 
+ * This smart-contract model describes a United States (US) patent asset that may or may not have foreign counterparts
+ * Drafted by Perkins-Coie
+ */
+
+/**
+ * A Patent Asset Identifier
+ */
+concept PatentAssetIdentifier {
+  o String assetNumber 
+  o AssetNumberStatus numberStatus
+  o Country assetCountry optional 
+}
+/**
+ * A Patent Classifier
+ */
+concept PatentClassification {
+  o String classificationSymbol optional
+  o String classificationDescription optional
+}
+
+/**
+ * An Inventor
+ */
+participant Inventor extends Person {
+  o Country residentCountry optional
+  o Residency inventorResidency optional
+}
+/**
+ * An Applicant
+ */
+participant Applicant extends Person {
+}
+
+/**
+ * An Assignee
+ */
+participant Assignee extends Person {
+}
+
+// AssetNumberStatus
+enum AssetNumberStatus {
+   o APP    // Application 
+   o PAT    // Patent 
+   o PUB    // Publication  
+   o REISS  // Reissue 
+   o FOR    // Foreign
+}
+
+// ApplicationType
+enum ApplicationType {
+   o PROV   // Provisional
+   o NONPROV    // Nonprovisional
+}
+// SubjectMatter
+enum SubjectMatter {
+   o UTILITY    // Utility
+   o PLANT  // Plant
+   o DESIGN     // Design
+}
+/**
+ * http://schema.org/PatentAsset
+ */
+concept PatentAsset {
+  o PatentAssetIdentifier[] assetIdentifier
+  o String title optional
+  o Inventor[] inventorIdentifier optional
+  o Applicant applicantIdentifier optional
+  o Assignee currentAssignee optional
+  o Assignee originalAssignee optional
+  o DateTime priorityDate optional
+  o DateTime filingDate optional
+  o DateTime issueDate optional
+  o DateTime publicationDate optional
+  o PatentClassification[] classifier optional
+  o String attorneyDocketNumber optional
+  o String customerNumber optional
+  o String[] emailAddress optional
+  o ApplicationType applicationType optional
+  o SubjectMatter subjectMatter optional
+  o Double numDrawings optional
+  o Double pubFigure optional
+  o PatentAsset[] priorApplication optional
+}
