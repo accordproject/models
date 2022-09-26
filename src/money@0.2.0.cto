@@ -11,8 +11,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+concerto version "^3.0.0-beta.2"
 
-namespace org.accordproject.money
+namespace org.accordproject.money@0.2.0
 
 /**
  * Represents an amount of Cryptocurrency
