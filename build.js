@@ -373,9 +373,6 @@ function findCompatibleVersion(concertoVersions, modelText) {
             const ast = thisConcerto.Parser.parse(modelText, file);
             modelFile  = new thisConcerto.ModelFile(modelManager, ast, modelText, file);         
         }
-        if (!modelFile.getNamespace().match(/accord/)) {
-            continue;
-        }
         console.log(`Processing ${modelFile.getNamespace()}`);
         let modelFilePlantUML = '';
         // passed validation, so copy to build dir
