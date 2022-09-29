@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-concerto version "^3.0.0-beta.2"
+concerto version "^3.0.0"
 namespace org.accordproject.person@0.2.0
 
 import org.accordproject.value@0.2.0.QuantitativeValue from https://models.accordproject.org/value@0.2.0.cto
