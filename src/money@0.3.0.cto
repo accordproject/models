@@ -13,7 +13,7 @@
  */
 concerto version "^3.0.0"
 
-namespace org.accordproject.money@0.2.0
+namespace org.accordproject.money@0.3.0
 
 /**
  * Represents an amount of Cryptocurrency

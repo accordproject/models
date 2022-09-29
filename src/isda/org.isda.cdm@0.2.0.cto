@@ -1,0 +1,4711 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0"
+namespace org.isda.cdm@0.2.0
+concept AdjustableDates{
+  o String id
+  o DateTime[] unadjustedDate
+  o DateTime[] adjustedDate
+  o BusinessDayAdjustments dateAdjustments
+
+}
+concept AdjustableDatesBuilder{
+  o String id
+  o DateTime[] unadjustedDate
+  o DateTime[] adjustedDate
+
+}
+concept AmountSchedule{
+  o String[] currency
+  o String currencyScheme
+  o String id
+  o Double initialValue
+  o Step[] step
+
+}
+concept AmountScheduleBuilder{
+  o String[] currency
+  o String currencyScheme
+  o String id
+  o Double initialValue
+
+}
+concept NonNegativeStep{
+  o String id
+  o DateTime stepDate
+  o Double stepValue
+
+}
+concept NonNegativeStepBuilder{
+  o String id
+  o DateTime stepDate
+  o Double stepValue
+
+}
+concept ComputedAmount{
+  o String currency
+  o String callFunction
+  o String currencyScheme
+  o Double amount
+
+}
+concept ComputedAmountBuilder{
+  o String currency
+  o String callFunction
+  o String currencyScheme
+  o Double amount
+
+}
+concept InterestShortFall{
+  o InterestShortfallCapEnum interestShortfallCap
+  o Boolean compounding
+  o FloatingRateIndexEnum rateSource
+
+}
+concept InterestShortFallBuilder{
+  o InterestShortfallCapEnum interestShortfallCap
+  o Boolean compounding
+  o FloatingRateIndexEnum rateSource
+
+}
+concept TradeHeaderBuilder{
+  o DateTime tradeDate
+
+}
+concept TradeHeader{
+  o PartyContractIdentifier[] identifier
+  o DateTime tradeDate
+
+}
+concept PaymentDetail{
+  o String id
+  o AdjustableOrAdjustedDate paymentDate
+  o PaymentRule paymentRule
+  o Money paymentAmount
+
+}
+concept PaymentDetailBuilder{
+  o String id
+
+}
+concept PaymentRule{
+  o PercentageRule percentageRule
+
+}
+concept PaymentRuleBuilder{
+
+}
+concept AllocationOutcome{
+  o ExecutionReference execution
+  o ContractReference[] contractReference
+  o Contract[] contract
+
+}
+concept AllocationOutcomeBuilder{
+
+}
+concept Account{
+  o String id
+  o String accountNumber
+  o String accountName
+  o AccountTypeEnum accountType
+  o String accountBeneficiary
+  o String servicingParty
+  o String accountNameScheme
+  o String accountNumberScheme
+  o String accountTypeScheme
+
+}
+concept AccountBuilder{
+  o String id
+  o String accountNumber
+  o String accountName
+  o AccountTypeEnum accountType
+  o String accountBeneficiary
+  o String servicingParty
+  o String accountNameScheme
+  o String accountNumberScheme
+  o String accountTypeScheme
+
+}
+enum ContractualDefinitionsEnum{
+  o ISDA1991
+  o ISDA_1993_COMMODITY
+  o ISDA_1996_EQUITY
+  o ISDA_1997_BULLION
+  o ISDA_1997_GOVERNMENT_BOND
+  o ISDA1998FX
+  o ISDA_1999_CREDIT
+  o ISDA2000
+  o ISDA_2002_EQUITY
+  o ISDA_2003_CREDIT
+  o ISDA_2004_NOVATION
+  o ISDA_2005_COMMODITY
+  o ISDA2006
+  o ISDA_2006_INFLATION
+  o ISDA_2008_INFLATION
+  o ISDA_2011_EQUITY
+  o ISDA_2014_CREDIT
+
+}
+concept BermudaExercise{
+  o String id
+  o AdjustableOrRelativeDates relevantUnderlyingDate
+  o BusinessCenterTime earliestExerciseTime
+  o BusinessCenterTime expirationTime
+  o AdjustableOrRelativeDates bermudaExerciseDates
+  o BusinessCenterTime latestExerciseTime
+  o MultipleExercise multipleExercise
+  o ExerciseFeeSchedule exerciseFeeSchedule
+
+}
+concept BermudaExerciseBuilder{
+  o String id
+
+}
+concept ContractualMatrix{
+  o MatrixTypeEnum matrixType
+  o DateTime publicationDate
+  o MatrixTermEnum matrixTerm
+  o String matrixTermScheme
+  o String matrixTypeScheme
+
+}
+concept ContractualMatrixBuilder{
+  o MatrixTypeEnum matrixType
+  o DateTime publicationDate
+  o MatrixTermEnum matrixTerm
+  o String matrixTermScheme
+  o String matrixTypeScheme
+
+}
+concept PhysicalExercise{
+  o Cashflow cashflow
+  o Commodity commodity
+  o ListedProduct listedProduct
+  o Quantity quantity
+  o ContractReference[] contractReference
+  o Contract[] contract
+
+}
+concept PhysicalExerciseBuilder{
+
+}
+concept InterestRateCurveBuilder{
+  o String floatingRateIndexScheme
+  o FloatingRateIndexEnum floatingRateIndex
+
+}
+concept InterestRateCurve{
+  o String floatingRateIndexScheme
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period tenor
+
+}
+concept RelativeDateOffset{
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept RelativeDateOffsetBuilder{
+  o BusinessDayConventionEnum businessDayConvention
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept PayoutLineage{
+  o String cashflow
+  o String optionPayout
+  o String creditDefaultPayout
+  o String payoutReference
+  o String interestRatePayout
+
+}
+concept PayoutLineageBuilder{
+  o String cashflow
+  o String optionPayout
+  o String creditDefaultPayout
+  o String payoutReference
+  o String interestRatePayout
+
+}
+concept ManualExercise{
+  o ExerciseNotice exerciseNotice
+  o Boolean fallbackExercise
+
+}
+concept ManualExerciseBuilder{
+  o Boolean fallbackExercise
+
+}
+concept GeneralTerms{
+  o String additionalTermScheme
+  o BuyerSeller buyerSeller
+  o ReferenceInformation referenceInformation
+  o IndexReferenceInformation indexReferenceInformation
+  o Boolean substitution
+  o Boolean modifiedEquityDelivery
+  o BasketReferenceInformation basketReferenceInformation
+  o String[] additionalTerm
+  o BusinessDayAdjustments dateAdjustments
+
+}
+concept GeneralTermsBuilder{
+  o String additionalTermScheme
+  o Boolean substitution
+  o Boolean modifiedEquityDelivery
+  o String[] additionalTerm
+
+}
+concept ListedProduct{
+  o Bond bond
+  o ConvertibleBond convertibleBond
+  o String rosettaKey
+
+}
+concept ListedProductBuilder{
+
+}
+enum RoundingDirectionEnum{
+  o UP
+  o DOWN
+  o NEAREST
+
+}
+concept NewTradePrimitiveBuilder{
+
+}
+concept NewTradePrimitive{
+  o ContractIdentifier contractReference
+  o Contract contract
+
+}
+concept IndexReferenceInformationBuilder{
+  o String id
+  o Integer indexAnnexVersion
+  o String indexAnnexSourceScheme
+  o String indexIdScheme
+  o String indexNameScheme
+  o Integer indexSeries
+  o String indexName
+  o String[] indexId
+  o DateTime indexAnnexDate
+  o IndexAnnexSourceEnum indexAnnexSource
+
+}
+concept IndexReferenceInformation{
+  o String id
+  o Integer indexAnnexVersion
+  o String indexAnnexSourceScheme
+  o String indexIdScheme
+  o String indexNameScheme
+  o Tranche tranche
+  o Integer indexSeries
+  o String indexName
+  o String[] indexId
+  o DateTime indexAnnexDate
+  o IndexAnnexSourceEnum indexAnnexSource
+  o LegalEntity[] excludedReferenceEntity
+  o SettledEntityMatrix settledEntityMatrix
+
+}
+concept ContractOrContractReference{
+  o ContractReference[] contractReference
+  o Contract[] contract
+
+}
+concept ContractOrContractReferenceBuilder{
+
+}
+enum StepRelativeToEnum{
+  o INITIAL
+  o PREVIOUS
+
+}
+concept TransactedPriceBuilder{
+  o Double initialPoints
+  o QuotationStyleEnum quotationStyle
+  o Double marketFixedRate
+  o Double marketPrice
+
+}
+concept TransactedPrice{
+  o Double initialPoints
+  o QuotationStyleEnum quotationStyle
+  o Double marketFixedRate
+  o Double marketPrice
+
+}
+concept Step{
+  o String id
+  o DateTime stepDate
+  o Double stepValue
+
+}
+concept StepBuilder{
+  o String id
+  o DateTime stepDate
+  o Double stepValue
+
+}
+concept FxLinkedNotionalAmount{
+  o Double notionalAmount
+  o DateTime resetDate
+  o DateTime adjustedFxSpotFixingDate
+  o Double observedFxSpotRate
+
+}
+concept FxLinkedNotionalAmountBuilder{
+  o Double notionalAmount
+  o DateTime resetDate
+  o DateTime adjustedFxSpotFixingDate
+  o Double observedFxSpotRate
+
+}
+concept EarlyTerminationEvent{
+  o String id
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedExerciseFeePaymentDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+  o DateTime adjustedExerciseDate
+
+}
+concept EarlyTerminationEventBuilder{
+  o String id
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedExerciseFeePaymentDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+  o DateTime adjustedExerciseDate
+
+}
+concept ObservationPrimitive{
+  o QuotationSideEnum side
+  o ObservationSource source
+  o Double observation
+  o DateTime date
+  o TimeZone time
+
+}
+concept ObservationPrimitiveBuilder{
+  o QuotationSideEnum side
+  o Double observation
+  o DateTime date
+
+}
+concept ValuationDate{
+  o SingleValuationDate singleValuationDate
+  o MultipleValuationDates multipleValuationDates
+
+}
+concept ValuationDateBuilder{
+
+}
+concept PartyRole{
+  o PartyRoleEnum role
+  o String partyReference
+
+}
+concept PartyRoleBuilder{
+  o PartyRoleEnum role
+  o String partyReference
+
+}
+enum TimeUnitEnum{
+  o SECOND
+  o MINUTE
+  o HOUR
+  o DAY
+  o WEEK
+  o MONTH
+  o YEAR
+
+}
+concept TimeZone{
+  o String location
+  o String locationScheme
+  o DateTime time
+
+}
+concept TimeZoneBuilder{
+  o String location
+  o String locationScheme
+  o DateTime time
+
+}
+concept Tranche{
+  o Double attachmentPoint
+  o Double exhaustionPoint
+  o Boolean incurredRecoveryApplicable
+
+}
+concept TrancheBuilder{
+  o Double attachmentPoint
+  o Double exhaustionPoint
+  o Boolean incurredRecoveryApplicable
+
+}
+concept StrategyFeature{
+  o StrikeSpread strikeSpread
+  o CalendarSpread calendarSpread
+
+}
+concept StrategyFeatureBuilder{
+
+}
+concept FloatingAmountEvents{
+  o Boolean failureToPayPrincipal
+  o Boolean writedown
+  o Boolean impliedWritedown
+  o AdditionalFixedPayments additionalFixedPayments
+  o InterestShortFall interestShortfall
+  o FloatingAmountProvisions floatingAmountProvisions
+
+}
+concept FloatingAmountEventsBuilder{
+  o Boolean failureToPayPrincipal
+  o Boolean writedown
+  o Boolean impliedWritedown
+
+}
+concept Collateral{
+  o IndependentAmount independentAmount
+
+}
+concept CollateralBuilder{
+
+}
+concept CurveBuilder{
+  o String commodityCurveScheme
+  o CommodityReferencePriceEnum commodityCurve
+
+}
+concept Curve{
+  o String commodityCurveScheme
+  o InterestRateCurve interestRateCurve
+  o CommodityReferencePriceEnum commodityCurve
+
+}
+concept PassThrough{
+  o PassThroughItem[] passThroughItem
+
+}
+concept PassThroughBuilder{
+
+}
+enum QuotationStyleEnum{
+  o POINTS_UP_FRONT
+  o TRADED_SPREAD
+  o PRICE
+
+}
+concept ReferencePoolItemBuilder{
+  o String protectionTermsReference
+  o String settlementTermsReference
+
+}
+concept ReferencePoolItem{
+  o ReferencePair referencePair
+  o String protectionTermsReference
+  o String settlementTermsReference
+  o ConstituentWeight constituentWeight
+
+}
+concept StubPeriod{
+  o String calculationPeriodDatesReference
+  o StubValue initialStub
+  o StubValue finalStub
+
+}
+concept StubPeriodBuilder{
+  o String calculationPeriodDatesReference
+
+}
+concept Event{
+  o DateTime effectiveDate
+  o PrimitiveEvent primitive
+  o Lineage lineage
+  o MessageInformation messageInformation
+  o Identifier eventIdentifier
+  o String eventQualifier
+  o DateTime eventDate
+  o ActionEnum action
+  o IntentEnum intent
+  o String functionCall
+  o EventEffect eventEffect
+  o Party[] party
+  o String rosettaKey
+  o EventTimestamp timestamp
+
+}
+concept EventBuilder{
+  o DateTime effectiveDate
+  o String eventQualifier
+  o DateTime eventDate
+  o ActionEnum action
+  o IntentEnum intent
+  o String functionCall
+
+}
+concept Transfer{
+  o GrossCashflow[] grossCashflow
+  o String settlementReference
+  o String rosettaKey
+  o AdjustableOrAdjustedOrRelativeDate transferDate
+  o String transferCalculation
+  o TransferTypeEnum transferType
+  o TransferStatusEnum transferStatus
+  o PayerReceiver payerReceiver
+  o Asset asset
+  o TransferorTransferee transferorTransferee
+  o Quantity quantity
+  o Money amount
+
+}
+concept TransferBuilder{
+  o String settlementReference
+  o String transferCalculation
+  o TransferTypeEnum transferType
+  o TransferStatusEnum transferStatus
+
+}
+enum SpreadScheduleTypeEnum{
+  o LONG
+  o SHORT
+
+}
+concept AdditionalFixedPayments{
+  o Boolean interestShortfallReimbursement
+  o Boolean principalShortfallReimbursement
+  o Boolean writedownReimbursement
+
+}
+concept AdditionalFixedPaymentsBuilder{
+  o Boolean interestShortfallReimbursement
+  o Boolean principalShortfallReimbursement
+  o Boolean writedownReimbursement
+
+}
+concept EuropeanExerciseBuilder{
+  o String id
+
+}
+concept EuropeanExercise{
+  o String id
+  o AdjustableOrRelativeDate expirationDate
+  o AdjustableOrRelativeDates relevantUnderlyingDate
+  o BusinessCenterTime earliestExerciseTime
+  o BusinessCenterTime expirationTime
+  o PartialExercise partialExercise
+  o ExerciseFee exerciseFee
+
+}
+enum CreditSeniorityTradingEnum{
+  o SENIOR
+  o SUBORDINATE
+
+}
+concept Barrier{
+  o TriggerEvent barrierCap
+  o TriggerEvent barrierFloor
+
+}
+concept BarrierBuilder{
+
+}
+enum QuoteBasisEnum{
+  o CURRENCY_1_PER_CURRENCY_2
+  o CURRENCY_2_PER_CURRENCY_1
+
+}
+concept BusinessDayAdjustments{
+  o String id
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+
+}
+concept BusinessDayAdjustmentsBuilder{
+  o String id
+  o BusinessDayConventionEnum businessDayConvention
+
+}
+enum PeriodExtendedEnum{
+  o T
+  o D
+  o W
+  o M
+  o Y
+
+}
+concept FloatingRateDefinition{
+  o Double floatingRateMultiplier
+  o Double spread
+  o Double calculatedRate
+  o RateObservation[] rateObservation
+  o Strike[] capRate
+  o Strike[] floorRate
+
+}
+concept FloatingRateDefinitionBuilder{
+  o Double floatingRateMultiplier
+  o Double spread
+  o Double calculatedRate
+
+}
+concept AllocationPrimitiveBuilder{
+
+}
+concept AllocationPrimitive{
+  o Execution before
+  o AllocationOutcome after
+
+}
+concept FxRateBuilder{
+  o Double rate
+
+}
+concept FxRate{
+  o QuotedCurrencyPair quotedCurrencyPair
+  o Double rate
+
+}
+concept ExtendibleProvisionAdjustedDatesBuilder{
+
+}
+concept ExtendibleProvisionAdjustedDates{
+  o ExtensionEvent[] extensionEvent
+
+}
+concept RelativeDatesBuilder{
+  o Integer periodSkip
+  o BusinessDayConventionEnum businessDayConvention
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept RelativeDates{
+  o Integer periodSkip
+  o DateRange scheduleBounds
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+enum ActionEnum{
+  o NEW
+  o CORRECT
+  o CANCEL
+
+}
+concept OptionStrike{
+  o String currency
+  o Double spread
+  o ReferenceSwapCurve referenceSwapCurve
+  o Double price
+  o Double percentage
+  o String strikeReference
+  o String currencyScheme
+
+}
+concept OptionStrikeBuilder{
+  o String currency
+  o Double spread
+  o Double price
+  o Double percentage
+  o String strikeReference
+  o String currencyScheme
+
+}
+concept ResetPrimitive{
+  o Cashflow cashflow
+  o Double resetValue
+  o String rosettaKey
+  o DateTime date
+
+}
+concept ResetPrimitiveBuilder{
+  o Double resetValue
+  o DateTime date
+
+}
+concept AveragingPeriodBuilder{
+  o String marketDisruptionScheme
+  o MarketDisruptionEnum marketDisruption
+
+}
+concept AveragingPeriod{
+  o String marketDisruptionScheme
+  o DateTimeList averagingDateTimes
+  o AveragingObservationList averagingObservations
+  o MarketDisruptionEnum marketDisruption
+  o AveragingSchedule[] schedule
+
+}
+concept PercentageRuleBuilder{
+  o Double paymentPercent
+  o String notionalAmountReference
+
+}
+concept PercentageRule{
+  o Double paymentPercent
+  o String notionalAmountReference
+
+}
+concept CalculationAgent{
+  o String calculationAgentBusinessCenterScheme
+  o BusinessCenterEnum calculationAgentBusinessCenter
+  o String[] calculationAgentPartyReference
+  o CalculationAgentPartyEnum calculationAgentParty
+
+}
+concept CalculationAgentBuilder{
+  o String calculationAgentBusinessCenterScheme
+  o BusinessCenterEnum calculationAgentBusinessCenter
+  o String[] calculationAgentPartyReference
+  o CalculationAgentPartyEnum calculationAgentParty
+
+}
+concept NaturalPerson{
+  o String id
+  o String honorific
+  o String firstName
+  o String[] middleName
+  o String[] initial
+  o String surname
+  o String suffix
+  o DateTime dateOfBirth
+
+}
+concept NaturalPersonBuilder{
+  o String id
+  o String honorific
+  o String firstName
+  o String[] middleName
+  o String[] initial
+  o String surname
+  o String suffix
+  o DateTime dateOfBirth
+
+}
+concept BusinessDateRangeBuilder{
+  o BusinessDayConventionEnum businessDayConvention
+  o DateTime unadjustedFirstDate
+  o DateTime unadjustedLastDate
+
+}
+concept BusinessDateRange{
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+  o DateTime unadjustedFirstDate
+  o DateTime unadjustedLastDate
+
+}
+concept CancelableProvision{
+  o Boolean followUpConfirmation
+  o AmericanExercise americanExercise
+  o BermudaExercise bermudaExercise
+  o EuropeanExercise europeanExercise
+  o ExerciseNotice exerciseNotice
+  o SimplePayment initialFee
+  o CancelableProvisionAdjustedDates cancelableProvisionAdjustedDates
+  o FinalCalculationPeriodDateAdjustment[] finalCalculationPeriodDateAdjustment
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+concept CancelableProvisionBuilder{
+  o Boolean followUpConfirmation
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+enum BrokerConfirmationTypeEnum{
+  o ABX
+  o CD_SON_MBS
+
+}
+enum QuotationRateTypeEnum{
+  o BID
+  o ASK
+  o MID
+  o EXERCISING_PARTY_PAYS
+
+}
+concept PriceSourceDisruptionBuilder{
+
+}
+concept PriceSourceDisruption{
+  o FallbackReferencePrice fallbackReferencePrice
+
+}
+concept CreditDefaultPayout{
+  o String id
+  o PhysicalSettlementTerms physicalSettlementTerms
+  o String rosettaKeyValue
+  o ProtectionTerms protectionTerms
+  o GeneralTerms generalTerms
+  o CashSettlementTerms cashSettlementTerms
+  o TransactedPrice transactedPrice
+
+}
+concept CreditDefaultPayoutBuilder{
+  o String id
+
+}
+concept CashPriceMethodBuilder{
+  o String cashSettlementCurrencyScheme
+  o String cashSettlementCurrency
+  o QuotationRateTypeEnum quotationRateType
+
+}
+concept CashPriceMethod{
+  o String cashSettlementCurrencyScheme
+  o CashSettlementReferenceBanks cashSettlementReferenceBanks
+  o String cashSettlementCurrency
+  o QuotationRateTypeEnum quotationRateType
+
+}
+enum TimeTypeEnum{
+  o CLOSE
+  o OPEN
+  o OSP
+  o SPECIFIC_TIME
+  o XETRA
+  o DERIVATIVES_CLOSE
+  o AS_SPECIFIED_IN_MASTER_CONFIRMATION
+
+}
+enum InformationProviderEnum{
+  o BANK_OF_JAPAN
+  o BLOOMBERG
+  o ISDA
+  o REUTERS
+  o TELERATE
+  o OTHER
+
+}
+enum RollConventionEnum{
+  o EOM
+  o FRN
+  o IMM
+  o IMMCAD
+  o IMMAUD
+  o IMMNZD
+  o SFE
+  o NONE
+  o TBILL
+  o _1
+  o _2
+  o _3
+  o _4
+  o _5
+  o _6
+  o _7
+  o _8
+  o _9
+  o _10
+  o _11
+  o _12
+  o _13
+  o _14
+  o _15
+  o _16
+  o _17
+  o _18
+  o _19
+  o _20
+  o _21
+  o _22
+  o _23
+  o _24
+  o _25
+  o _26
+  o _27
+  o _28
+  o _29
+  o _30
+  o MON
+  o TUE
+  o WED
+  o THU
+  o FRI
+  o SAT
+  o SUN
+
+}
+concept Mortgage{
+  o Period paymentFrequency
+  o String dayCountFractionScheme
+  o String sectorScheme
+  o String tranche
+  o Party insurer
+  o String insurerReference
+  o Double originalPrincipalAmount
+  o MortgageSectorEnum sector
+  o DayCountFractionEnum dayCountFraction
+  o AssetPool pool
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept MortgageBuilder{
+  o String dayCountFractionScheme
+  o String sectorScheme
+  o String tranche
+  o String insurerReference
+  o Double originalPrincipalAmount
+  o MortgageSectorEnum sector
+  o DayCountFractionEnum dayCountFraction
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+enum AssetClassEnum{
+  o COMMODITY
+  o CREDIT
+  o EQUITY
+  o FOREIGN_EXCHANGE
+  o INTEREST_RATE
+
+}
+enum GoverningLawEnum{
+  o AS_SPECIFIED_IN_MASTER_AGREEMENT
+
+}
+enum CategoryEnum{
+  o TBD
+
+}
+concept PaymentDiscounting{
+  o Double discountFactor
+  o Money presentValueAmount
+
+}
+concept PaymentDiscountingBuilder{
+  o Double discountFactor
+
+}
+concept ReferenceSwapCurve{
+  o SwapCurveValuation swapUnwindValue
+  o MakeWholeAmount makeWholeAmount
+
+}
+concept ReferenceSwapCurveBuilder{
+
+}
+concept InterestRate{
+  o FloatingRateCalculation floatingRate
+  o InflationRateCalculation inflationRate
+  o Schedule fixedRate
+
+}
+concept InterestRateBuilder{
+
+}
+concept PartyContractIdentifierBuilder{
+  o String accountReference
+  o String partyReference
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept PartyContractIdentifier{
+  o LinkId[] linkId
+  o ContractIdentifier[] allocationTradeId
+  o ContractIdentifierExtended[] resultingTradeId
+  o ContractIdentifier blockTradeId
+  o ContractIdentifier[] originatingTradeId
+  o String accountReference
+  o String partyReference
+  o IdentifierValue identifierValue
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+enum OptionTypeEnum{
+  o PUT
+  o CALL
+  o PAYER
+  o RECEIVER
+  o STRADDLE
+
+}
+concept ConvertibleBondBuilder{
+  o DateTime redemptionDate
+  o String dayCountFractionScheme
+  o Double parValue
+  o Double issuanceFaceAmount
+  o DayCountFractionEnum dayCountFraction
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept ConvertibleBond{
+  o EquityAsset underlyingEquity
+  o DateTime redemptionDate
+  o Period paymentFrequency
+  o String dayCountFractionScheme
+  o Double parValue
+  o Double issuanceFaceAmount
+  o DayCountFractionEnum dayCountFraction
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept Offset{
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept OffsetBuilder{
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+enum StandardSettlementStyleEnum{
+  o STANDARD
+  o NET
+  o STANDARD_AND_NET
+
+}
+concept PaymentDates{
+  o String id
+  o Frequency paymentFrequency
+  o Offset paymentDaysOffset
+  o DateTime lastRegularPaymentDate
+  o String resetDatesReference
+  o String valuationDatesReference
+  o Boolean paymentDelay
+  o PayRelativeToEnum payRelativeTo
+  o DateTime firstPaymentDate
+  o String calculationPeriodDatesReference
+  o BusinessDayAdjustments paymentDatesAdjustments
+
+}
+concept PaymentDatesBuilder{
+  o String id
+  o DateTime lastRegularPaymentDate
+  o String resetDatesReference
+  o String valuationDatesReference
+  o Boolean paymentDelay
+  o PayRelativeToEnum payRelativeTo
+  o DateTime firstPaymentDate
+  o String calculationPeriodDatesReference
+
+}
+concept QuotedCurrencyPair{
+  o String currency1
+  o String currency2
+  o QuoteBasisEnum quoteBasis
+  o String currency1Scheme
+  o String currency2Scheme
+
+}
+concept QuotedCurrencyPairBuilder{
+  o String currency1
+  o String currency2
+  o QuoteBasisEnum quoteBasis
+  o String currency1Scheme
+  o String currency2Scheme
+
+}
+concept ObservationSource{
+  o Curve curve
+  o InformationSource informationSource
+
+}
+concept ObservationSourceBuilder{
+
+}
+concept ContractIdentifierExtended{
+  o String associatedParty
+  o String accountReference
+  o String partyReference
+  o IdentifierValue identifierValue
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept ContractIdentifierExtendedBuilder{
+  o String associatedParty
+  o String accountReference
+  o String partyReference
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept StrikeBuilder{
+  o String id
+  o PayerReceiverEnum buyer
+  o PayerReceiverEnum seller
+  o Double strikeRate
+
+}
+concept Strike{
+  o String id
+  o PayerReceiverEnum buyer
+  o PayerReceiverEnum seller
+  o Double strikeRate
+
+}
+enum PaymentTypeEnum{
+  o NET_CASHFLOW
+  o BROKERAGE_COMMISSION
+  o FEE
+  o INTEREST
+  o NET_INTEREST
+  o NOVATION_FEE
+  o PREMIUM
+  o TERMINATION_FEE
+
+}
+concept StrikeSchedule{
+  o PayerReceiverEnum buyer
+  o PayerReceiverEnum seller
+  o String id
+  o Double initialValue
+  o Step[] step
+
+}
+concept StrikeScheduleBuilder{
+  o PayerReceiverEnum buyer
+  o PayerReceiverEnum seller
+  o String id
+  o Double initialValue
+
+}
+enum AveragingMethodEnum{
+  o UNWEIGHTED
+  o WEIGHTED
+
+}
+enum IntentEnum{
+  o ALLOCATION
+  o COMPRESSION
+  o CORRECTION
+  o EARLY_TERMINATION
+  o EXERCISE
+  o INCREASE
+  o NEW_TRADE
+  o NOVATION
+  o PARTIAL_NOVATION
+  o PARTIAL_TERMINATION
+  o PORTFOLIO_COMPRESSION
+  o RENEGOTIATION
+  o TERMINATION
+
+}
+concept ExercisePrimitive{
+  o ContractOrContractReference before
+  o DateTime exerciseDate
+  o DateTime exerciseTime
+  o Boolean fullExercise
+  o ExerciseOutcome after
+
+}
+concept ExercisePrimitiveBuilder{
+  o DateTime exerciseDate
+  o DateTime exerciseTime
+  o Boolean fullExercise
+
+}
+enum DayOfWeekEnum{
+  o MON
+  o TUE
+  o WED
+  o THU
+  o FRI
+  o SAT
+  o SUN
+
+}
+enum AccountTypeEnum{
+  o AGGREGATE_CLIENT
+  o CLIENT
+  o HOUSE
+
+}
+concept AdjustedRelativeDateOffset{
+  o BusinessDayAdjustments relativeDateAdjustments
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept AdjustedRelativeDateOffsetBuilder{
+  o BusinessDayConventionEnum businessDayConvention
+  o String businessCentersReference
+  o String dateRelativeTo
+  o DateTime adjustedDate
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept CreditSupportAgreementBuilder{
+  o CreditSupportAgreementTypeEnum type
+  o String identifierValue
+  o DateTime date
+  o String typeScheme
+
+}
+concept CreditSupportAgreement{
+  o CreditSupportAgreementTypeEnum type
+  o String identifierValue
+  o DateTime date
+  o String typeScheme
+
+}
+enum PaymentStatusEnum{
+  o DISPUTED
+  o INSTRUCTED
+  o PENDING
+  o SETTLED
+
+}
+concept LinkId{
+  o String id
+  o String linkId
+  o String linkIdScheme
+
+}
+concept LinkIdBuilder{
+  o String id
+  o String linkId
+  o String linkIdScheme
+
+}
+enum MasterConfirmationTypeEnum{
+  o CREDIT_INDEX_2003
+  o DJ_CDX_NA
+  o DJ_I_TRAXX_EUROPE
+  o ISDA_1999_CREDIT
+  o ISDA_2003_CREDIT_JAPAN
+  o ISDA_2003_CREDIT_NORTH_AMERICAN
+
+}
+enum MatrixTypeEnum{
+  o CREDIT_DERIVATIVES_PHYSICAL_SETTLEMENT_MATRIX
+  o EQUITY_DERIVATIVES_MATRIX
+  o SETTLEMENT_MATRIX
+
+}
+concept ExtendibleProvisionBuilder{
+  o Boolean followUpConfirmation
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+concept ExtendibleProvision{
+  o Boolean followUpConfirmation
+  o AmericanExercise americanExercise
+  o BermudaExercise bermudaExercise
+  o EuropeanExercise europeanExercise
+  o ExerciseNotice exerciseNotice
+  o ExtendibleProvisionAdjustedDates extendibleProvisionAdjustedDates
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+enum InterestShortfallCapEnum{
+  o FIXED
+  o VARIABLE
+
+}
+concept ExtensionEvent{
+  o String id
+  o DateTime adjustedExerciseDate
+  o DateTime adjustedExtendedTerminationDate
+
+}
+concept ExtensionEventBuilder{
+  o String id
+  o DateTime adjustedExerciseDate
+  o DateTime adjustedExtendedTerminationDate
+
+}
+enum CreditSeniorityEnum{
+  o OTHER
+  o SENIOR_SEC
+  o SENIOR_UN_SEC
+  o SUB_LOWER_TIER_2
+  o SUB_TIER_1
+  o SUB_TIER_3
+  o SUB_UPPER_TIER_2
+
+}
+enum InterpolationMethodEnum{
+  o LINEAR_ZERO_YIELD
+  o NONE
+
+}
+concept AdjustableOrAdjustedDate{
+  o String id
+  o DateTime unadjustedDate
+  o DateTime adjustedDate
+  o BusinessDayAdjustments dateAdjustments
+
+}
+concept AdjustableOrAdjustedDateBuilder{
+  o String id
+  o DateTime unadjustedDate
+  o DateTime adjustedDate
+
+}
+concept BuyerSeller{
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+concept BuyerSellerBuilder{
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+concept PaymentBuilder{
+  o PaymentTypeEnum paymentType
+  o PaymentStatusEnum paymentStatus
+  o String settlementReference
+  o String id
+  o Double discountFactor
+
+}
+concept Payment{
+  o PaymentTypeEnum paymentType
+  o AdjustableOrAdjustedOrRelativeDate paymentDate
+  o GrossCashflow[] grossCashflow
+  o PaymentStatusEnum paymentStatus
+  o String settlementReference
+  o String rosettaKey
+  o Money paymentAmount
+  o String id
+  o Double discountFactor
+  o Money presentValueAmount
+  o PremiumExpression premiumExpression
+  o PaymentDiscounting paymentDiscounting
+  o PayerReceiver payerReceiver
+
+}
+enum LengthUnitEnum{
+  o PAGES
+  o TIME_UNIT
+
+}
+concept SingleValuationDateBuilder{
+  o Integer businessDays
+
+}
+concept SingleValuationDate{
+  o Integer businessDays
+
+}
+enum PayerReceiverEnum{
+  o PAYER
+  o RECEIVER
+
+}
+concept FloatingRateCalculation{
+  o Double initialRate
+  o Rounding finalRateRounding
+  o AveragingMethodEnum averagingMethod
+  o NegativeInterestRateTreatmentEnum negativeInterestRateTreatment
+  o String id
+  o SpreadSchedule[] spreadSchedule
+  o String floatingRateIndexScheme
+  o Schedule floatingRateMultiplierSchedule
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o RateTreatmentEnum rateTreatment
+  o StrikeSchedule[] capRateSchedule
+  o StrikeSchedule[] floorRateSchedule
+
+}
+concept FloatingRateCalculationBuilder{
+  o Double initialRate
+  o AveragingMethodEnum averagingMethod
+  o NegativeInterestRateTreatmentEnum negativeInterestRateTreatment
+  o String id
+  o String floatingRateIndexScheme
+  o FloatingRateIndexEnum floatingRateIndex
+  o RateTreatmentEnum rateTreatment
+
+}
+concept EventTestBundleBuilder{
+
+}
+concept EventTestBundle{
+  o Event[] event
+  o ComputedAmount[] computedAmount
+
+}
+concept NonDeliverableSettlementBuilder{
+  o String referenceCurrency
+  o SettlementRateOptionEnum settlementRateOption
+  o String referenceCurrencyScheme
+  o String settlementRateOptionScheme
+
+}
+concept NonDeliverableSettlement{
+  o String referenceCurrency
+  o FxFixingDate fxFixingDate
+  o AdjustableDates fxFixingSchedule
+  o SettlementRateOptionEnum settlementRateOption
+  o PriceSourceDisruption priceSourceDisruption
+  o String referenceCurrencyScheme
+  o String settlementRateOptionScheme
+
+}
+concept AutomaticExercise{
+  o Double thresholdRate
+
+}
+concept AutomaticExerciseBuilder{
+  o Double thresholdRate
+
+}
+enum MasterConfirmationAnnexTypeEnum{
+  o ISDA_2004_INDEX_VARIANCE_SWAP_AMERICAS_INTERDEALER
+
+}
+concept CalculationPeriodFrequency{
+  o RollConventionEnum rollConvention
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+concept CalculationPeriodFrequencyBuilder{
+  o RollConventionEnum rollConvention
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+concept CashflowRepresentationBuilder{
+  o Boolean cashflowsMatchParameters
+
+}
+concept CashflowRepresentation{
+  o Boolean cashflowsMatchParameters
+  o PrincipalExchange[] principalExchange
+  o PaymentCalculationPeriod[] paymentCalculationPeriod
+
+}
+concept DiscountingBuilder{
+  o DayCountFractionEnum discountRateDayCountFraction
+  o Double discountRate
+  o DiscountingTypeEnum discountingType
+  o String discountRateDayCountFractionScheme
+
+}
+concept Discounting{
+  o DayCountFractionEnum discountRateDayCountFraction
+  o Double discountRate
+  o DiscountingTypeEnum discountingType
+  o String discountRateDayCountFractionScheme
+
+}
+concept YieldCurveMethod{
+  o QuotationRateTypeEnum quotationRateType
+  o SettlementRateSource settlementRateSource
+
+}
+concept YieldCurveMethodBuilder{
+  o QuotationRateTypeEnum quotationRateType
+
+}
+enum CreditSupportAgreementTypeEnum{
+  o ISDA_1994_CREDIT_SUPPORT_ANNEX_NEW_YORK_LAW
+  o ISDA_1995_CREDIT_SUPPORT_ANNEX_ENGLISH_LAW
+  o ISDA_1995_CREDIT_SUPPORT_ANNEX_JAPANESE_LAW
+  o ISDA_1995_CREDIT_SUPPORT_DEED_ENGLISH_LAW
+  o ISDA_2001_MARGIN_PROVISIONS
+  o ISDA_2013_STANDARD_CREDIT_SUPPORT_AGREEMENT
+  o ISDA_2014_STANDARD_CREDIT_SUPPORT_AGREEMENT
+
+}
+concept OptionExercise{
+  o OptionStyle optionStyle
+  o OptionStrike strike
+  o ExerciseProcedure exerciseProcedure
+  o OptionSettlement settlement
+
+}
+concept OptionExerciseBuilder{
+
+}
+concept CashSettlementPaymentDateBuilder{
+  o String id
+
+}
+concept CashSettlementPaymentDate{
+  o String id
+  o AdjustableDates adjustableDates
+  o BusinessDateRange businessDateRange
+  o RelativeDateOffset relativeDate
+
+}
+concept DateList{
+  o DateTime[] date
+
+}
+concept DateListBuilder{
+  o DateTime[] date
+
+}
+concept DateRange{
+  o DateTime unadjustedFirstDate
+  o DateTime unadjustedLastDate
+
+}
+concept DateRangeBuilder{
+  o DateTime unadjustedFirstDate
+  o DateTime unadjustedLastDate
+
+}
+concept PrimitiveEvent{
+  o Payment[] payment
+  o ObservationPrimitive[] observation
+  o Transfer[] transfer
+  o NewTradePrimitive[] newTrade
+  o Inception[] inception
+  o QuantityChangePrimitive[] quantityChange
+  o AllocationPrimitive[] allocation
+  o TermsChangePrimitive termsChange
+  o ExercisePrimitive exercise
+  o ResetPrimitive[] reset
+
+}
+concept PrimitiveEventBuilder{
+
+}
+concept StubValueBuilder{
+  o Double stubRate
+
+}
+concept StubValue{
+  o StubFloatingRate[] floatingRate
+  o Double stubRate
+  o Money stubAmount
+
+}
+enum PartyRoleEnum{
+  o BARRIER_DETERMINATION_AGENT
+  o BENEFICIARY
+  o BROKER
+  o DETERMINING_PARTY
+  o HEDGING_PARTY
+
+}
+concept GrossCashflowBuilder{
+  o String cashflowCalculation
+  o CashflowTypeEnum cashflowType
+  o String id
+  o Double discountFactor
+
+}
+concept GrossCashflow{
+  o PayoutLineage payoutLineage
+  o String cashflowCalculation
+  o CashflowTypeEnum cashflowType
+  o Money cashflowAmount
+  o String id
+  o Double discountFactor
+  o Money presentValueAmount
+  o PremiumExpression premiumExpression
+  o PaymentDiscounting paymentDiscounting
+  o PayerReceiver payerReceiver
+
+}
+concept NaturalPersonRole{
+  o NaturalPersonRoleEnum role
+  o String personReference
+  o String roleScheme
+
+}
+concept NaturalPersonRoleBuilder{
+  o NaturalPersonRoleEnum role
+  o String personReference
+  o String roleScheme
+
+}
+enum QuantityTypeEnum{
+  o UNITS
+  o CONTRACTS
+  o UNITS_OF_MEASURE_PER_TIME_UNIT
+
+}
+enum EntityTypeEnum{
+  o ASIAN
+  o AUSTRALIAN_AND_NEW_ZEALAND
+  o EUROPEAN_EMERGING_MARKETS
+  o JAPANESE
+  o NORTH_AMERICAN_HIGH_YIELD
+  o NORTH_AMERICAN_INSURANCE
+  o NORTH_AMERICAN_INVESTMENT_GRADE
+  o SINGAPOREAN
+  o WESTERN_EUROPEAN
+  o WESTERN_EUROPEAN_INSURANCE
+
+}
+concept FxFixingDate{
+  o BusinessDayConventionEnum businessDayConvention
+  o BusinessCenters businessCenters
+  o String businessCentersReference
+  o DateRelativeToPaymentDates dateRelativeToPaymentDates
+  o DateRelativeToCalculationPeriodDates dateRelativeToCalculationPeriodDates
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept FxFixingDateBuilder{
+  o BusinessDayConventionEnum businessDayConvention
+  o String businessCentersReference
+  o DayTypeEnum dayType
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept RelatedParty{
+  o PartyRoleEnum role
+  o String accountReference
+  o String partyReference
+
+}
+concept RelatedPartyBuilder{
+  o PartyRoleEnum role
+  o String accountReference
+  o String partyReference
+
+}
+concept SimplePayment{
+  o String id
+  o AdjustableOrRelativeDate paymentDate
+  o Money paymentAmount
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+concept SimplePaymentBuilder{
+  o String id
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+enum ResetRelativeToEnum{
+  o CALCULATION_PERIOD_START_DATE
+  o CALCULATION_PERIOD_END_DATE
+
+}
+concept Product{
+  o ListedProduct listedProduct
+  o ContractualProduct contractualProduct
+
+}
+concept ProductBuilder{
+
+}
+concept ResetDates{
+  o String id
+  o Offset rateCutOffDaysOffset
+  o ResetRelativeToEnum resetRelativeTo
+  o InitialFixingDate initialFixingDate
+  o AdjustableDate finalFixingDate
+  o RelativeDateOffset fixingDates
+  o String calculationPeriodDatesReference
+  o ResetFrequency resetFrequency
+  o BusinessDayAdjustments resetDatesAdjustments
+
+}
+concept ResetDatesBuilder{
+  o String id
+  o ResetRelativeToEnum resetRelativeTo
+  o String calculationPeriodDatesReference
+
+}
+concept NotDomesticCurrencyBuilder{
+  o String currency
+  o Boolean applicable
+  o String currencyScheme
+
+}
+concept NotDomesticCurrency{
+  o String currency
+  o Boolean applicable
+  o String currencyScheme
+
+}
+concept AdjustableOrRelativeDate{
+  o String id
+  o AdjustableDate adjustableDate
+  o RelativeDateOffset relativeDate
+
+}
+concept AdjustableOrRelativeDateBuilder{
+  o String id
+
+}
+enum FraDiscountingEnum{
+  o ISDA
+  o AFMA
+  o NONE
+  o ISDA_YIELD
+
+}
+concept FxLinkedNotionalScheduleBuilder{
+  o String varyingNotionalCurrency
+  o String constantNotionalScheduleReference
+  o Double initialValue
+  o String varyingNotionalCurrencyScheme
+
+}
+concept FxLinkedNotionalSchedule{
+  o String varyingNotionalCurrency
+  o FxSpotRateSource fxSpotRateSource
+  o String constantNotionalScheduleReference
+  o RelativeDateOffset varyingNotionalFixingDates
+  o RelativeDateOffset varyingNotionalInterimExchangePaymentDates
+  o Double initialValue
+  o String varyingNotionalCurrencyScheme
+
+}
+concept MultipleExercise{
+  o Double maximumNumberOfOptions
+  o Double maximumNotionalAmount
+  o Integer minimumNumberOfOptions
+  o String notionaReference
+  o Double integralMultipleAmount
+  o Double minimumNotionalAmount
+
+}
+concept MultipleExerciseBuilder{
+  o Double maximumNumberOfOptions
+  o Double maximumNotionalAmount
+  o Integer minimumNumberOfOptions
+  o String notionaReference
+  o Double integralMultipleAmount
+  o Double minimumNotionalAmount
+
+}
+concept PCDeliverableObligationCharacBuilder{
+  o Boolean applicable
+  o Boolean partialCashSettlement
+
+}
+concept PCDeliverableObligationCharac{
+  o Boolean applicable
+  o Boolean partialCashSettlement
+
+}
+concept FloatingAmountProvisions{
+  o Boolean wacCapInterestProvision
+  o Boolean stepUpProvision
+
+}
+concept FloatingAmountProvisionsBuilder{
+  o Boolean wacCapInterestProvision
+  o Boolean stepUpProvision
+
+}
+enum DayTypeEnum{
+  o BUSINESS
+  o CALENDAR
+  o COMMODITY_BUSINESS
+  o CURRENCY_BUSINESS
+  o EXCHANGE_BUSINESS
+  o SCHEDULED_TRADING_DAY
+
+}
+concept FallbackReferencePrice{
+  o SettlementRateOptionEnum[] fallBackSettlementRateOption
+  o Boolean fallbackSurveyValuationPostponement
+  o CalculationAgent calculationAgenDetermination
+  o ValuationPostponement valuationPostponement
+  o String fallBackSettlementRateOptionScheme
+
+}
+concept FallbackReferencePriceBuilder{
+  o SettlementRateOptionEnum[] fallBackSettlementRateOption
+  o Boolean fallbackSurveyValuationPostponement
+  o String fallBackSettlementRateOptionScheme
+
+}
+concept FixedIncomeSecurityBuilder{
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept FixedIncomeSecurity{
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept BasketName{
+  o String basketName
+  o String[] basketId
+  o String basketIdScheme
+  o String basketNameScheme
+
+}
+concept BasketNameBuilder{
+  o String basketName
+  o String[] basketId
+  o String basketIdScheme
+  o String basketNameScheme
+
+}
+enum QuotationSideEnum{
+  o BID
+  o ASK
+  o MID
+
+}
+concept TransferorTransfereeBuilder{
+  o String transferorPartyReference
+  o String transferorAccountReference
+  o String transfereePartyReference
+  o String transfereeAccountReference
+
+}
+concept TransferorTransferee{
+  o String transferorPartyReference
+  o String transferorAccountReference
+  o String transfereePartyReference
+  o String transfereeAccountReference
+
+}
+concept FutureValueAmount{
+  o DateTime valueDate
+  o Integer calculationPeriodNumberOfDays
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+concept FutureValueAmountBuilder{
+  o DateTime valueDate
+  o Integer calculationPeriodNumberOfDays
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+enum ObligationCategoryEnum{
+  o PAYMENT
+  o BORROWED_MONEY
+  o REFERENCE_OBLIGATIONS_ONLY
+  o BOND
+  o LOAN
+  o BOND_OR_LOAN
+
+}
+concept PhysicalSettlementTerms{
+  o String id
+  o DeliverableObligations deliverableObligations
+  o String settlementCurrency
+  o PhysicalSettlementPeriod physicalSettlementPeriod
+  o Boolean escrow
+  o Boolean sixtyBusinessDaySettlementCap
+  o String settlementCurrencyScheme
+
+}
+concept PhysicalSettlementTermsBuilder{
+  o String id
+  o String settlementCurrency
+  o Boolean escrow
+  o Boolean sixtyBusinessDaySettlementCap
+  o String settlementCurrencyScheme
+
+}
+concept OptionalEarlyTerminationAdjustedDates{
+  o EarlyTerminationEvent[] earlyTerminationEvent
+
+}
+concept OptionalEarlyTerminationAdjustedDatesBuilder{
+
+}
+concept OptionSettlement{
+  o OptionPhysicalSettlement physicalSettlementTerms
+  o String settlementCurrency
+  o OptionCashSettlement cashSettlementTerms
+  o SettlementTypeEnum settlementType
+  o AdjustableOrRelativeDate settlementDate
+  o Money settlementAmount
+  o String settlementCurrencyScheme
+
+}
+concept OptionSettlementBuilder{
+  o String settlementCurrency
+  o SettlementTypeEnum settlementType
+  o String settlementCurrencyScheme
+
+}
+concept OptionalEarlyTermination{
+  o OptionCashSettlement cashSettlement
+  o Boolean followUpConfirmation
+  o BuyerSeller singlePartyOption
+  o AmericanExercise americanExercise
+  o BermudaExercise bermudaExercise
+  o EuropeanExercise europeanExercise
+  o ExerciseNotice[] exerciseNotice
+  o OptionalEarlyTerminationAdjustedDates optionalEarlyTerminationAdjustedDates
+  o CalculationAgent calculationAgent
+
+}
+concept OptionalEarlyTerminationBuilder{
+  o Boolean followUpConfirmation
+
+}
+concept AssetBuilder{
+
+}
+concept Asset{
+  o Commodity commodity
+  o ListedProduct listedProduct
+
+}
+enum StubPeriodTypeEnum{
+  o SHORT_INITIAL
+  o SHORT_FINAL
+  o LONG_INITIAL
+  o LONG_FINAL
+
+}
+concept PartyContractInformationBuilder{
+  o String partyReference
+
+}
+concept PartyContractInformation{
+  o NaturalPersonRole[] naturalPersonRole
+  o String partyReference
+
+}
+concept FxSpotRateSource{
+  o InformationSource primaryRateSource
+  o InformationSource secondaryRateSource
+  o BusinessCenterTime fixingTime
+
+}
+concept FxSpotRateSourceBuilder{
+
+}
+concept SettlementRateSource{
+  o CashSettlementReferenceBanks cashSettlementReferenceBanks
+  o InformationSource informationSource
+
+}
+concept SettlementRateSourceBuilder{
+
+}
+concept CalculationPeriodBuilder{
+  o String id
+  o Double notionalAmount
+  o Double forecastRate
+  o DateTime unadjustedStartDate
+  o DateTime unadjustedEndDate
+  o DateTime adjustedStartDate
+  o DateTime adjustedEndDate
+  o Double dayCountYearFraction
+  o Integer calculationPeriodNumberOfDays
+  o Double fixedRate
+
+}
+concept CalculationPeriod{
+  o String id
+  o Double notionalAmount
+  o Double forecastRate
+  o DateTime unadjustedStartDate
+  o DateTime unadjustedEndDate
+  o DateTime adjustedStartDate
+  o DateTime adjustedEndDate
+  o FxLinkedNotionalAmount fxLinkedNotionalAmount
+  o FloatingRateDefinition floatingRateDefinition
+  o Double dayCountYearFraction
+  o Money forecastAmount
+  o Integer calculationPeriodNumberOfDays
+  o Double fixedRate
+
+}
+concept ExecutionReferenceBuilder{
+  o StateEnum state
+
+}
+concept ExecutionReference{
+  o StateEnum state
+  o Identifier executionReference
+
+}
+concept ExerciseProcedure{
+  o ManualExercise manualExercise
+  o AutomaticExercise automaticExercise
+  o Boolean followUpConfirmation
+  o Boolean limitedRightToConfirm
+  o Boolean splitTicket
+
+}
+concept ExerciseProcedureBuilder{
+  o Boolean followUpConfirmation
+  o Boolean limitedRightToConfirm
+  o Boolean splitTicket
+
+}
+enum CalculationAgentPartyEnum{
+  o EXERCISING_PARTY
+  o NON_EXERCISING_PARTY
+  o AS_SPECIFIED_IN_MASTER_AGREEMENT
+  o AS_SPECIFIED_IN_STANDARD_TERMS_SUPPLEMENT
+  o BOTH
+
+}
+concept NonNegativeSchedule{
+  o String id
+  o Double initialValue
+  o NonNegativeStep[] step
+
+}
+concept NonNegativeScheduleBuilder{
+  o String id
+  o Double initialValue
+
+}
+concept Contract{
+  o String id
+  o StateEnum state
+  o Account[] account
+  o CalculationAgent calculationAgent
+  o DateTime clearedDate
+  o Collateral collateral
+  o PartyContractIdentifier[] contractIdentifier
+  o ContractualProduct contractualProduct
+  o Documentation documentation
+  o GoverningLawEnum governingLaw
+  o String governingLawScheme
+  o Payment[] otherPartyPayment
+  o Party[] party
+  o PartyContractInformation[] partyContractInformation
+  o PartyRole[] partyRole
+  o DateInstances tradeDate
+  o String rosettaKey
+
+}
+concept ContractBuilder{
+  o String id
+  o StateEnum state
+  o DateTime clearedDate
+  o GoverningLawEnum governingLaw
+  o String governingLawScheme
+
+}
+enum DiscountingTypeEnum{
+  o STANDARD
+  o FRA
+  o FRA_YIELD
+
+}
+concept Money{
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+concept MoneyBuilder{
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+concept TriggerEvent{
+  o DateList triggerDates
+  o Trigger trigger
+  o FeaturePayment featurePayment
+  o AveragingSchedule[] schedule
+
+}
+concept TriggerEventBuilder{
+
+}
+concept ResetFrequencyBuilder{
+  o WeeklyRollConventionEnum weeklyRollConvention
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+concept ResetFrequency{
+  o WeeklyRollConventionEnum weeklyRollConvention
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+enum TriggerTypeEnum{
+  o EQUAL_OR_LESS
+  o EQUAL_OR_GREATER
+  o EQUAL
+  o LESS
+  o GREATER
+
+}
+concept CashSettlementReferenceBanks{
+  o ReferenceBank[] referenceBank
+
+}
+concept CashSettlementReferenceBanksBuilder{
+
+}
+concept AssetPoolBuilder{
+  o DateTime effectiveDate
+  o Double initialFactor
+  o Double currentFactor
+  o String version
+
+}
+concept AssetPool{
+  o DateTime effectiveDate
+  o Double initialFactor
+  o Double currentFactor
+  o String version
+
+}
+concept ContractualProductBuilder{
+
+}
+concept ContractualProduct{
+  o EconomicTerms economicTerms
+  o ProductTaxonomy[] productTaxonomy
+  o ProductIdentification productIdentification
+
+}
+concept OptionPayoutBuilder{
+  o String id
+  o OptionTypeEnum optionType
+
+}
+concept OptionPayout{
+  o String id
+  o String rosettaKeyValue
+  o BuyerSeller buyerSeller
+  o OptionTypeEnum optionType
+  o OptionFeature feature
+  o OptionDenomination denomination
+  o OptionExercise exerciseTerms
+  o Product underlyer
+  o ContractualQuantity quantity
+
+}
+concept PayoutBuilder{
+
+}
+concept Payout{
+  o Cashflow[] cashflow
+  o OptionPayout[] optionPayout
+  o CreditDefaultPayout creditDefaultPayout
+  o InterestRatePayout[] interestRatePayout
+
+}
+concept WeightedAveragingObservation{
+  o DateTime dateTime
+  o Double weight
+  o Integer observationNumber
+
+}
+concept WeightedAveragingObservationBuilder{
+  o DateTime dateTime
+  o Double weight
+  o Integer observationNumber
+
+}
+concept PubliclyAvailableInformation{
+  o Integer specifiedNumber
+  o Boolean standardPublicSources
+  o String[] publicSource
+
+}
+concept PubliclyAvailableInformationBuilder{
+  o Integer specifiedNumber
+  o Boolean standardPublicSources
+  o String[] publicSource
+
+}
+concept Party{
+  o String id
+  o String partyIdScheme
+  o String[] partyId
+  o LegalEntity legalEntity
+  o NaturalPerson[] naturalPerson
+
+}
+concept PartyBuilder{
+  o String id
+  o String partyIdScheme
+  o String[] partyId
+
+}
+concept MessageInformationBuilder{
+  o String copyToScheme
+  o String messageIdScheme
+  o String sentByScheme
+  o String sentToScheme
+  o String messageId
+  o String sentBy
+  o String sentTo
+  o String[] copyTo
+
+}
+concept MessageInformation{
+  o String copyToScheme
+  o String messageIdScheme
+  o String sentByScheme
+  o String sentToScheme
+  o String messageId
+  o String sentBy
+  o String sentTo
+  o String[] copyTo
+
+}
+concept Asian{
+  o AveragingInOutEnum averagingInOut
+  o Double strikeFactor
+  o AveragingPeriod averagingPeriodIn
+  o AveragingPeriod averagingPeriodOut
+
+}
+concept AsianBuilder{
+  o AveragingInOutEnum averagingInOut
+  o Double strikeFactor
+
+}
+concept ReferenceBankBuilder{
+  o String referenceBankId
+  o String referenceBankName
+  o String referenceBankIdScheme
+
+}
+concept ReferenceBank{
+  o String referenceBankId
+  o String referenceBankName
+  o String referenceBankIdScheme
+
+}
+concept ProtectionTerms{
+  o String id
+  o Money notionalAmount
+  o CreditEvents creditEvents
+  o FloatingAmountEvents floatingAmountEvents
+  o Obligations obligations
+
+}
+concept ProtectionTermsBuilder{
+  o String id
+
+}
+enum ProductIdSourceEnum{
+  o CUSIP
+  o SEDOL
+  o ISIN
+  o RIC
+  o FIGI
+  o WERTPAPIER
+  o SICOVAM
+
+}
+concept RestructuringBuilder{
+  o Boolean multipleHolderObligation
+  o Boolean multipleCreditEventNotices
+  o Boolean applicable
+  o RestructuringEnum restructuringType
+  o String restructuringTypeScheme
+
+}
+concept Restructuring{
+  o Boolean multipleHolderObligation
+  o Boolean multipleCreditEventNotices
+  o Boolean applicable
+  o RestructuringEnum restructuringType
+  o String restructuringTypeScheme
+
+}
+concept CreditEventNotice{
+  o NotifyingParty notifyingParty
+  o BusinessCenterEnum businessCenter
+  o PubliclyAvailableInformation publiclyAvailableInformation
+
+}
+concept CreditEventNoticeBuilder{
+  o BusinessCenterEnum businessCenter
+
+}
+concept StrikeSpread{
+  o OptionStrike upperStrike
+  o Double upperStrikeNumberOfOptions
+
+}
+concept StrikeSpreadBuilder{
+  o Double upperStrikeNumberOfOptions
+
+}
+concept ResourceLength{
+  o LengthUnitEnum lengthUnit
+  o Double lengthValue
+
+}
+concept ResourceLengthBuilder{
+  o LengthUnitEnum lengthUnit
+  o Double lengthValue
+
+}
+enum ResourceTypeEnum{
+  o CONFIRMATION
+  o SUPPLEMENTAL_MATERIAL_ECONOMIC_TERMS
+  o TERM_SHEET
+
+}
+concept AmericanExerciseBuilder{
+  o String id
+
+}
+concept AmericanExercise{
+  o String id
+  o AdjustableOrRelativeDate expirationDate
+  o AdjustableOrRelativeDates relevantUnderlyingDate
+  o BusinessCenterTime earliestExerciseTime
+  o BusinessCenterTime expirationTime
+  o BusinessCenterTime latestExerciseTime
+  o MultipleExercise multipleExercise
+  o ExerciseFeeSchedule exerciseFeeSchedule
+  o AdjustableOrRelativeDate commencementDate
+
+}
+enum CouponTypeEnum{
+  o FIXED
+  o FLOAT
+  o STRUCTURED
+
+}
+enum SettlementTypeEnum{
+  o CASH
+  o PHYSICAL
+  o ELECTION
+  o CASH_OR_PHYSICAL
+
+}
+concept CreditEvents{
+  o String id
+  o CreditEventNotice creditEventNotice
+  o Restructuring restructuring
+  o Boolean failureToPayPrincipal
+  o Boolean failureToPayInterest
+  o Boolean distressedRatingsDowngrade
+  o Boolean maturityExtension
+  o Boolean writedown
+  o Boolean impliedWritedown
+  o Boolean bankruptcy
+  o Boolean obligationDefault
+  o Boolean obligationAcceleration
+  o Boolean repudiationMoratorium
+  o Boolean governmentalIntervention
+  o FailureToPay failureToPay
+  o Money defaultRequirement
+
+}
+concept CreditEventsBuilder{
+  o String id
+  o Boolean failureToPayPrincipal
+  o Boolean failureToPayInterest
+  o Boolean distressedRatingsDowngrade
+  o Boolean maturityExtension
+  o Boolean writedown
+  o Boolean impliedWritedown
+  o Boolean bankruptcy
+  o Boolean obligationDefault
+  o Boolean obligationAcceleration
+  o Boolean repudiationMoratorium
+  o Boolean governmentalIntervention
+
+}
+concept NotifyingParty{
+  o String sellerPartyReference
+  o String buyerPartyReference
+
+}
+concept NotifyingPartyBuilder{
+  o String sellerPartyReference
+  o String buyerPartyReference
+
+}
+concept IndependentAmount{
+  o PaymentDetail[] paymentDetail
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+concept IndependentAmountBuilder{
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+concept ContractIdentifierBuilder{
+  o String accountReference
+  o String partyReference
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept ContractIdentifier{
+  o String accountReference
+  o String partyReference
+  o IdentifierValue identifierValue
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept ContractualQuantityBuilder{
+  o String notionalReference
+
+}
+concept ContractualQuantity{
+  o Money notionalAmount
+  o NotionalSchedule notionalSchedule
+  o FxLinkedNotionalSchedule fxLinkedNotional
+  o String notionalReference
+  o Quantity quantity
+  o FutureValueAmount futureValueNotional
+
+}
+concept DateRelativeToPaymentDates{
+  o String[] paymentDatesReference
+
+}
+concept DateRelativeToPaymentDatesBuilder{
+  o String[] paymentDatesReference
+
+}
+concept PaymentCalculationPeriod{
+  o String id
+  o DateTime unadjustedPaymentDate
+  o DateTime adjustedPaymentDate
+  o Double fixedPaymentAmount
+  o Double discountFactor
+  o Money forecastPaymentAmount
+  o Money presentValueAmount
+  o CalculationPeriod[] calculationPeriod
+
+}
+concept PaymentCalculationPeriodBuilder{
+  o String id
+  o DateTime unadjustedPaymentDate
+  o DateTime adjustedPaymentDate
+  o Double fixedPaymentAmount
+  o Double discountFactor
+
+}
+concept PartialExercise{
+  o Integer minimumNumberOfOptions
+  o String notionaReference
+  o Double integralMultipleAmount
+  o Double minimumNotionalAmount
+
+}
+concept PartialExerciseBuilder{
+  o Integer minimumNumberOfOptions
+  o String notionaReference
+  o Double integralMultipleAmount
+  o Double minimumNotionalAmount
+
+}
+enum MortgageSectorEnum{
+  o ABS
+  o CDO
+  o CMBS
+  o RMBS
+
+}
+concept CrossCurrencyTerms{
+  o SettlementProvision settlementProvision
+  o PrincipalExchanges principalExchanges
+
+}
+concept CrossCurrencyTermsBuilder{
+
+}
+enum PartyIdSourceEnum{
+  o BIC
+  o LEI
+  o ARNU
+  o CCPT
+  o CUST
+  o DRLC
+  o EMPL
+  o NIDN
+  o SOSE
+  o TXID
+
+}
+concept IssuerTradeId{
+  o String identifier
+  o String issuer
+  o String issuerScheme
+  o String identifierScheme
+
+}
+concept IssuerTradeIdBuilder{
+  o String identifier
+  o String issuer
+  o String issuerScheme
+  o String identifierScheme
+
+}
+concept IdentifierBuilder{
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept Identifier{
+  o IdentifierValue identifierValue
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept FrequencyBuilder{
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+concept Frequency{
+  o String id
+  o PeriodExtendedEnum period
+  o Integer periodMultiplier
+
+}
+concept PassThroughItem{
+  o Double passThroughPercentage
+  o PayerReceiver payerReceiver
+
+}
+concept PassThroughItemBuilder{
+  o Double passThroughPercentage
+
+}
+concept OtherAgreementBuilder{
+  o String type
+  o String identifier
+  o String identifierScheme
+  o DateTime date
+  o String typeScheme
+  o String versionScheme
+  o String version
+
+}
+concept OtherAgreement{
+  o String type
+  o String identifier
+  o String identifierScheme
+  o DateTime date
+  o String typeScheme
+  o String versionScheme
+  o String version
+
+}
+enum ContractualSupplementEnum{
+  o ABX
+  o CD_SON_MBS
+  o ISDA_1999_CREDIT_CONVERTIBLE_EXCHANGEABLE_ACCRETING_OBLIGATIONS
+  o ISDA_1999_CREDIT_SUCCESSOR_AND_CREDIT_EVENTS
+  o ISDA_2003_CREDIT_MAY_2003
+  o I_TRAXX_EUROPE_DEALER
+  o STANDARD_LCDS
+
+}
+enum TaxonomySourceEnum{
+  o CFI
+  o ISDA
+
+}
+concept FailureToPay{
+  o Boolean applicable
+  o GracePeriodExtension gracePeriodExtension
+  o Money paymentRequirement
+
+}
+concept FailureToPayBuilder{
+  o Boolean applicable
+
+}
+enum PayRelativeToEnum{
+  o CALCULATION_PERIOD_START_DATE
+  o CALCULATION_PERIOD_END_DATE
+  o LAST_PRICING_DATE
+  o RESET_DATE
+  o VALUATION_DATE
+
+}
+concept ExerciseEventBuilder{
+  o String id
+  o DateTime adjustedRelevantSwapEffectiveDate
+  o DateTime adjustedExerciseFeePaymentDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+  o DateTime adjustedExerciseDate
+
+}
+concept ExerciseEvent{
+  o String id
+  o DateTime adjustedRelevantSwapEffectiveDate
+  o DateTime adjustedExerciseFeePaymentDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+  o DateTime adjustedExerciseDate
+
+}
+concept SpreadSchedule{
+  o SpreadScheduleTypeEnum type
+  o String typeScheme
+  o String id
+  o Double initialValue
+  o Step[] step
+
+}
+concept SpreadScheduleBuilder{
+  o SpreadScheduleTypeEnum type
+  o String typeScheme
+  o String id
+  o Double initialValue
+
+}
+concept LoanParticipation{
+  o String qualifyingParticipationSeller
+  o Boolean applicable
+  o Boolean partialCashSettlement
+
+}
+concept LoanParticipationBuilder{
+  o String qualifyingParticipationSeller
+  o Boolean applicable
+  o Boolean partialCashSettlement
+
+}
+concept IdentifierValueBuilder{
+  o String id
+  o String identifier
+  o String identifierScheme
+
+}
+concept IdentifierValue{
+  o String id
+  o String identifier
+  o String identifierScheme
+
+}
+concept Loan{
+  o String facilityTypeScheme
+  o String lienScheme
+  o String trancheScheme
+  o String tranche
+  o DateTime maturity
+  o LegalEntity[] borrower
+  o String[] borrowerReference
+  o String lien
+  o String facilityType
+  o DateTime creditAgreementDate
+  o String id
+  o String instrumentIdentifierScheme
+  o String description
+  o String[] instrumentIdentifier
+
+}
+concept LoanBuilder{
+  o String facilityTypeScheme
+  o String lienScheme
+  o String trancheScheme
+  o String tranche
+  o DateTime maturity
+  o String[] borrowerReference
+  o String lien
+  o String facilityType
+  o DateTime creditAgreementDate
+  o String id
+  o String instrumentIdentifierScheme
+  o String description
+  o String[] instrumentIdentifier
+
+}
+concept EventEffect{
+  o String[] listedProduct
+  o String[] payment
+  o String[] contractReference
+  o String[] effectedContract
+  o String[] effectedContractReference
+  o String effectedEvent
+  o String[] transfer
+  o String[] contract
+
+}
+concept EventEffectBuilder{
+  o String[] listedProduct
+  o String[] payment
+  o String[] contractReference
+  o String[] effectedContract
+  o String[] effectedContractReference
+  o String effectedEvent
+  o String[] transfer
+  o String[] contract
+
+}
+concept BusinessCentersBuilder{
+  o String id
+  o String businessCenterScheme
+  o BusinessCenterEnum[] businessCenter
+  o String businessCentersReference
+
+}
+concept BusinessCenters{
+  o String id
+  o String businessCenterScheme
+  o BusinessCenterEnum[] businessCenter
+  o String businessCentersReference
+
+}
+concept BondOptionStrikeBuilder{
+
+}
+concept BondOptionStrike{
+  o ReferenceSwapCurve referenceSwapCurve
+  o OptionStrike price
+
+}
+concept MandatoryEarlyTerminationBuilder{
+  o String id
+
+}
+concept MandatoryEarlyTermination{
+  o String id
+  o OptionCashSettlement cashSettlement
+  o CalculationAgent calculationAgent
+  o AdjustableDate mandatoryEarlyTerminationDate
+  o MandatoryEarlyTerminationAdjustedDates mandatoryEarlyTerminationAdjustedDates
+
+}
+concept OptionStyleBuilder{
+
+}
+concept OptionStyle{
+  o AmericanExercise americanExercise
+  o BermudaExercise bermudaExercise
+  o EuropeanExercise europeanExercise
+
+}
+concept ProductIdentifierBuilder{
+  o String productId
+  o ProductIdSourceEnum productIdSource
+  o String productIdScheme
+
+}
+concept ProductIdentifier{
+  o String productId
+  o ProductIdSourceEnum productIdSource
+  o String productIdScheme
+
+}
+concept SpecifiedCurrencyBuilder{
+  o String currency
+  o Boolean applicable
+  o String currencyScheme
+
+}
+concept SpecifiedCurrency{
+  o String currency
+  o Boolean applicable
+  o String currencyScheme
+
+}
+concept CalculationPeriodDates{
+  o String id
+  o CalculationPeriodFrequency calculationPeriodFrequency
+  o DateInstances effectiveDate
+  o AdjustableDate terminationDate
+  o DateTime firstCompoundingPeriodEndDate
+  o StubPeriodTypeEnum stubPeriodType
+  o AdjustedRelativeDateOffset relativeEffectiveDate
+  o RelativeDateOffset relativeTerminationDate
+  o AdjustableDate firstPeriodStartDate
+  o DateTime firstRegularPeriodStartDate
+  o BusinessDayAdjustments calculationPeriodDatesAdjustments
+  o DateTime lastRegularPeriodEndDate
+
+}
+concept CalculationPeriodDatesBuilder{
+  o String id
+  o DateTime firstCompoundingPeriodEndDate
+  o StubPeriodTypeEnum stubPeriodType
+  o DateTime firstRegularPeriodStartDate
+  o DateTime lastRegularPeriodEndDate
+
+}
+concept StubCalculationPeriodAmount{
+  o String calculationPeriodDatesReference
+  o StubValue initialStub
+  o StubValue finalStub
+
+}
+concept StubCalculationPeriodAmountBuilder{
+  o String calculationPeriodDatesReference
+
+}
+enum SettledEntityMatrixSourceEnum{
+  o CONFIRMATION_ANNEX
+  o NOT_APPLICABLE
+  o PUBLISHER
+
+}
+concept SwapCurveValuation{
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o Double spread
+  o QuotationSideEnum side
+
+}
+concept SwapCurveValuationBuilder{
+  o FloatingRateIndexEnum floatingRateIndex
+  o Double spread
+  o QuotationSideEnum side
+
+}
+concept PartyAndAccountReferenceBuilder{
+  o String accountReference
+  o String partyReference
+
+}
+concept PartyAndAccountReference{
+  o String accountReference
+  o String partyReference
+
+}
+concept ConstituentWeightBuilder{
+  o Double openUnits
+  o Double basketPercentage
+
+}
+concept ConstituentWeight{
+  o Double openUnits
+  o Double basketPercentage
+
+}
+concept InterestRatePayoutBuilder{
+  o String id
+  o String dayCountFractionScheme
+  o DayCountFractionEnum dayCountFraction
+  o CompoundingMethodEnum compoundingMethod
+
+}
+concept InterestRatePayout{
+  o String id
+  o String rosettaKeyValue
+  o String dayCountFractionScheme
+  o CrossCurrencyTerms crossCurrencyTerms
+  o Discounting discounting
+  o CashflowRepresentation cashflowRepresentation
+  o BondReference bondReference
+  o DayCountFractionEnum dayCountFraction
+  o CompoundingMethodEnum compoundingMethod
+  o ResetDates resetDates
+  o PayerReceiver payerReceiver
+  o CalculationPeriodDates calculationPeriodDates
+  o ContractualQuantity quantity
+  o InterestRate interestRate
+  o StubPeriod stubPeriod
+  o PaymentDates paymentDates
+
+}
+concept AdjustableOrAdjustedOrRelativeDateBuilder{
+  o String id
+  o DateTime unadjustedDate
+  o DateTime adjustedDate
+
+}
+concept AdjustableOrAdjustedOrRelativeDate{
+  o String id
+  o DateTime unadjustedDate
+  o RelativeDateOffset relativeDate
+  o DateTime adjustedDate
+  o BusinessDayAdjustments dateAdjustments
+
+}
+concept Obligations{
+  o ObligationCategoryEnum category
+  o String excluded
+  o Boolean fullFaithAndCreditObLiability
+  o Boolean generalFundObligationLiability
+  o Boolean listed
+  o Boolean notContingent
+  o NotDomesticCurrency notDomesticCurrency
+  o Boolean notDomesticIssuance
+  o Boolean notDomesticLaw
+  o Boolean notSovereignLender
+  o Boolean notSubordinated
+  o String othReferenceEntityObligations
+  o Boolean revenueObligationLiability
+  o SpecifiedCurrency specifiedCurrency
+  o String designatedPriority
+  o Boolean cashSettlementOnly
+  o Boolean deliveryOfCommitments
+  o Boolean continuity
+  o String designatedPriorityScheme
+
+}
+concept ObligationsBuilder{
+  o ObligationCategoryEnum category
+  o String excluded
+  o Boolean fullFaithAndCreditObLiability
+  o Boolean generalFundObligationLiability
+  o Boolean listed
+  o Boolean notContingent
+  o Boolean notDomesticIssuance
+  o Boolean notDomesticLaw
+  o Boolean notSovereignLender
+  o Boolean notSubordinated
+  o String othReferenceEntityObligations
+  o Boolean revenueObligationLiability
+  o String designatedPriority
+  o Boolean cashSettlementOnly
+  o Boolean deliveryOfCommitments
+  o Boolean continuity
+  o String designatedPriorityScheme
+
+}
+concept ContractualTermsSupplement{
+  o ContractualSupplementEnum type
+  o DateTime publicationDate
+  o String typeScheme
+
+}
+concept ContractualTermsSupplementBuilder{
+  o ContractualSupplementEnum type
+  o DateTime publicationDate
+  o String typeScheme
+
+}
+concept Lineage{
+  o Identifier[] contractReference
+  o Identifier[] eventReference
+  o String contractReferenceScheme
+
+}
+concept LineageBuilder{
+  o String contractReferenceScheme
+
+}
+concept SettledEntityMatrix{
+  o DateTime publicationDate
+  o String matrixSourceScheme
+  o SettledEntityMatrixSourceEnum matrixSource
+
+}
+concept SettledEntityMatrixBuilder{
+  o DateTime publicationDate
+  o String matrixSourceScheme
+  o SettledEntityMatrixSourceEnum matrixSource
+
+}
+concept ReferenceInformationBuilder{
+  o Double referencePrice
+  o Boolean allGuarantees
+  o Boolean noReferenceObligation
+  o Boolean unknownReferenceObligation
+  o Boolean referencePolicy
+  o Boolean securedList
+
+}
+concept ReferenceInformation{
+  o Double referencePrice
+  o Boolean allGuarantees
+  o ReferenceObligation[] referenceObligation
+  o LegalEntity referenceEntity
+  o Boolean noReferenceObligation
+  o Boolean unknownReferenceObligation
+  o Boolean referencePolicy
+  o Boolean securedList
+
+}
+concept NonNegativeAmountScheduleBuilder{
+  o String currency
+  o String currencyScheme
+  o String id
+  o Double initialValue
+
+}
+concept NonNegativeAmountSchedule{
+  o String currency
+  o String currencyScheme
+  o String id
+  o Double initialValue
+  o NonNegativeStep[] step
+
+}
+enum CashflowTypeEnum{
+  o BROKERAGE_COMMISSION
+  o FEE
+  o INTEREST
+  o NET_INTEREST
+  o NOVATION_FEE
+  o PREMIUM
+  o TERMINATION_FEE
+
+}
+concept PayerReceiver{
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+concept PayerReceiverBuilder{
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+enum BusinessCenterEnum{
+  o AEAD
+  o AEDU
+  o AMYE
+  o BEBR
+  o BRBD
+  o CATO
+  o CHZU
+  o CNBE
+  o DEFR
+  o EUTA
+  o GBLO
+  o INMU
+  o JPTO
+  o KRSE
+  o USNY
+
+}
+concept BasketReferenceInformation{
+  o Tranche tranche
+  o BasketName basketName
+  o String[] basketId
+  o ReferencePool referencePool
+  o Integer nthToDefault
+  o Integer mthToDefault
+  o String basketIdScheme
+
+}
+concept BasketReferenceInformationBuilder{
+  o String[] basketId
+  o Integer nthToDefault
+  o Integer mthToDefault
+  o String basketIdScheme
+
+}
+concept FeaturePayment{
+  o String id
+  o String currency
+  o AdjustableOrAdjustedDate featurePaymentDate
+  o String currencyScheme
+  o Double levelPercentage
+  o PayerReceiver payerReceiver
+  o Double amount
+  o TimeTypeEnum time
+
+}
+concept FeaturePaymentBuilder{
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double levelPercentage
+  o Double amount
+  o TimeTypeEnum time
+
+}
+concept ReferencePool{
+  o ReferencePoolItem[] referencePoolItem
+
+}
+concept ReferencePoolBuilder{
+
+}
+concept PhysicalSettlementPeriod{
+  o Integer businessDays
+  o Integer maximumBusinessDays
+  o Boolean businessDaysNotSpecified
+
+}
+concept PhysicalSettlementPeriodBuilder{
+  o Integer businessDays
+  o Integer maximumBusinessDays
+  o Boolean businessDaysNotSpecified
+
+}
+enum PackageTypeEnum{
+  o BUTTERFLY
+  o CALENDAR_ROLL
+  o CALENDAR_SPREAD
+  o CUSTOM
+  o INDEX_ROLL
+  o ONE_CANCELS_OTHERS
+  o SWAP_SPREAD
+  o SWITCH
+
+}
+concept EconomicTermsBuilder{
+
+}
+concept EconomicTerms{
+  o String rosettaKeyValue
+  o Payout payout
+  o EarlyTerminationProvision earlyTerminationProvision
+  o CancelableProvision cancelableProvision
+  o ExtendibleProvision extendibleProvision
+
+}
+concept EquityAsset{
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept EquityAssetBuilder{
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept AdjustableOrRelativeDates{
+  o String id
+  o AdjustableDates adjustableDates
+  o RelativeDates relativeDates
+
+}
+concept AdjustableOrRelativeDatesBuilder{
+  o String id
+
+}
+enum IndexAnnexSourceEnum{
+  o MASTER_CONFIRMATION
+  o PUBLISHER
+
+}
+concept Knock{
+  o TriggerEvent knockOut
+  o TriggerEvent knockIn
+
+}
+concept KnockBuilder{
+
+}
+concept CalculationAgentModelBuilder{
+  o BusinessCenterEnum calculationAgentBusinessCenter
+
+}
+concept CalculationAgentModel{
+  o BusinessCenterEnum calculationAgentBusinessCenter
+  o CalculationAgent calculationAgent
+
+}
+concept CalendarSpread{
+  o AdjustableOrRelativeDate expirationDateTwo
+
+}
+concept CalendarSpreadBuilder{
+
+}
+concept ProductTaxonomy{
+  o String taxonomyValue
+  o TaxonomySourceEnum taxonomySource
+
+}
+concept ProductTaxonomyBuilder{
+  o String taxonomyValue
+  o TaxonomySourceEnum taxonomySource
+
+}
+enum TransferTypeEnum{
+  o SECURITY_SETTLEMENT
+  o SECURITY_TRANSFER
+  o BROKERAGE_COMMISSION
+  o FEE
+  o INTEREST
+  o NET_INTEREST
+  o NOVATION_FEE
+  o PREMIUM
+  o TERMINATION_FEE
+
+}
+concept BrokerConfirmation{
+  o BrokerConfirmationTypeEnum brokerConfirmationType
+  o String brokerConfirmationTypeScheme
+
+}
+concept BrokerConfirmationBuilder{
+  o BrokerConfirmationTypeEnum brokerConfirmationType
+  o String brokerConfirmationTypeScheme
+
+}
+concept DeliverableObligations{
+  o ObligationCategoryEnum category
+  o Boolean acceleratedOrMatured
+  o Boolean accruedInterest
+  o PCDeliverableObligationCharac assignableLoan
+  o PCDeliverableObligationCharac consentRequiredLoan
+  o LoanParticipation directLoanParticipation
+  o String excluded
+  o Boolean fullFaithAndCreditObLiability
+  o Boolean generalFundObligationLiability
+  o LoanParticipation indirectLoanParticipation
+  o Boolean listed
+  o Period maximumMaturity
+  o Boolean notBearer
+  o Boolean notContingent
+  o NotDomesticCurrency notDomesticCurrency
+  o Boolean notDomesticIssuance
+  o Boolean notDomesticLaw
+  o Boolean notSovereignLender
+  o Boolean notSubordinated
+  o String othReferenceEntityObligations
+  o Boolean revenueObligationLiability
+  o SpecifiedCurrency specifiedCurrency
+  o Boolean transferable
+
+}
+concept DeliverableObligationsBuilder{
+  o ObligationCategoryEnum category
+  o Boolean acceleratedOrMatured
+  o Boolean accruedInterest
+  o String excluded
+  o Boolean fullFaithAndCreditObLiability
+  o Boolean generalFundObligationLiability
+  o Boolean listed
+  o Boolean notBearer
+  o Boolean notContingent
+  o Boolean notDomesticIssuance
+  o Boolean notDomesticLaw
+  o Boolean notSovereignLender
+  o Boolean notSubordinated
+  o String othReferenceEntityObligations
+  o Boolean revenueObligationLiability
+  o Boolean transferable
+
+}
+concept DateInstancesBuilder{
+  o String id
+  o DateTime date
+
+}
+concept DateInstances{
+  o String id
+  o AdjustableDate adjustableDate
+  o PriorDateInstance[] priorDateInstance
+  o DateTime date
+
+}
+concept ExerciseNoticeBuilder{
+  o String businessCenterScheme
+  o BusinessCenterEnum businessCenter
+  o String exerciseNoticePartyReference
+  o String partyReference
+
+}
+concept ExerciseNotice{
+  o String businessCenterScheme
+  o BusinessCenterEnum businessCenter
+  o String exerciseNoticePartyReference
+  o String partyReference
+
+}
+enum MasterAgreementTypeEnum{
+  o AFB
+  o ISDA
+
+}
+concept FloatingRate{
+  o String id
+  o SpreadSchedule[] spreadSchedule
+  o String floatingRateIndexScheme
+  o Schedule floatingRateMultiplierSchedule
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o RateTreatmentEnum rateTreatment
+  o StrikeSchedule[] capRateSchedule
+  o StrikeSchedule[] floorRateSchedule
+
+}
+concept FloatingRateBuilder{
+  o String id
+  o String floatingRateIndexScheme
+  o FloatingRateIndexEnum floatingRateIndex
+  o RateTreatmentEnum rateTreatment
+
+}
+concept CancellationEvent{
+  o String id
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedExerciseDate
+
+}
+concept CancellationEventBuilder{
+  o String id
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedExerciseDate
+
+}
+concept MultipleValuationDates{
+  o Integer businessDaysThereafter
+  o Integer numberValuationDates
+  o Integer businessDays
+
+}
+concept MultipleValuationDatesBuilder{
+  o Integer businessDaysThereafter
+  o Integer numberValuationDates
+  o Integer businessDays
+
+}
+concept TriggerBuilder{
+  o Double level
+  o Double levelPercentage
+  o String creditEventsReference
+  o TriggerTypeEnum triggerType
+  o TriggerTimeTypeEnum triggerTimeType
+
+}
+concept Trigger{
+  o CreditEvents creditEvents
+  o Double level
+  o Double levelPercentage
+  o String creditEventsReference
+  o TriggerTypeEnum triggerType
+  o TriggerTimeTypeEnum triggerTimeType
+
+}
+concept ExerciseOutcome{
+  o PhysicalExercise physicalExercise
+  o Cashflow cashExercise
+  o ContractReference[] contractReference
+  o Contract[] contract
+
+}
+concept ExerciseOutcomeBuilder{
+
+}
+concept ExerciseFeeScheduleBuilder{
+  o String notionalReference
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+concept ExerciseFeeSchedule{
+  o String notionalReference
+  o AmountSchedule feeAmountSchedule
+  o Schedule feeRateSchedule
+  o RelativeDateOffset feePaymentDate
+  o String payerPartyReference
+  o String receiverPartyReference
+  o String payerAccountReference
+  o String receiverAccountReference
+
+}
+enum MarketDisruptionEnum{
+  o MODIFIED_POSTPONEMENT
+  o OMISSION
+  o POSTPONEMENT
+
+}
+enum FloatingRateIndexEnum{
+  o AED_EBOR_REUTERS
+  o AUD_AONIA_OIS_COMPOUND
+  o AUD_AONIA_OIS_COMPOUND_SWAP_MARKER
+  o BRL_CDI
+  o CAD_BA_CDOR
+  o CNY_CNREPOFIX_CFXS_REUTERS
+  o EUR_EONIA_OIS_COMPOUND
+  o EUR_EURIBOR_REUTERS
+  o EUR_EURIBOR_TELERATE
+  o EUR_LIBOR_BBA
+  o GBP_LIBOR_BBA
+  o GBP_LIBOR_ISDA
+  o GBP_SONIA_COMPOUND
+  o INR_FBIL_MIBOR_OIS_COMPOUND
+  o KRW_CD_KSDA_BLOOMBERG
+  o UK_RPIX
+  o USA_CPI_U
+  o USD_FEDERAL_FUNDS_H_15_OIS_COMPOUND
+  o USD_LIBOR_BBA
+
+}
+concept EventTimestamp{
+  o DateTime expiryTimestamp
+  o DateTime creationTimestamp
+
+}
+concept EventTimestampBuilder{
+  o DateTime expiryTimestamp
+  o DateTime creationTimestamp
+
+}
+concept QuantoBuilder{
+
+}
+concept Quanto{
+  o FxRate[] fxRate
+  o FxSpotRateSource fxSpotRateSource
+
+}
+enum UnitEnum{
+  o M_WH
+  o MMBTU
+  o BBL
+  o GAL
+  o BSH
+
+}
+enum DeterminationMethodEnum{
+  o AGREED_INITIAL_PRICE
+  o AS_SPECIFIED_IN_MASTER_CONFIRMATION
+  o CALCULATION_AGENT
+  o CLOSING_PRICE
+  o DIVIDEND_CURRENCY
+  o EXPIRING_CONTRACT_LEVEL
+  o HEDGE_EXECUTION
+  o ISSUER_PAYMENT_CURRENCY
+  o NAV
+  o OPEN_PRICE
+  o OSP_PRICE
+  o SETTLEMENT_CURRENCY
+  o STRIKE_DATE_DETERMINATION
+  o TWAP_PRICE
+  o VALUATION_TIME
+  o VWAP_PRICE
+
+}
+concept NotionalSchedule{
+  o String id
+  o NonNegativeAmountSchedule notionalStepSchedule
+  o NotionalStepRule notionalStepParameters
+
+}
+concept NotionalScheduleBuilder{
+  o String id
+
+}
+enum PeriodEnum{
+  o D
+  o W
+  o M
+  o Y
+
+}
+concept InceptionBuilder{
+
+}
+concept Inception{
+  o ContractOrContractReference[] before
+  o ContractOrContractReference after
+
+}
+concept ExerciseFeeBuilder{
+  o String notionalReference
+  o Double feeAmount
+  o Double feeRate
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+concept ExerciseFee{
+  o String notionalReference
+  o RelativeDateOffset feePaymentDate
+  o Double feeAmount
+  o Double feeRate
+  o String sellerPartyReference
+  o String buyerPartyReference
+  o String buyerAccountReference
+  o String sellerAccountReference
+
+}
+enum BusinessDayConventionEnum{
+  o FOLLOWING
+  o FRN
+  o MODFOLLOWING
+  o PRECEDING
+  o MODPRECEDING
+  o NEAREST
+  o NONE
+  o NOT_APPLICABLE
+
+}
+concept CancelableProvisionAdjustedDatesBuilder{
+
+}
+concept CancelableProvisionAdjustedDates{
+  o CancellationEvent[] cancellationEvent
+
+}
+enum PremiumTypeEnum{
+  o PRE_PAID
+  o POST_PAID
+  o VARIABLE
+  o FIXED
+
+}
+concept Quantity{
+  o UnitEnum unit
+  o Double amount
+
+}
+concept QuantityBuilder{
+  o UnitEnum unit
+  o Double amount
+
+}
+concept FinalCalculationPeriodDateAdjustment{
+  o BusinessDayConventionEnum businessDayConvention
+  o String relevantUnderlyingDateReference
+  o String swapStreamReference
+
+}
+concept FinalCalculationPeriodDateAdjustmentBuilder{
+  o BusinessDayConventionEnum businessDayConvention
+  o String relevantUnderlyingDateReference
+  o String swapStreamReference
+
+}
+concept CalculationAmount{
+  o Step[] step
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+concept CalculationAmountBuilder{
+  o String id
+  o String currency
+  o String currencyScheme
+  o Double amount
+
+}
+enum TriggerTimeTypeEnum{
+  o CLOSING
+  o ANYTIME
+
+}
+concept EarlyTerminationProvision{
+  o String id
+  o Period mandatoryEarlyTerminationDateTenor
+  o ExercisePeriod optionalEarlyTerminationParameters
+  o MandatoryEarlyTermination mandatoryEarlyTermination
+  o OptionalEarlyTermination optionalEarlyTermination
+
+}
+concept EarlyTerminationProvisionBuilder{
+  o String id
+
+}
+concept PremiumExpression{
+  o PremiumTypeEnum premiumType
+  o Money pricePerOption
+  o Double percentageOfNotional
+
+}
+concept PremiumExpressionBuilder{
+  o PremiumTypeEnum premiumType
+  o Double percentageOfNotional
+
+}
+concept FxFeatureBuilder{
+  o String referenceCurrency
+  o String referenceCurrencyScheme
+
+}
+concept FxFeature{
+  o String referenceCurrency
+  o Composite composite
+  o Quanto quanto
+  o Composite crossCurrency
+  o String referenceCurrencyScheme
+
+}
+enum WeeklyRollConventionEnum{
+  o TBILL
+  o MON
+  o TUE
+  o WED
+  o THU
+  o FRI
+  o SAT
+  o SUN
+
+}
+concept Rosetta{
+
+}
+concept IdentifiedAssetBuilder{
+  o String id
+  o String instrumentIdentifierScheme
+  o String description
+  o String[] instrumentIdentifier
+
+}
+concept IdentifiedAsset{
+  o String id
+  o String instrumentIdentifierScheme
+  o String description
+  o String[] instrumentIdentifier
+
+}
+concept CrossCurrencyMethodBuilder{
+  o String cashSettlementCurrencyScheme
+  o String[] cashSettlementCurrency
+  o QuotationRateTypeEnum quotationRateType
+
+}
+concept CrossCurrencyMethod{
+  o String cashSettlementCurrencyScheme
+  o CashSettlementReferenceBanks[] cashSettlementReferenceBanks
+  o String[] cashSettlementCurrency
+  o QuotationRateTypeEnum quotationRateType
+
+}
+concept ContractReferenceBuilder{
+  o StateEnum state
+  o String accountReference
+  o String partyReference
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+concept ContractReference{
+  o StateEnum state
+  o String rosettaKey
+  o String accountReference
+  o String partyReference
+  o IdentifierValue identifierValue
+  o String issuer
+  o String issuerScheme
+  o Integer version
+
+}
+enum RestructuringEnum{
+  o MOD_MOD_R
+  o MOD_R
+  o R
+
+}
+concept OptionFeatureBuilder{
+
+}
+concept OptionFeature{
+  o FxFeature fxFeature
+  o StrategyFeature strategyFeature
+  o Asian asian
+  o Barrier barrier
+  o Knock knock
+  o PassThrough passThrough
+
+}
+concept LegalEntityBuilder{
+  o String name
+  o String id
+  o String entityId
+  o String entityIdScheme
+  o String nameScheme
+
+}
+concept LegalEntity{
+  o String name
+  o String id
+  o String entityId
+  o String entityIdScheme
+  o String nameScheme
+
+}
+enum StateEnum{
+  o ALLOCATED
+  o EXERCISED
+  o NOVATED
+  o TERMINATED
+
+}
+concept MasterConfirmation{
+  o MasterConfirmationTypeEnum masterConfirmationType
+  o DateTime masterConfirmationDate
+  o DateTime masterConfirmationAnnexDate
+  o MasterConfirmationAnnexTypeEnum masterConfirmationAnnexType
+  o String masterConfirmationAnnexTypeScheme
+  o String masterConfirmationTypeScheme
+
+}
+concept MasterConfirmationBuilder{
+  o MasterConfirmationTypeEnum masterConfirmationType
+  o DateTime masterConfirmationDate
+  o DateTime masterConfirmationAnnexDate
+  o MasterConfirmationAnnexTypeEnum masterConfirmationAnnexType
+  o String masterConfirmationAnnexTypeScheme
+  o String masterConfirmationTypeScheme
+
+}
+concept Commodity{
+
+}
+concept CommodityBuilder{
+
+}
+concept BusinessCenterTime{
+  o String businessCenterScheme
+  o BusinessCenterEnum businessCenter
+  o DateTime hourMinuteTime
+
+}
+concept BusinessCenterTimeBuilder{
+  o String businessCenterScheme
+  o BusinessCenterEnum businessCenter
+  o DateTime hourMinuteTime
+
+}
+enum NegativeInterestRateTreatmentEnum{
+  o NEGATIVE_INTEREST_RATE_METHOD
+  o ZERO_INTEREST_RATE_METHOD
+
+}
+concept GracePeriodExtensionBuilder{
+  o Boolean applicable
+
+}
+concept GracePeriodExtension{
+  o Boolean applicable
+  o Offset gracePeriod
+
+}
+concept PrincipalExchangesBuilder{
+  o String id
+  o Boolean initialExchange
+  o Boolean finalExchange
+  o Boolean intermediateExchange
+
+}
+concept PrincipalExchanges{
+  o String id
+  o Boolean initialExchange
+  o Boolean finalExchange
+  o Boolean intermediateExchange
+
+}
+enum RateTreatmentEnum{
+  o BOND_EQUIVALENT_YIELD
+  o MONEY_MARKET_YIELD
+
+}
+concept Bond{
+  o Period paymentFrequency
+  o String dayCountFractionScheme
+  o Double parValue
+  o Double issuanceFaceAmount
+  o DayCountFractionEnum dayCountFraction
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept BondBuilder{
+  o String dayCountFractionScheme
+  o Double parValue
+  o Double issuanceFaceAmount
+  o DayCountFractionEnum dayCountFraction
+  o String couponTypeScheme
+  o String seniorityScheme
+  o String issuerName
+  o String issuerReference
+  o CreditSeniorityEnum seniority
+  o CouponTypeEnum couponType
+  o Double couponRate
+  o DateTime maturity
+  o DateTime issueDate
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+enum MatrixTermEnum{
+  o IVS_1_OPEN_MARKETS
+
+}
+enum AveragingInOutEnum{
+  o IN
+  o OUT
+  o BOTH
+
+}
+concept PrincipalExchange{
+  o String id
+  o Double discountFactor
+  o DateTime unadjustedPrincipalExchangeDate
+  o DateTime adjustedPrincipalExchangeDate
+  o Double principalExchangeAmount
+  o Money presentValuePrincipalExchangeAmount
+
+}
+concept PrincipalExchangeBuilder{
+  o String id
+  o Double discountFactor
+  o DateTime unadjustedPrincipalExchangeDate
+  o DateTime adjustedPrincipalExchangeDate
+  o Double principalExchangeAmount
+
+}
+concept ReferencePair{
+  o ReferenceObligation referenceObligation
+  o LegalEntity referenceEntity
+  o Boolean noReferenceObligation
+  o EntityTypeEnum entityType
+  o String entityTypeScheme
+
+}
+concept ReferencePairBuilder{
+  o Boolean noReferenceObligation
+  o EntityTypeEnum entityType
+  o String entityTypeScheme
+
+}
+enum SettlementRateOptionEnum{
+  o ARS_BNAR_ARS01
+  o ARS_EMTA_INDICATIVE_SURVEY_RATE_ARS04
+  o BRL_PTAX_BRL09
+  o CNY_SAEC_CNY01
+  o KRW_KFTC18_KRW02
+  o INR_RBIB_INR01
+
+}
+concept TermsChangePrimitive{
+  o ContractOrContractReference before
+  o ContractOrContractReference after
+
+}
+concept TermsChangePrimitiveBuilder{
+
+}
+concept Rounding{
+  o RoundingDirectionEnum roundingDirection
+  o Integer precision
+
+}
+concept RoundingBuilder{
+  o RoundingDirectionEnum roundingDirection
+  o Integer precision
+
+}
+concept ProductIdentificationBuilder{
+  o String productQualifier
+  o AssetClassEnum primaryAssetClass
+  o AssetClassEnum[] secondaryAssetClass
+  o String[] productType
+  o String[] productId
+  o String productIdScheme
+  o String primaryAssetClassScheme
+  o String productTypeScheme
+  o String secondaryAssetClassScheme
+
+}
+concept ProductIdentification{
+  o String productQualifier
+  o AssetClassEnum primaryAssetClass
+  o AssetClassEnum[] secondaryAssetClass
+  o String[] productType
+  o String[] productId
+  o String productIdScheme
+  o String primaryAssetClassScheme
+  o String productTypeScheme
+  o String secondaryAssetClassScheme
+
+}
+concept AveragingSchedule{
+  o DateTime endDate
+  o DateTime startDate
+  o CalculationPeriodFrequency averagingPeriodFrequency
+
+}
+concept AveragingScheduleBuilder{
+  o DateTime endDate
+  o DateTime startDate
+
+}
+concept DateTimeListBuilder{
+  o DateTime[] dateTime
+
+}
+concept DateTimeList{
+  o DateTime[] dateTime
+
+}
+concept MakeWholeAmountBuilder{
+  o InterpolationMethodEnum interpolationMethod
+  o DateTime earlyCallDate
+  o FloatingRateIndexEnum floatingRateIndex
+  o Double spread
+  o QuotationSideEnum side
+
+}
+concept MakeWholeAmount{
+  o InterpolationMethodEnum interpolationMethod
+  o DateTime earlyCallDate
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o Double spread
+  o QuotationSideEnum side
+
+}
+concept BondReferenceBuilder{
+  o Boolean conditionPrecedentBond
+  o Boolean discrepancyClause
+
+}
+concept BondReference{
+  o Bond bond
+  o Boolean conditionPrecedentBond
+  o Boolean discrepancyClause
+
+}
+concept ValuationPostponement{
+  o Integer maximumDaysOfPostponement
+
+}
+concept ValuationPostponementBuilder{
+  o Integer maximumDaysOfPostponement
+
+}
+concept SettlementProvision{
+  o String settlementCurrency
+  o NonDeliverableSettlement nonDeliverableSettlement
+  o String settlementCurrencyScheme
+
+}
+concept SettlementProvisionBuilder{
+  o String settlementCurrency
+  o String settlementCurrencyScheme
+
+}
+concept CashflowBaseBuilder{
+  o String id
+  o Double discountFactor
+
+}
+concept CashflowBase{
+  o String id
+  o Double discountFactor
+  o Money presentValueAmount
+  o PremiumExpression premiumExpression
+  o PaymentDiscounting paymentDiscounting
+  o PayerReceiver payerReceiver
+
+}
+concept Resource{
+  o ResourceLength length
+  o String name
+  o String language
+  o String resourceId
+  o ResourceTypeEnum resourceType
+  o Double sizeInBytes
+  o String mimeType
+  o String comments
+  o String url
+  o String string
+  o String languageScheme
+  o String mimeTypeScheme
+  o String resourceIdScheme
+  o String resourceTypeScheme
+
+}
+concept ResourceBuilder{
+  o String name
+  o String language
+  o String resourceId
+  o ResourceTypeEnum resourceType
+  o Double sizeInBytes
+  o String mimeType
+  o String comments
+  o String url
+  o String string
+  o String languageScheme
+  o String mimeTypeScheme
+  o String resourceIdScheme
+  o String resourceTypeScheme
+
+}
+concept ReferenceObligationBuilder{
+  o String primaryObligorReference
+  o String guarantorReference
+  o Boolean standardReferenceObligation
+
+}
+concept ReferenceObligation{
+  o Mortgage mortgage
+  o Bond bond
+  o ConvertibleBond convertibleBond
+  o Loan loan
+  o LegalEntity primaryObligor
+  o String primaryObligorReference
+  o LegalEntity guarantor
+  o String guarantorReference
+  o Boolean standardReferenceObligation
+
+}
+enum ValuationMethodEnum{
+  o MARKET
+  o HIGHEST
+  o AVERAGE_MARKET
+  o AVERAGE_HIGHEST
+  o BLENDED_MARKET
+  o BLENDED_HIGHEST
+  o AVERAGE_BLENDED_MARKET
+  o AVERAGE_BLENDED_HIGHEST
+
+}
+concept ExecutionBuilder{
+
+}
+concept Execution{
+  o TradeHeader tradeHeader
+  o ContractualProduct contractualProduct
+  o Party[] party
+
+}
+concept InformationSource{
+  o InformationProviderEnum sourceProvider
+  o String sourcePage
+  o String sourcePageHeading
+  o String sourcePageScheme
+  o String sourceProviderScheme
+
+}
+concept InformationSourceBuilder{
+  o InformationProviderEnum sourceProvider
+  o String sourcePage
+  o String sourcePageHeading
+  o String sourcePageScheme
+  o String sourceProviderScheme
+
+}
+concept MandatoryEarlyTerminationAdjustedDates{
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+
+}
+concept MandatoryEarlyTerminationAdjustedDatesBuilder{
+  o DateTime adjustedEarlyTerminationDate
+  o DateTime adjustedCashSettlementValuationDate
+  o DateTime adjustedCashSettlementPaymentDate
+
+}
+concept InitialFixingDateBuilder{
+  o DateTime initialFixingDate
+
+}
+concept Period{
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept InitialFixingDate{
+  o DateTime initialFixingDate
+  o RelativeDateOffset relativeDateOffset
+
+}
+concept OptionCashSettlement{
+  o String id
+  o CashSettlementPaymentDate cashSettlementPaymentDate
+  o BusinessCenterTime cashSettlementValuationTime
+  o RelativeDateOffset cashSettlementValuationDate
+  o CashPriceMethod cashPriceMethod
+  o CashPriceMethod cashPriceAlternateMethod
+  o YieldCurveMethod parYieldCurveAdjustedMethod
+  o YieldCurveMethod zeroCouponYieldAdjustedMethod
+  o YieldCurveMethod parYieldCurveUnadjustedMethod
+  o CrossCurrencyMethod crossCurrencyMethod
+  o YieldCurveMethod collateralizedCashPriceMethod
+
+}
+concept OptionCashSettlementBuilder{
+  o String id
+
+}
+concept NotionalStepRuleBuilder{
+  o Double notionalStepAmount
+  o Double notionalStepRate
+  o StepRelativeToEnum stepRelativeTo
+  o DateTime firstNotionalStepDate
+  o DateTime lastNotionalStepDate
+  o String calculationPeriodDatesReference
+
+}
+concept NotionalStepRule{
+  o Double notionalStepAmount
+  o Double notionalStepRate
+  o StepRelativeToEnum stepRelativeTo
+  o Frequency stepFrequency
+  o DateTime firstNotionalStepDate
+  o DateTime lastNotionalStepDate
+  o String calculationPeriodDatesReference
+
+}
+concept InflationRateCalculation{
+  o Offset inflationLag
+  o String indexSource
+  o String mainPublication
+  o InterpolationMethodEnum interpolationMethod
+  o Double initialIndexLevel
+  o Boolean fallbackBondApplicable
+  o String indexSourceScheme
+  o String interpolationMethodScheme
+  o String mainPublicationScheme
+  o Double initialRate
+  o Rounding finalRateRounding
+  o AveragingMethodEnum averagingMethod
+  o NegativeInterestRateTreatmentEnum negativeInterestRateTreatment
+  o String id
+  o SpreadSchedule[] spreadSchedule
+  o String floatingRateIndexScheme
+  o Schedule floatingRateMultiplierSchedule
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o RateTreatmentEnum rateTreatment
+  o StrikeSchedule[] capRateSchedule
+  o StrikeSchedule[] floorRateSchedule
+
+}
+concept InflationRateCalculationBuilder{
+  o String indexSource
+  o String mainPublication
+  o InterpolationMethodEnum interpolationMethod
+  o Double initialIndexLevel
+  o Boolean fallbackBondApplicable
+  o String indexSourceScheme
+  o String interpolationMethodScheme
+  o String mainPublicationScheme
+  o Double initialRate
+  o AveragingMethodEnum averagingMethod
+  o NegativeInterestRateTreatmentEnum negativeInterestRateTreatment
+  o String id
+  o String floatingRateIndexScheme
+  o FloatingRateIndexEnum floatingRateIndex
+  o RateTreatmentEnum rateTreatment
+
+}
+concept QuantityChangePrimitiveBuilder{
+
+}
+concept QuantityChangePrimitive{
+  o ContractOrContractReference before
+  o ContractualQuantity[] change
+  o ContractOrContractReference after
+
+}
+concept Documentation{
+  o ContractualDefinitionsEnum[] contractualDefinitions
+  o ContractualTermsSupplement[] contractualTermsSupplement
+  o MasterAgreement masterAgreement
+  o BrokerConfirmation brokerConfirmation
+  o CreditSupportAgreement creditSupportAgreement
+  o OtherAgreement[] otherAgreement
+  o Resource[] attachment
+  o MasterConfirmation masterConfirmation
+  o ContractualMatrix[] contractualMatrix
+  o String contractualDefinitionsScheme
+
+}
+concept DocumentationBuilder{
+  o ContractualDefinitionsEnum[] contractualDefinitions
+  o String contractualDefinitionsScheme
+
+}
+enum CompoundingMethodEnum{
+  o FLAT
+  o NONE
+  o STRAIGHT
+  o SPREAD_EXCLUSIVE
+
+}
+concept ExercisePeriod{
+  o String id
+  o Period earliestExerciseDateTenor
+  o Period exerciseFrequency
+
+}
+concept ExercisePeriodBuilder{
+  o String id
+
+}
+concept AdjustableDate{
+  o String id
+  o DateTime unadjustedDate
+  o String dateAdjustmentsReference
+  o DateTime adjustedDate
+  o BusinessDayAdjustments dateAdjustments
+
+}
+concept AdjustableDateBuilder{
+  o String id
+  o DateTime unadjustedDate
+  o String dateAdjustmentsReference
+  o DateTime adjustedDate
+
+}
+concept StubFloatingRate{
+  o String id
+  o SpreadSchedule[] spreadSchedule
+  o Schedule floatingRateMultiplierSchedule
+  o FloatingRateIndexEnum floatingRateIndex
+  o Period indexTenor
+  o RateTreatmentEnum rateTreatment
+  o StrikeSchedule[] capRateSchedule
+  o StrikeSchedule[] floorRateSchedule
+
+}
+concept StubFloatingRateBuilder{
+  o String id
+  o FloatingRateIndexEnum floatingRateIndex
+  o RateTreatmentEnum rateTreatment
+
+}
+enum DayCountFractionEnum{
+  o _1_1
+  o _30_360
+  o _30E_360
+  o _30E_360_ISDA
+  o ACT_360
+  o ACT_365_FIXED
+  o ACT_365L
+  o ACT_ACT_AFB
+  o ACT_ACT_ICMA
+  o ACT_ACT_ISDA
+  o ACT_ACT_ISMA
+  o BUS_252
+
+}
+concept PriorDateInstanceBuilder{
+  o DateTime date
+
+}
+concept PriorDateInstance{
+  o Identifier contractReference
+  o DateTime date
+
+}
+concept DateRelativeToCalculationPeriodDates{
+  o String[] calculationPeriodDatesReference
+
+}
+concept DateRelativeToCalculationPeriodDatesBuilder{
+  o String[] calculationPeriodDatesReference
+
+}
+enum NaturalPersonRoleEnum{
+  o TRADER
+
+}
+concept CompositeBuilder{
+  o DeterminationMethodEnum determinationMethod
+
+}
+concept Composite{
+  o FxSpotRateSource fxSpotRateSource
+  o DeterminationMethodEnum determinationMethod
+  o RelativeDateOffset relativeDate
+
+}
+concept AveragingObservationListBuilder{
+
+}
+concept AveragingObservationList{
+  o WeightedAveragingObservation[] averagingObservation
+
+}
+enum TransferStatusEnum{
+  o DISPUTED
+  o INSTRUCTED
+  o PENDING
+  o SETTLED
+
+}
+concept ListedHeader{
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o ProductIdentifier[] productIdentifier
+  o ProductTaxonomy[] productTaxonomy
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept ListedHeaderBuilder{
+  o String id
+  o String currency
+  o String clearanceSystemScheme
+  o String productIdentifierScheme
+  o String description
+  o String clearanceSystem
+  o String currencyScheme
+
+}
+concept OptionPhysicalSettlementBuilder{
+  o Boolean clearedPhysicalSettlement
+  o String predeterminedClearingOrganizationPartyReference
+
+}
+concept OptionPhysicalSettlement{
+  o Boolean clearedPhysicalSettlement
+  o String predeterminedClearingOrganizationPartyReference
+
+}
+concept PackageInformation{
+  o CategoryEnum[] category
+  o RelatedParty[] relatedParty
+  o Boolean intentToAllocate
+
+}
+concept PackageInformationBuilder{
+  o CategoryEnum[] category
+  o Boolean intentToAllocate
+
+}
+concept Cashflow{
+  o AdjustableOrAdjustedOrRelativeDate cashflowDate
+  o String rosettaKeyValue
+  o String cashflowCalculation
+  o CashflowTypeEnum cashflowType
+  o Money cashflowAmount
+  o String id
+  o Double discountFactor
+  o Money presentValueAmount
+  o PremiumExpression premiumExpression
+  o PaymentDiscounting paymentDiscounting
+  o PayerReceiver payerReceiver
+
+}
+concept CashflowBuilder{
+  o String cashflowCalculation
+  o CashflowTypeEnum cashflowType
+  o String id
+  o Double discountFactor
+
+}
+enum CommodityReferencePriceEnum{
+  o ALUMINIUM_ALLOY_LME_15_MONTH
+
+}
+concept PeriodBuilder{
+  o String id
+  o PeriodEnum period
+  o Integer periodMultiplier
+
+}
+concept CashSettlementTerms{
+  o String id
+  o Money quotationAmount
+  o Money minimumQuotationAmout
+  o Boolean accruedInterest
+  o String settlementCurrency
+  o Integer cashSettlementBusinessDays
+  o ValuationDate valuationDate
+  o BusinessCenterTime valuationTime
+  o QuotationRateTypeEnum quotationMethod
+  o String dealer
+  o Money cashSettlementAmount
+  o Boolean fixedSettlement
+  o ValuationMethodEnum valuationMethod
+  o Double recoveryFactor
+  o String settlementCurrencyScheme
+
+}
+concept CashSettlementTermsBuilder{
+  o String id
+  o Boolean accruedInterest
+  o String settlementCurrency
+  o Integer cashSettlementBusinessDays
+  o QuotationRateTypeEnum quotationMethod
+  o String dealer
+  o Boolean fixedSettlement
+  o ValuationMethodEnum valuationMethod
+  o Double recoveryFactor
+  o String settlementCurrencyScheme
+
+}
+concept RateObservationBuilder{
+  o String id
+  o Integer observationWeight
+  o DateTime resetDate
+  o DateTime adjustedFixingDate
+  o Double observedRate
+  o Double treatedRate
+  o String rateReference
+  o Double forecastRate
+  o Double treatedForecastRate
+
+}
+concept RateObservation{
+  o String id
+  o Integer observationWeight
+  o DateTime resetDate
+  o DateTime adjustedFixingDate
+  o Double observedRate
+  o Double treatedRate
+  o String rateReference
+  o Double forecastRate
+  o Double treatedForecastRate
+
+}
+concept MasterAgreement{
+  o String masterAgreementId
+  o MasterAgreementTypeEnum masterAgreementType
+  o String masterAgreementVersion
+  o DateTime masterAgreementDate
+  o String masterAgreementIdScheme
+  o String masterAgreementTypeScheme
+  o String masterAgreementVersionScheme
+
+}
+concept MasterAgreementBuilder{
+  o String masterAgreementId
+  o MasterAgreementTypeEnum masterAgreementType
+  o String masterAgreementVersion
+  o DateTime masterAgreementDate
+  o String masterAgreementIdScheme
+  o String masterAgreementTypeScheme
+  o String masterAgreementVersionScheme
+
+}
+concept ScheduleBuilder{
+  o String id
+  o Double initialValue
+
+}
+concept Schedule{
+  o String id
+  o Double initialValue
+  o Step[] step
+
+}
+concept OptionDenomination{
+  o Double optionEntitlement
+  o Double numberOfOptions
+  o String entitlementCurrency
+  o String entitlementCurrencyScheme
+
+}
+concept OptionDenominationBuilder{
+  o Double optionEntitlement
+  o Double numberOfOptions
+  o String entitlementCurrency
+  o String entitlementCurrencyScheme
+
+}

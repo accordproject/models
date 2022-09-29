@@ -1,0 +1,124 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0"
+namespace org.accordproject.trademark@0.2.0
+
+import org.accordproject.address@0.2.0.PostalAddress from https://models.accordproject.org/address@0.2.0.cto
+import org.accordproject.geo@0.2.0.{Country, GeoCoordinates} from https://models.accordproject.org/geo@0.2.0.cto
+import org.accordproject.person@0.2.0.Person from https://models.accordproject.org/person@0.2.0.cto
+
+import org.accordproject.usa.entity@0.2.0.EntityType from https://models.accordproject.org/usa/entity@0.2.0.cto
+import org.accordproject.color@0.2.0.Color from https://models.accordproject.org/color@0.2.0.cto
+/**
+* This smart-contract model describes a United States (US) Trademark Asset that may or may not have foreign counterparts.
+* Drafted by Perkins Coie LLP
+*/
+
+/**
+* A U.S. Trademark Asset Identifier
+*/
+concept TrademarkAssetIdentifier {
+ o String assetSerialNumber
+ o String assetRegistrationNumber optional
+ o Country assetCountry
+}
+
+/**
+* A Goods & Services Description
+*/
+concept GoodsAndServices  {
+ o String gsDescription
+ o String intlClass
+ o String usClass optional
+ o String currentFilingBasis
+ o String origFilingBasis optional
+}
+
+/**
+* An Owner        //Current Owner if different from Registrant
+*/
+participant Owner extends Person {
+}
+
+/**
+* A Registrant
+*/
+participant Registrant extends Person {
+}
+
+
+/**
+* An Assignee
+*/
+participant Assignee extends Person {
+}
+
+/**
+* A Correspondent    //Correspondence Information
+*/
+participant Correspondent extends Person {
+}
+
+/**
+* An Attorney
+*/
+participant Attorney extends Person {
+}
+
+
+// MarkStatus
+enum MarkStatus {
+  o Live     // Live
+  o Dead     // Dead
+}
+
+
+// Mark Type
+enum MarkType {
+  o Standard_Character    // Standard Character
+  o Special_Form        // Special Form (Stylized and/or Design)
+  o Sound            // Sound
+}
+
+
+// Register
+enum Register {
+  o Principal    // Principal Register
+  o Supplemental // Supplemental Register
+}
+
+/**
+* http://schema.org/TrademarkAsset
+*/
+
+concept TrademarkAsset {
+ o TrademarkAssetIdentifier assetIdentifier
+ o String encodedMarkImage
+ o String markDescription
+ o GoodsAndServices[] goodsandServices optional
+ o Owner originalOwner optional
+ o EntityType entityType optional
+ o Registrant originalRegistrant optional
+ o Assignee currentAssignee optional
+ o Correspondent currentCorrespondent optional
+ o Attorney attorneyRepresentative optional
+ o MarkStatus markStatus optional
+ o MarkType markType optional
+ o Register register optional
+ o String literalElement optional
+ o Boolean colorClaim optional
+ o Color[] colorFeature optional
+ o DateTime filingDate optional
+ o DateTime registrationDate optional
+}

@@ -1,0 +1,68 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+/**
+ * DecoratorCommandSet defines a set of instructions to add or update decorators
+ * on model elements.
+ */
+concerto version "^3.0.0"
+namespace org.accordproject.decoratorcommands@0.2.0
+
+import concerto.metamodel@0.4.0.Decorator from https://models.accordproject.org/concerto/metamodel@0.4.0.cto
+
+/**
+ * A reference to an existing named & versioned DecoratorCommandSet
+ */
+concept DecoratorCommandSetReference {
+    o String name
+    o String version
+}
+
+/**
+ * Whether to upsert or append the decorator
+ */
+enum CommandType {
+    o UPSERT
+    o APPEND
+}
+
+/**
+ * Which models elements to add the decorator to. Any null
+ * elements are 'wildcards'. 
+ */
+concept CommandTarget {
+    o String namespace optional
+    o String declaration optional
+    o String property optional
+    o String type optional 
+}
+
+/**
+ * Applies a decorator to a given target
+ */
+concept Command {
+    o CommandTarget target
+    o Decorator decorator
+    o CommandType type
+}
+
+/**
+ * A named and versioned set of commands. Includes are supported for modularity/reuse.
+ */
+concept DecoratorCommandSet {
+    o String name
+    o String version
+    o DecoratorCommandSetReference[] includes optional
+    o Command[] commands
+}

@@ -1,0 +1,50 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0"
+namespace org.accordproject.finance.loan@0.2.0
+
+import org.accordproject.time@0.3.0.Duration from https://models.accordproject.org/time@0.3.0.cto
+import org.accordproject.money@0.3.0.CurrencyCode from https://models.accordproject.org/money@0.3.0.cto
+import org.accordproject.money@0.3.0.DigitalCurrencyCode from https://models.accordproject.org/money@0.3.0.cto
+
+enum CurrencyType {
+  o MONETARY
+  o CRYPTOMONETARY
+}
+
+concept PaymentFrequency {
+    o Integer periodMultiplier
+    o Duration period
+}
+
+/**
+ * Definition of a Loan, based on the FpML schema:
+ * http://www.fpml.org/spec/fpml-5-3-2-wd-2/html/reporting/schemaDocumentation/schemas/fpml-asset-5-3_xsd/complexTypes/Loan.html
+ *
+ */
+concept Loan {
+    o String[] instrumentId
+    o String description optional
+    o CurrencyType currencyType
+    o CurrencyCode currencyCode optional
+    o DigitalCurrencyCode DigitalCurrencyCode optional
+    o String[] exchangeId optional
+    o String clearanceSystem optional
+    o String definition optional
+    o String lien optional         
+    o String facilityType optional
+    o DateTime maturity
+    o DateTime creditAgreementDate
+    o String tranche optional
+}

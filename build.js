@@ -64,7 +64,7 @@ async function generatePlantUML(thisConcerto, buildDir, destPath, fileNameNoExt,
         return `https://www.plantuml.com/plantuml/svg/${encoded}`;        
     }
     catch(err) {
-        console.log(`Generating PlantUML for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating PlantUML for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -95,7 +95,7 @@ async function generateTypescript(thisConcerto, buildDir, destPath, fileNameNoEx
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating Typescript for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating Typescript for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -126,7 +126,7 @@ async function generateCSharp(thisConcerto, buildDir, destPath, fileNameNoExt, m
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating CSharp for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating CSharp for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -157,7 +157,7 @@ async function generateOData(thisConcerto, buildDir, destPath, fileNameNoExt, mo
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating OData for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating OData for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -188,7 +188,7 @@ async function generateXmlSchema(thisConcerto, buildDir, destPath, fileNameNoExt
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating XmlSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating XmlSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -207,7 +207,7 @@ async function generateJsonSchema(thisConcerto, buildDir, destPath, fileNameNoEx
             });
     }
     catch(err) {
-        console.log(`Generating JsonSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating JsonSchema for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -229,7 +229,7 @@ async function generateGraphQL(thisConcerto, buildDir, destPath, fileNameNoExt, 
         modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating GraphQL for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating GraphQL for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -250,7 +250,7 @@ async function generateJsonAst(thisConcerto, buildDir, destPath, fileNameNoExt, 
         });
     }
     catch(err) {
-        console.log(`Generating JSON Syntax Tree for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating JSON Syntax Tree for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -280,7 +280,7 @@ async function generateJava(thisConcerto, buildDir, destPath, fileNameNoExt, mod
             modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating Java for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating Java for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -310,7 +310,7 @@ async function generateGo(thisConcerto, buildDir, destPath, fileNameNoExt, model
             modelFile.getModelManager().accept(visitor, params);
     }
     catch(err) {
-        console.log(`Generating Go for ${destPath}/${fileNameNoExt}: ${err.message}`);
+        console.log(`    Generating Go for ${destPath}/${fileNameNoExt}: ${err.message}`);
     }
 }
 
@@ -327,9 +327,12 @@ let modelFileIndex = [];
  */
 function findCompatibleVersion(concertoVersions, modelText) {
     const defaultConcertoVersion = concertoVersions[DEFAULT_CONCERTO_VERSION];
-    const regex = /^\/\/.*requires:.*concerto-core:(?<versionRange>.*)$/m;
-    const match = modelText.match(regex);
-    const versionRange = match ? match.groups.versionRange : null;
+
+    const commentRegex = /^\/\/.*requires:.*concerto-core:(?<versionRange>.*)$/m;
+    const declarationRegex = /^concerto version \"(?<versionRange>.*)\"$/m;
+    const match = modelText.match(declarationRegex) || modelText.match(commentRegex);
+
+    const versionRange = match ? match.groups.versionRange.replace(' ', '') : null;
     const foundConcertoVersion = Object.entries(concertoVersions).find(([version,concerto]) => {
         return versionRange && semver.satisfies( version, versionRange );
     });
@@ -353,39 +356,48 @@ function findCompatibleVersion(concertoVersions, modelText) {
 
     // validate and copy all the files
     const files = await getFiles(rootDir);
+
+    const filter = process.argv[2];
     for( const file of files ) {
-        const modelText = fs.readFileSync(file, 'utf8');
-        const thisConcerto = findCompatibleVersion(concertoVersions, modelText);
-
-        const modelManager = new thisConcerto.ModelManager();
-        if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
-            // load system model if we are using 0.82
-            const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
-            modelManager.addModelFile(systemModel, 'base.cto', false, true);
-        }
-
-        let modelFile = null;
-
-        if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
-            modelFile  = new thisConcerto.ModelFile(modelManager, modelText, file);     
-        }
-        else {
-            const ast = thisConcerto.Parser.parse(modelText, file);
-            modelFile  = new thisConcerto.ModelFile(modelManager, ast, modelText, file);         
-        }
-        console.log(`Processing ${modelFile.getNamespace()}`);
-        let modelFilePlantUML = '';
-        // passed validation, so copy to build dir
-        const dest = file.replace('/src/', '/build/');
-        const destPath = path.dirname(dest);
-        const relative = destPath.slice(buildDir.length);
-
-        const fileName = path.basename(file);
-        const fileNameNoExt = path.parse(fileName).name;
-
-        await fs.ensureDir(destPath);
-        let umlURL = '';
         try {
+            if (!file.match(filter)){
+                continue;
+            }
+
+            const modelText = fs.readFileSync(file, 'utf8');
+            const thisConcerto = findCompatibleVersion(concertoVersions, modelText);
+            let modelManager = new thisConcerto.ModelManager();
+            if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
+                // load system model if we are using 0.82
+                const systemModel = fs.readFileSync(rootDir + '/cicero/base.cto', 'utf8');
+                modelManager.addModelFile(systemModel, 'base.cto', false, true);
+            }
+            if(semver.lte(thisConcerto.concertoVersion, '3.0.0')) {
+                modelManager = new thisConcerto.ModelManager({ strict: true });
+            }
+    
+            let modelFile = null;
+    
+            if(semver.satisfies(thisConcerto.concertoVersion, '0.82.x')) {
+                modelFile  = new thisConcerto.ModelFile(modelManager, modelText, file);     
+            }
+            else {
+                const ast = thisConcerto.Parser.parse(modelText, file);
+                modelFile  = new thisConcerto.ModelFile(modelManager, ast, modelText, file);         
+            }
+            console.log(`🔄 Processing ${modelFile.getNamespace()} using Concerto v${thisConcerto.concertoVersion}`);
+            let modelFilePlantUML = '';
+            // passed validation, so copy to build dir
+            const dest = file.replace('/src/', '/build/');
+            const destPath = path.dirname(dest);
+            const relative = destPath.slice(buildDir.length);
+    
+            const fileName = path.basename(file);
+            const fileNameNoExt = path.parse(fileName).name;
+    
+            await fs.ensureDir(destPath);
+            let umlURL = '';
+ 
             // Find the model version
             const modelVersionStr = relative.match(/v\d+(\.\d+){0,2}/g);
             const isLegacyModelVersionScheme = modelVersionStr !== null && modelVersionStr.length === 1;
@@ -434,7 +446,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 const serverRoot = process.env.SERVER_ROOT;
                 const templateResult = nunjucks.render('model.njk', { serverRoot: serverRoot, modelFile: modelFile, modelVersion: modelVersion, filePath: `${relative}/${fileNameNoExt}`, umlURL: umlURL, concerto: thisConcerto });
                 modelFileIndex.push({htmlFile: generatedHtmlFile, modelFile: modelFile, modelVersion: modelVersion});
-                console.log(`✓ Processed ${modelFile.getNamespace()} version ${modelVersion} (for Concerto ${thisConcerto.concertoVersion})`);
+                console.log(`✅ Processed ${modelFile.getNamespace()} version ${modelVersion}`);
 
                 fs.writeFile( `./build/${generatedHtmlFile}`, templateResult, function (err) {
                     if (err) {
@@ -446,7 +458,7 @@ function findCompatibleVersion(concertoVersions, modelText) {
                 await fs.copy(file, dest);
             }
         } catch (err) {
-            console.log(`❗ Error handling ${modelFile.getName()}`);
+            console.log(`❗ Error handling ${file}`);
             console.log(err.message);
             console.log(err);
         }

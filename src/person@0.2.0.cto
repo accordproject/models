@@ -1,0 +1,76 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0"
+namespace org.accordproject.person@0.2.0
+
+import org.accordproject.value@0.2.0.QuantitativeValue from https://models.accordproject.org/value@0.2.0.cto
+import org.accordproject.address@0.2.0.PostalAddress from https://models.accordproject.org/address@0.2.0.cto
+import org.accordproject.organization@0.2.0.Organization from https://models.accordproject.org/organization@0.2.0.cto
+import org.accordproject.geo@0.2.0.{Place, Country} from https://models.accordproject.org/geo@0.2.0.cto
+import org.accordproject.money@0.3.0.MonetaryAmount from https://models.accordproject.org/money@0.3.0.cto
+import org.accordproject.product@0.2.0.Product from https://models.accordproject.org/produc@0.2.0t.cto
+
+enum Gender {
+  o MALE
+  o FEMALE
+  o OTHER
+  o UNKNOWN
+}
+
+/**
+ * Based on http://schema.org/Person
+ */
+participant Person identified by identifier {
+  o String identifier
+  o String additionalName optional
+  o PostalAddress address optional
+  --> Organization affiliation optional
+  --> Organization alumniOf optional
+  o String award optional
+  o DateTime birthDate optional
+  o DateTime deathDate optional
+  o Place birthPlace optional
+  --> Person[] children optional
+  --> Person[] colleagues optional
+  o String email optional
+  o String familyName optional
+  o String faxNumber optional
+  --> Person[] follows optional
+  --> Organization funder optional
+  o Gender gender optional
+  o String givenName optional
+  o String globalLocationNumber optional
+  o QuantitativeValue height optional
+  o PostalAddress homeLocation optional
+  o String honorificPrefix optional
+  o String honorificSuffix optional
+  o String isicsV4 optional
+  o String jobTitle optional
+  --> Person[] knows optional
+  --> Organization memberOf optional
+  o String naics optional
+  o Country nationality optional
+  o MonetaryAmount netWorth optional
+  --> Product owns optional
+  --> Person parent optional
+  --> Person relatedTo optional
+  --> Person[] sibling optional
+  --> Organization sponsor optional
+  --> Person spouse optional
+  o String taxId optional
+  o String telephone optional
+  o String vatId optional
+  o QuantitativeValue weight optional
+  --> Organization worksFor optional
+}
