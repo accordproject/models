@@ -11,9 +11,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-concerto version "^3.0.0"
 
-namespace org.accordproject.time@0.2.0
+namespace org.accordproject.time
 
 /**
  * Months of the year
