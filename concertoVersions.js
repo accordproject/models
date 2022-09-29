@@ -31,8 +31,10 @@ const concertoFromVersion = (version) => ({
  * should be compatible with version 2.0.x of the CTO parser
  */
 module.exports = {
-    defaultVersion: '3.0.0',
-    '3.0.0': concertoFromVersion('3.0'),
-    '2.0.0': concertoFromVersion('2.0'),
+    // We're forced to use version 2 by default, because we want to force strict mode in version 3.
+    // Older models do not have version declarations and we can't modify them retrospectively
+    defaultVersion: '2.0.0',
     '0.82.11': concertoFromVersion('0.82'),
+    '2.0.0': concertoFromVersion('2.0'),
+    '3.0.0': concertoFromVersion('3.0'),
 };

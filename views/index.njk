@@ -24,7 +24,7 @@
                 <ul class="namespaces-list">
                     {% for e in modelFileIndex %}
                     <li>
-                        <a href="{{e.htmlFile}}">{{e.modelFile.getNamespace()}}{{ e.modelVersion }}</a> ({{e.modelFile.getAllDeclarations().length}} types)
+                        <a href="{{e.htmlFile}}">{{e.modelFile.getNamespace()}}{% if e.modelFile.getNamespace().includes("@")===false %}@{{ e.modelVersion }}{% endif %}</a> ({{e.modelFile.getAllDeclarations().length}} types)
                     </li>
                     {% endfor %}
                 </ul>

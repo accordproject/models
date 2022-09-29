@@ -18,12 +18,11 @@
 <section class="section inner-content">
   <div class="container">
     <h1 class="title is-1">
-      Namespace {{modelFile.getNamespace()}}({{modelVersion}})
+      Namespace {{modelFile.getNamespace()}}{% if modelFile.getNamespace().includes("@")===false %}{{modelVersion}}{% endif %}
     </h1>
     <p class="subtitle">
-      Found {{modelFile.getAllDeclarations().length}} declarations!
+      Compatible with Concerto versions {{modelFile.getConcertoVersion()}}. Has {{modelFile.getAllDeclarations().length}} declarations.
     </p>
-
     <p>
       <a href="{{filePath}}.cto" alt="Concerto File" title="Concerto File" class="button is-rounded is-primary">Concerto</a>
       {% if concerto.MetaModel %}
@@ -43,7 +42,7 @@
     </p>
     <img src="{{umlURL}}" class="box" style="margin-top:40px;"  />
 
-    <h2 class="title is-2">Declared Types</h2>
+    <h4 class="title is-4">Declared Types</h4>
     <div class="content box">
       <pre style="border: 0; background-color: transparent;">
       <code class="js">
@@ -66,9 +65,7 @@
     <h4 class="title is-4">Source</h4>
     <div class="content box">
     <pre style="border: 0; background-color: transparent;">
-    <code class="js">
-      {{modelFile.getDefinitions()}}
-    </code>
+    <code class="js">{{modelFile.getDefinitions()}}</code>
     </pre>
   </div>
 </section>
