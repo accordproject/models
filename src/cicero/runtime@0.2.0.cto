@@ -16,7 +16,7 @@ concerto version "^3.0.0"
 namespace org.accordproject.cicero.runtime@0.2.0
 
 import org.accordproject.cicero.contract@0.2.0.{AccordContract, AccordContractState} from https://models.accordproject.org/cicero/contract@0.2.0.cto
-import org.accordproject.money@0.2.0.MonetaryAmount from https://models.accordproject.org/money.cto
+import org.accordproject.money@0.3.0.MonetaryAmount from https://models.accordproject.org/money@0.3.0.cto
 
 /**
  * Contract API
