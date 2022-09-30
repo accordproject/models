@@ -19,7 +19,7 @@ import org.accordproject.address@0.2.0.PostalAddress from https://models.accordp
 import org.accordproject.organization@0.2.0.Organization from https://models.accordproject.org/organization@0.2.0.cto
 import org.accordproject.geo@0.2.0.{Place, Country} from https://models.accordproject.org/geo@0.2.0.cto
 import org.accordproject.money@0.3.0.MonetaryAmount from https://models.accordproject.org/money@0.3.0.cto
-import org.accordproject.product@0.2.0.Product from https://models.accordproject.org/produc@0.2.0t.cto
+import org.accordproject.product@0.2.0.Product from https://models.accordproject.org/product@0.2.0.cto
 
 enum Gender {
   o MALE
