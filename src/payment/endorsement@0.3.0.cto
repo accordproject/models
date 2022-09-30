@@ -14,7 +14,7 @@
 concerto version "^3.0.0"
 namespace org.accordproject.payment.endorsement@0.3.0
 
-import org.accordproject.money@0.4.0.DigitalMonetaryAmount from https://models.accordproject.org/money@0.3.0.cto
+import org.accordproject.money@0.3.0.DigitalMonetaryAmount from https://models.accordproject.org/money@0.3.0.cto
 
 /** This smart-contract model describes a routine that would transfer a cryptocurrency payment to be made by a separate smart contract (a “payment smart contract”) on a specified date to a payee to a transferee authorized by the payee. This can be thought of as equivalent to flipping a check or note over and writing “Pay to the order of” on the back, hence it is referred to as an “endorsement smart contract”.
  */
