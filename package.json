@@ -20,14 +20,14 @@
     "bulma": "^0.7.5",
     "concerto-core-0.82": "npm:@accordproject/concerto-core@0.82.11",
     "concerto-core-2.0": "npm:@accordproject/concerto-core@2.1.0",
-    "concerto-core-3.0": "npm:@accordproject/concerto-core@3.0.0",
+    "concerto-core-3.5": "npm:@accordproject/concerto-core@3.5.0",
     "concerto-cto-2.0": "npm:@accordproject/concerto-cto@2.1.0",
-    "concerto-cto-3.0": "npm:@accordproject/concerto-cto@3.0.0",
+    "concerto-cto-3.5": "npm:@accordproject/concerto-cto@3.5.0",
     "concerto-tools-0.82": "npm:@accordproject/concerto-tools@0.82.11",
     "concerto-tools-2.0": "npm:@accordproject/concerto-tools@2.1.0",
-    "concerto-tools-3.0": "npm:@accordproject/concerto-tools@3.0.0",
+    "concerto-tools-3.5": "npm:@accordproject/concerto-tools@3.5.0",
     "concerto-util-2.0": "npm:@accordproject/concerto-util@2.1.0",
-    "concerto-util-3.0": "npm:@accordproject/concerto-util@3.0.0",
+    "concerto-util-3.5": "npm:@accordproject/concerto-util@3.5.0",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
@@ -49,5 +49,9 @@
   "bugs": {
     "url": "https://github.com/accordproject/models/issues"
   },
-  "homepage": "https://github.com/accordproject/models#readme"
+  "homepage": "https://github.com/accordproject/models#readme",
+  "dependencies": {
+    "@accordproject/concerto-core": "^3.5.0",
+    "@accordproject/concerto-tools": "^3.5.0"
+  }
 }
