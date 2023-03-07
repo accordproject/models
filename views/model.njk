@@ -28,17 +28,9 @@
       {% if concerto.MetaModel %}
       <a href="{{filePath}}.ast.json" alt="JSON Syntax Tree" title="JSON" class="button is-rounded is-primary">JSON AST</a>
       {% endif %}    
-      <a href="{{filePath}}.puml" alt="UML Diagram" title="UML Diagram" class="button is-rounded is-primary">UML</a>
-      <a href="{{filePath}}.json" alt="JSON Schema" title="JSON Schema" class="button is-rounded is-primary">JSON Schema</a>
-      <a href="{{filePath}}.xsd.zip" alt="XML Schema" title="XML Schema" class="button is-rounded is-primary">XML Schema</a>
-      {% if concerto.CodeGen.GraphQLVisitor %}
-      <a href="{{filePath}}.gql" alt="GraphQL Schema" title="GraphQL Schema" class="button is-rounded is-primary">GraphQL</a>
-      {% endif %}    
-      <a href="{{filePath}}.ts.zip" alt="TypeScript Source Code" title="TypeScript Source Code" class="button is-rounded is-primary">TypeScript</a>
-      <a href="{{filePath}}.cs.zip" alt="CSharp Source Code" title="CSharp Source Code" class="button is-rounded is-primary">CSharp</a>
-      <a href="{{filePath}}.jar" alt="Java Source Code" title="Java Source Code" class="button is-rounded is-primary">Java</a>
-      <a href="{{filePath}}.go.zip" alt="Go Source Code" title="Go Source Code" class="button is-rounded is-primary">Go</a>
-      <a href="{{filePath}}.csdl.zip" alt="OData Source Code" title="OData Source Code" class="button is-rounded is-primary">OData</a>
+      {% for gen in codeGenerators %}
+            <a href="{{filePath}}.{{gen.ext}}.zip" alt="{{gen.name}}" title="{{gen.name}}" class="button is-rounded is-primary">{{gen.name}}</a>
+      {% endfor %}
     </p>
     <img src="{{umlURL}}" class="box" style="margin-top:40px;"  />
 
