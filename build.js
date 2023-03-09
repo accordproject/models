@@ -164,7 +164,7 @@ async function generatePlantUML(thisConcerto, buildDir, destPath, fileNameNoExt,
         const fileWriter = new thisConcerto.FileWriter(buildDir);
         fileWriter.openFile(generatedPumlFile);
         fileWriter.writeLine(0, '@startuml');
-        const params = {fileWriter : fileWriter, showCompositionRelationships: false, hideBaseModel: true};
+        const params = {fileWriter : fileWriter, showCompositionRelationships: true, hideBaseModel: true};
         modelFile.accept(visitor, params);
         fileWriter.writeLine(0, '@enduml');
         fileWriter.closeFile();
