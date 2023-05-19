@@ -73,6 +73,26 @@ abstract concept Declaration {
   o Range location optional
 }
 
+concept MapDeclaration extends Declaration {
+  o MapKeyType key
+  o AggregateValueType value
+}
+
+concept MapKeyType {
+  o TypeIdentifier type
+  o Decorator[] decorators optional
+  o Range location optional
+}
+
+concept AggregateValueType {
+  o TypeIdentifier type
+  o Decorator[] decorators optional
+  o Range location optional
+}
+
+concept AggregateRelationshipValueType extends AggregateValueType {
+}
+
 concept EnumDeclaration extends Declaration {
   o EnumProperty[] properties
 }
@@ -129,11 +149,17 @@ concept DateTimeProperty extends Property {
 concept StringProperty extends Property {
   o String defaultValue optional
   o StringRegexValidator validator optional
+  o StringLengthValidator lengthValidator optional
 }
 
 concept StringRegexValidator {
   o String pattern
   o String flags
+}
+
+concept StringLengthValidator {
+  o Integer minLength optional
+  o Integer maxLength optional
 }
 
 concept DoubleProperty extends Property {
@@ -220,6 +246,7 @@ concept DoubleScalar extends ScalarDeclaration {
 concept StringScalar extends ScalarDeclaration {
   o String defaultValue optional
   o StringRegexValidator validator optional
+  o StringLengthValidator lengthValidator optional
 }
 
 concept DateTimeScalar extends ScalarDeclaration {
