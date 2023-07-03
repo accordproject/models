@@ -31,7 +31,7 @@
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
-    "nunjucks": "^3.2.2",
+    "nunjucks": "^3.2.4",
     "plantuml-encoder": "^1.4.0",
     "rimraf": "^2.7.1",
     "semver": "^6.3.0",
