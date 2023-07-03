@@ -84,10 +84,13 @@ concept OptionalDefinition extends BlockDefinition {
     o Child[] whenSome
     o Child[] whenNone
 }
-
 concept JoinDefinition extends BlockDefinition {
-    o String separator
-    o String lastSeparator optional
+    // if separator is set, we just use that
+    o String separator optional
+    // if separator is not set, we use the Intl.ListFormat, paramaterized by locale, type and style
+    o String locale optional
+    o String type optional
+    o String style optional
 }
 
 concept ListBlockDefinition extends BlockDefinition {
