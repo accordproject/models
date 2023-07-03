@@ -87,7 +87,7 @@ concept OptionalDefinition extends BlockDefinition {
 concept JoinDefinition extends BlockDefinition {
     // if separator is set, we just use that
     o String separator optional
-    // if separator is not set, we use the Intl.ListFormat, paramaterized by type and style
+    // if separator is not set, we use the Intl.ListFormat, paramaterized by locale, type and style
     o String locale optional
     o String type optional
     o String style optional
