@@ -38,7 +38,7 @@
     <div class="content box">
       <pre style="border: 0; background-color: transparent;">
       <code class="js">
-      {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from {{serverRoot}}{{filePath}}.cto
+      {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from '{{serverRoot}}{{filePath}}.cto'
       {% endfor %}
       </code></pre>
     </div>
