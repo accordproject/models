@@ -14,6 +14,7 @@
 
 'use strict';
 
+process.env.SERVER_ROOT = "https://models.accordproject.org";
 const concertoVersions = require('./concertoVersions');
 const DEFAULT_CONCERTO_VERSION = concertoVersions.defaultVersion;
 
