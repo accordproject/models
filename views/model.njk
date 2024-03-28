@@ -36,9 +36,9 @@
 
     <h4 class="title is-4">Declared Types</h4>
     <div class="content box">
-      <pre style="border: 0; background-color: transparent;">
-      <code class="js">
-      {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from '{{serverRoot}}{{filePath}}.cto'
+      <pre style="border: 0; background-color: transparent; color: black">
+      <code class="nohighlight">
+      {% for decl in modelFile.getAllDeclarations() %}import {{decl.getFullyQualifiedName()}} from {{serverRoot}}{{filePath}}.cto
       {% endfor %}
       </code></pre>
     </div>
