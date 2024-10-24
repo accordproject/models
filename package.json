@@ -1,10 +1,10 @@
 {
   "name": "@accordproject/models",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "This repository host all Accord Project models. Models are captured using the Concerto modeling language; a platform and runtime neutral typed schema language.",
   "engines": {
-    "node": ">=12",
-    "npm": ">=5"
+    "node": ">=18",
+    "npm": ">=10"
   },
   "main": "build.js",
   "scripts": {
@@ -20,14 +20,14 @@
     "bulma": "^0.7.5",
     "concerto-core-0.82": "npm:@accordproject/concerto-core@0.82.11",
     "concerto-core-2.0": "npm:@accordproject/concerto-core@2.1.0",
-    "concerto-core-3.6": "npm:@accordproject/concerto-core@3.7.0",
+    "concerto-core-3.6": "npm:@accordproject/concerto-core@3.19.4",
     "concerto-cto-2.0": "npm:@accordproject/concerto-cto@2.1.0",
-    "concerto-cto-3.6": "npm:@accordproject/concerto-cto@3.7.0",
+    "concerto-cto-3.6": "npm:@accordproject/concerto-cto@3.19.4",
     "concerto-tools-0.82": "npm:@accordproject/concerto-tools@0.82.11",
     "concerto-tools-2.0": "npm:@accordproject/concerto-tools@2.1.0",
-    "concerto-tools-3.6": "npm:@accordproject/concerto-tools@3.7.0",
+    "concerto-tools-3.6": "npm:@accordproject/concerto-codegen@3.29.10",
     "concerto-util-2.0": "npm:@accordproject/concerto-util@2.1.0",
-    "concerto-util-3.6": "npm:@accordproject/concerto-util@3.7.0",
+    "concerto-util-3.6": "npm:@accordproject/concerto-util@3.19.4",
     "fs-extra": "^6.0.1",
     "lodash": "^4.17.20",
     "mkdirp": "^1.0.4",
@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/accordproject/models#readme",
   "dependencies": {
-    "@accordproject/concerto-core": "^3.5.0",
-    "@accordproject/concerto-tools": "^3.5.0"
+    "@accordproject/concerto-core": "^3.19.4",
+    "@accordproject/concerto-codegen": "^3.29.10"
   }
 }
