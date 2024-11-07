@@ -73,24 +73,41 @@ abstract concept Declaration {
   o Range location optional
 }
 
+abstract concept MapKeyType {
+  o Decorator[] decorators optional
+  o Range location optional
+}
+
+abstract concept MapValueType {
+  o Decorator[] decorators optional
+  o Range location optional
+}
+
 concept MapDeclaration extends Declaration {
   o MapKeyType key
-  o AggregateValueType value
+  o MapValueType value
 }
 
-concept MapKeyType {
+concept StringMapKeyType extends MapKeyType {}
+concept DateTimeMapKeyType extends MapKeyType {}
+
+concept ObjectMapKeyType extends MapKeyType {
   o TypeIdentifier type
-  o Decorator[] decorators optional
-  o Range location optional
 }
 
-concept AggregateValueType {
+concept BooleanMapValueType extends MapValueType {}
+concept DateTimeMapValueType extends MapValueType {}
+concept StringMapValueType extends MapValueType {}
+concept IntegerMapValueType extends MapValueType {}
+concept LongMapValueType extends MapValueType {}
+concept DoubleMapValueType extends MapValueType {}
+
+concept ObjectMapValueType extends MapValueType {
   o TypeIdentifier type
-  o Decorator[] decorators optional
-  o Range location optional
 }
 
-concept AggregateRelationshipValueType extends AggregateValueType {
+concept RelationshipMapValueType extends MapValueType {
+  o TypeIdentifier type
 }
 
 concept EnumDeclaration extends Declaration {
@@ -192,6 +209,10 @@ concept LongDomainValidator {
   o Long upper optional
 }
 
+concept AliasedType{
+  o String name
+  o String aliasedName
+}
 abstract concept Import {
   o String namespace
   o String uri optional
@@ -206,6 +227,7 @@ concept ImportType extends Import {
 
 concept ImportTypes extends Import {
   o String[] types
+  o AliasedType[] aliasedTypes optional
 }
 
 concept Model {
@@ -225,7 +247,7 @@ abstract concept ScalarDeclaration extends Declaration {
 }
 
 concept BooleanScalar extends ScalarDeclaration {
-  o Boolean defaultValue
+  o Boolean defaultValue optional
 }
 
 concept IntegerScalar extends ScalarDeclaration {
