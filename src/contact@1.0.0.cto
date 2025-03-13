@@ -35,7 +35,7 @@ scalar EmailAddress extends String length=[,254]
  */
 concept PhoneNumber {
   /*
-   * An formatted E.123 national number, potentially including spaces parentheses 
+    * A formatted E.123 national number, potentially including spaces parentheses
    * and separators (e.g. '-'). Does not include an International Prefix, extension,
    * trunk prefix or alternate endings.
    * https://www.itu.int/rec/T-REC-E.123-200102-I/en
