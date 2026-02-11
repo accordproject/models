@@ -51,7 +51,7 @@
   },
   "homepage": "https://github.com/accordproject/models#readme",
   "dependencies": {
-    "@accordproject/concerto-core": "^3.19.4",
-    "@accordproject/concerto-codegen": "^3.29.10"
+    "@accordproject/concerto-core": "^3.19.5",
+    "@accordproject/concerto-codegen": "^3.30.1"
   }
 }
