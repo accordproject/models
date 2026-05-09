@@ -33,14 +33,14 @@
     "concerto-util-3.6": "npm:@accordproject/concerto-util@3.19.4",
     "concerto-util-4.0": "npm:@accordproject/concerto-util@4.0.2",
     "fs-extra": "^6.0.1",
-    "lodash": "^4.17.23",
+    "lodash": "^4.18.1",
     "mkdirp": "^1.0.4",
     "nunjucks": "^3.2.4",
     "plantuml-encoder": "^1.4.0",
     "rimraf": "^2.7.1",
     "semver": "^6.3.0",
     "serve": "^14.2.6",
-    "showdown": "^1.9.1"
+    "showdown": "^2.1.0"
   },
   "keywords": [
     "accord",
