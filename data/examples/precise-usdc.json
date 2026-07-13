@@ -1,5 +1,5 @@
 {
-  "$class": "org.accordproject.money@1.0.0.FixedPointMonetaryAmount",
+  "$class": "org.accordproject.money@1.0.0.PreciseMonetaryAmount",
   "value": "1234560000",
   "unit": {
     "$class": "org.accordproject.money@1.0.0.MonetaryUnit",

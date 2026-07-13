@@ -1,5 +1,0 @@
-{
-  "$class": "org.accordproject.money@1.0.0.MonetaryAmount",
-  "doubleValue": 10.5,
-  "currencyCode": "USD"
-}

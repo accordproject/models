@@ -27,22 +27,22 @@ namespace org.accordproject.money@1.0.0
 scalar CurrencyCode extends String regex=/^[A-Z]{3}$/
 
 /**
- * Represents an amount of money.
+ * An approximate (floating-point) monetary amount.
  *
- * Decimal representation, backwards-compatible with
- * org.accordproject.money@0.3.0.MonetaryAmount. Instances of the 0.3.0
- * concept validate against this definition unchanged: `currencyCode` was an
- * ISO 4217 enum, whose members are three uppercase letters and so satisfy the
- * CurrencyCode scalar (e.g. "USD").
+ * `doubleValue` is an IEEE-754 double, so it cannot represent most decimal
+ * fractions exactly and errors accumulate under arithmetic. This type is for
+ * display, estimates, and legacy contracts only — NOT for settlement, ledgers,
+ * or any calculation. For exact arithmetic use PreciseMonetaryAmount.
  *
- * Use for legacy contracts, display values, and estimates where
- * floating-point precision loss is acceptable. For exact arithmetic
- * (settlement, ledgers, regulated reporting, non-decimal denominations)
- * prefer FixedPointMonetaryAmount.
+ * Backwards-compatible with org.accordproject.money@0.3.0.MonetaryAmount:
+ * instances of the 0.3.0 concept validate against this definition unchanged
+ * (its `currencyCode` enum members are three uppercase letters and so satisfy
+ * the CurrencyCode scalar, e.g. "USD"); only the `$class` name changes on
+ * migration.
  *
  * Example: { "doubleValue": 10.50, "currencyCode": "USD" }
  */
-concept MonetaryAmount {
+concept ApproximateMonetaryAmount {
   o Double doubleValue
   o CurrencyCode currencyCode
 }
@@ -55,7 +55,7 @@ concept MonetaryAmount {
  *          fiat; other schemes (e.g. "iso24165", "erc20", "caip19") allow
  *          non-fiat units without hard-coding ticker codes into the model.
  * `scale`  the number of decimal places / minor units. Travels with the
- *          unit so that a FixedPointMonetaryAmount is fully self-describing
+ *          unit so that a PreciseMonetaryAmount is fully self-describing
  *          without needing to resolve external reference data. e.g. USD=2,
  *          JPY=0, KWD=3, USDC=6, ETH=18.
  *
@@ -70,7 +70,7 @@ concept MonetaryUnit {
 
 /**
  * A base-10 integer, as a string. The exact integer mantissa of a
- * FixedPointMonetaryAmount, in canonical form (no leading zeros).
+ * PreciseMonetaryAmount, in canonical form (no leading zeros).
  *
  * Encoded as a string so the value is exact at any magnitude and scale —
  * unbounded by the 2^53 limit of a JSON number / IEEE-754 double, and never
@@ -81,7 +81,7 @@ concept MonetaryUnit {
 scalar IntegerAmount extends String regex=/^-?(0|[1-9][0-9]*)$/
 
 /**
- * Fixed-point (precision-safe) monetary amount.
+ * A precise (fixed-point) monetary amount.
  *
  * The amount is `value` minor units of `unit`, i.e.
  *
@@ -103,7 +103,7 @@ scalar IntegerAmount extends String regex=/^-?(0|[1-9][0-9]*)$/
  *   100.500 KWD -> { "value": "100500",              "unit": { "code": "KWD",  "scale": 3 } }
  *   1.5 ETH     -> { "value": "1500000000000000000", "unit": { "code": "ETH", "scheme": "slip44", "scale": 18 } }
  */
-concept FixedPointMonetaryAmount {
+concept PreciseMonetaryAmount {
   o IntegerAmount value
   o MonetaryUnit unit
 }
