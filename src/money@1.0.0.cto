@@ -16,13 +16,24 @@ concerto version "^3.0.0"
 namespace org.accordproject.money@1.0.0
 
 /**
+ * An ISO 4217 alphabetic currency code: three uppercase Latin letters
+ * (e.g. "USD", "JPY", "KWD"). The regex matches the ISO 4217 format without
+ * enumerating the code list, so new/retired codes need no model change.
+ *
+ * Every value of the org.accordproject.money@0.3.0.CurrencyCode enum is three
+ * uppercase letters, so existing instances validate against this scalar
+ * unchanged.
+ */
+scalar CurrencyCode extends String regex=/^[A-Z]{3}$/
+
+/**
  * Represents an amount of money.
  *
  * Decimal representation, backwards-compatible with
  * org.accordproject.money@0.3.0.MonetaryAmount. Instances of the 0.3.0
  * concept validate against this definition unchanged: `currencyCode` was an
- * ISO 4217 enum, whose members serialize as the same strings this String
- * property accepts (e.g. "USD").
+ * ISO 4217 enum, whose members are three uppercase letters and so satisfy the
+ * CurrencyCode scalar (e.g. "USD").
  *
  * Use for legacy contracts, display values, and estimates where
  * floating-point precision loss is acceptable. For exact arithmetic
@@ -33,7 +44,7 @@ namespace org.accordproject.money@1.0.0
  */
 concept MonetaryAmount {
   o Double doubleValue
-  o String currencyCode
+  o CurrencyCode currencyCode
 }
 
 /**
