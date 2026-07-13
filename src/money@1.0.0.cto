@@ -58,28 +58,41 @@ concept MonetaryUnit {
 }
 
 /**
+ * A base-10 integer, as a string. The exact integer mantissa of a
+ * FixedPointMonetaryAmount, in canonical form (no leading zeros).
+ *
+ * Encoded as a string so the value is exact at any magnitude and scale —
+ * unbounded by the 2^53 limit of a JSON number / IEEE-754 double, and never
+ * silently truncated by a JSON parser. Clients convert once at the boundary
+ * (e.g. BigInt(value), or a Dinero.js v2 / big.js money object) and then do
+ * exact integer arithmetic.
+ */
+scalar IntegerAmount extends String regex=/^-?(0|[1-9][0-9]*)$/
+
+/**
  * Fixed-point (precision-safe) monetary amount.
  *
  * The amount is `value` minor units of `unit`, i.e.
  *
  *   amount = value × 10^(−unit.scale)
  *
- * `value` is an integer (Long), so amounts can be added, subtracted and
- * compared with exact integer arithmetic — no floating-point drift and no
- * string parsing. Because the encoding is fixed there is no discriminator
- * to interpret.
+ * `value` is an exact integer mantissa (see IntegerAmount): amounts add,
+ * subtract and compare with exact integer arithmetic — no floating-point
+ * drift, and exact at any magnitude (e.g. 18-decimal tokens, aggregate
+ * balances) rather than being capped at 2^53. Because the encoding is fixed
+ * there is no discriminator to interpret.
  *
  * Use for banking, settlement, ledgers, tax computation, regulated
- * reporting, cross-currency arithmetic, and any currency with non-decimal
- * denominations.
+ * reporting, cross-currency arithmetic, on-chain base-unit accounting, and
+ * any currency with non-decimal denominations.
  *
  * Examples:
- *   $10.50      -> { "value": 1050,                "unit": { "code": "USD",  "scale": 2 } }
- *   ¥10,050     -> { "value": 10050,               "unit": { "code": "JPY",  "scale": 0 } }
- *   100.500 KWD -> { "value": 100500,              "unit": { "code": "KWD",  "scale": 3 } }
- *   1.5 ETH     -> { "value": 1500000000000000000, "unit": { "code": "ETH", "scheme": "erc20", "scale": 18 } }
+ *   $10.50      -> { "value": "1050",                "unit": { "code": "USD",  "scale": 2 } }
+ *   ¥10,050     -> { "value": "10050",               "unit": { "code": "JPY",  "scale": 0 } }
+ *   100.500 KWD -> { "value": "100500",              "unit": { "code": "KWD",  "scale": 3 } }
+ *   1.5 ETH     -> { "value": "1500000000000000000", "unit": { "code": "ETH", "scheme": "slip44", "scale": 18 } }
  */
 concept FixedPointMonetaryAmount {
-  o Long value
+  o IntegerAmount value
   o MonetaryUnit unit
 }

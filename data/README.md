@@ -55,17 +55,24 @@ A full ISO 4217 *active-list* audit (pruning retired codes such as `VEF`,
 `HRK`, `SLL`) is deferred; this initial table inherits the `money@0.3.0` code
 set and adds `VES`.
 
-## ⚠️ Precision limit of `FixedPointMonetaryAmount`
+## Precision & arithmetic
 
-`FixedPointMonetaryAmount.value` is a Concerto `Long`, which concerto-core
-represents as a JavaScript `number` — exact only up to `Number.MAX_SAFE_INTEGER`
-(2^53 − 1 ≈ 9.0 × 10^15).
+`FixedPointMonetaryAmount.value` is an `IntegerAmount` — an **exact integer
+mantissa encoded as a string** (`scalar IntegerAmount extends String
+regex=/^-?(0|[1-9][0-9]*)$/`). The amount is `value × 10^(−unit.scale)`.
 
-- **Fiat is safe.** At `scale` 2 that is ~90 trillion units — ample.
-- **High-decimal tokens are not.** An 18-decimal token (e.g. ETH at
-  `scale` 18) overflows above ~0.009 of a unit; e.g. `1500000000000000001` wei
-  round-trips to `1500000000000000000`.
+Encoding the mantissa as a string makes it **exact at any magnitude and scale**:
+it is not bounded by the 2^53 limit of a JSON number / IEEE-754 double, and it
+is never silently truncated by a JSON parser or lost across languages. So
+18-decimal tokens (`1500000000000000000` wei = 1.5 ETH), aggregate balances,
+and fiat minor units are all represented exactly.
 
-This is why the `erc20.json` sample and examples use magnitudes within the safe
-range, and why a string-valued alternative for high-precision schemes is an
-open question on the design issue.
+The trade-off is that `value` is a typed integer string, not a native number —
+clients convert once at the boundary and then do exact integer arithmetic.
+**You do not need to build a money library for this**: the shape (integer
+mantissa + scale) maps directly onto existing arbitrary-precision money
+libraries. The recommended path is a thin adapter over **Dinero.js v2** with the
+bigint calculator (`MonetaryUnit` → `currency { code, base: 10, exponent: scale }`,
+`value` → `BigInt(amount)`), which gives exact add/subtract/allocate/compare and
+locale formatting for free. `big.js` / `bignumber.js` / `decimal.js` work
+equally well. See [#187](https://github.com/accordproject/models/issues/187).
