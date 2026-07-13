@@ -50,22 +50,31 @@ concept ApproximateMonetaryAmount {
 /**
  * A unit of account, self-describing across schemes.
  *
- * `code`   the unit's identifier within `scheme` (e.g. "USD", "JPY", "ETH").
- * `scheme` the namespace the code is drawn from. Defaults to ISO 4217 for
- *          fiat; other schemes (e.g. "iso24165", "erc20", "caip19") allow
- *          non-fiat units without hard-coding ticker codes into the model.
- * `scale`  the number of decimal places / minor units. Travels with the
- *          unit so that a PreciseMonetaryAmount is fully self-describing
- *          without needing to resolve external reference data. e.g. USD=2,
- *          JPY=0, KWD=3, USDC=6, ETH=18.
+ * `code`       the unit's short code within `scheme` (e.g. "USD", "JPY", "ETH").
+ * `scheme`     the namespace the code is drawn from. Defaults to ISO 4217 for
+ *              fiat; other schemes (e.g. "iso24165", "erc20", "slip44",
+ *              "caip19") allow non-fiat units without hard-coding ticker codes
+ *              into the model.
+ * `identifier` an optional, unambiguous, scheme-scoped identifier for the exact
+ *              asset — e.g. a CAIP-19 asset id
+ *              ("eip155:1/erc20:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"), a
+ *              token contract address, or a DTI (ISO 24165). `code` alone is
+ *              ambiguous for token schemes — the same ticker can exist on many
+ *              chains / contracts — so carrying the disambiguator on the
+ *              instance avoids relying solely on a registry lookup.
+ * `scale`      the number of decimal places / minor units (non-negative).
+ *              Travels with the unit so that a PreciseMonetaryAmount is fully
+ *              self-describing without needing to resolve external reference
+ *              data. e.g. USD=2, JPY=0, KWD=3, USDC=6, ETH=18.
  *
- * Canonical scales for well-known schemes are published as reference data
- * in org.accordproject.money.reference.
+ * Canonical scales/identifiers for well-known schemes are published as
+ * reference data in org.accordproject.money.reference.
  */
 concept MonetaryUnit {
   o String code
   o String scheme default="iso4217"
-  o Integer scale
+  o String identifier optional
+  o Integer scale range=[0,]
 }
 
 /**
@@ -78,7 +87,7 @@ concept MonetaryUnit {
  * (e.g. BigInt(value), or a Dinero.js v2 / big.js money object) and then do
  * exact integer arithmetic.
  */
-scalar IntegerAmount extends String regex=/^-?(0|[1-9][0-9]*)$/
+scalar IntegerAmount extends String regex=/^(0|-?[1-9][0-9]*)$/
 
 /**
  * A precise (fixed-point) monetary amount.

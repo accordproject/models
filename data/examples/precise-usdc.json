@@ -5,6 +5,7 @@
     "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
     "code": "USDC",
     "scheme": "erc20",
+    "identifier": "eip155:1/erc20:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
     "scale": 6
   }
 }

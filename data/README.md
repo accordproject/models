@@ -59,7 +59,7 @@ set and adds `VES`.
 
 `PreciseMonetaryAmount.value` is an `IntegerAmount` — an **exact integer
 mantissa encoded as a string** (`scalar IntegerAmount extends String
-regex=/^-?(0|[1-9][0-9]*)$/`). The amount is `value × 10^(−unit.scale)`.
+regex=/^(0|-?[1-9][0-9]*)$/`). The amount is `value × 10^(−unit.scale)`.
 
 Encoding the mantissa as a string makes it **exact at any magnitude and scale**:
 it is not bounded by the 2^53 limit of a JSON number / IEEE-754 double, and it
