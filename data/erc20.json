@@ -8,6 +8,12 @@
       "scheme": "erc20",
       "scale": 18
     },
+    "SUI": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SUI",
+      "scheme": "erc20",
+      "scale": 9
+    },
     "USDC": {
       "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
       "code": "USDC",
