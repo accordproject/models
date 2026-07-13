@@ -1,0 +1,85 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^3.0.0"
+
+namespace org.accordproject.money@1.0.0
+
+/**
+ * Represents an amount of money.
+ *
+ * Decimal representation, backwards-compatible with
+ * org.accordproject.money@0.3.0.MonetaryAmount. Instances of the 0.3.0
+ * concept validate against this definition unchanged: `currencyCode` was an
+ * ISO 4217 enum, whose members serialize as the same strings this String
+ * property accepts (e.g. "USD").
+ *
+ * Use for legacy contracts, display values, and estimates where
+ * floating-point precision loss is acceptable. For exact arithmetic
+ * (settlement, ledgers, regulated reporting, non-decimal denominations)
+ * prefer FixedPointMonetaryAmount.
+ *
+ * Example: { "doubleValue": 10.50, "currencyCode": "USD" }
+ */
+concept MonetaryAmount {
+  o Double doubleValue
+  o String currencyCode
+}
+
+/**
+ * A unit of account, self-describing across schemes.
+ *
+ * `code`   the unit's identifier within `scheme` (e.g. "USD", "JPY", "ETH").
+ * `scheme` the namespace the code is drawn from. Defaults to ISO 4217 for
+ *          fiat; other schemes (e.g. "iso24165", "erc20", "caip19") allow
+ *          non-fiat units without hard-coding ticker codes into the model.
+ * `scale`  the number of decimal places / minor units. Travels with the
+ *          unit so that a FixedPointMonetaryAmount is fully self-describing
+ *          without needing to resolve external reference data. e.g. USD=2,
+ *          JPY=0, KWD=3, USDC=6, ETH=18.
+ *
+ * Canonical scales for well-known schemes are published as reference data
+ * in org.accordproject.money.reference.
+ */
+concept MonetaryUnit {
+  o String code
+  o String scheme default="iso4217"
+  o Integer scale
+}
+
+/**
+ * Fixed-point (precision-safe) monetary amount.
+ *
+ * The amount is `value` minor units of `unit`, i.e.
+ *
+ *   amount = value × 10^(−unit.scale)
+ *
+ * `value` is an integer (Long), so amounts can be added, subtracted and
+ * compared with exact integer arithmetic — no floating-point drift and no
+ * string parsing. Because the encoding is fixed there is no discriminator
+ * to interpret.
+ *
+ * Use for banking, settlement, ledgers, tax computation, regulated
+ * reporting, cross-currency arithmetic, and any currency with non-decimal
+ * denominations.
+ *
+ * Examples:
+ *   $10.50      -> { "value": 1050,                "unit": { "code": "USD",  "scale": 2 } }
+ *   ¥10,050     -> { "value": 10050,               "unit": { "code": "JPY",  "scale": 0 } }
+ *   100.500 KWD -> { "value": 100500,              "unit": { "code": "KWD",  "scale": 3 } }
+ *   1.5 ETH     -> { "value": 1500000000000000000, "unit": { "code": "ETH", "scheme": "erc20", "scale": 18 } }
+ */
+concept FixedPointMonetaryAmount {
+  o Long value
+  o MonetaryUnit unit
+}

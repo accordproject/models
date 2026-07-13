@@ -1,0 +1,1080 @@
+{
+  "$class": "org.accordproject.money.reference@1.0.0.CurrencyRegistry",
+  "scheme": "iso4217",
+  "units": {
+    "AED": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AED",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AFN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AFN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ALL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ALL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AMD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AMD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ANG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ANG",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AOA": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AOA",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ARS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ARS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AUD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AUD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AWG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AWG",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "AZN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "AZN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BAM": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BAM",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BBD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BBD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BDT": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BDT",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BGN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BGN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BHD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BHD",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "BIF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BIF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "BMD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BMD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BND": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BND",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BOB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BOB",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BOV": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BOV",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BRL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BRL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BSD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BSD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BTN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BTN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BWP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BWP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BYN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BYN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "BZD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "BZD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CAD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CAD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CDF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CDF",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CHE": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CHE",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CHF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CHF",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CHW": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CHW",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CLF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CLF",
+      "scheme": "iso4217",
+      "scale": 4
+    },
+    "CLP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CLP",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "CNY": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CNY",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "COP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "COP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "COU": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "COU",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CRC": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CRC",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CUC": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CUC",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CUP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CUP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CVE": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CVE",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "CZK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "CZK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "DJF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "DJF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "DKK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "DKK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "DOP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "DOP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "DZD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "DZD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "EGP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "EGP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ERN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ERN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ETB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ETB",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "EUR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "EUR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "FJD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "FJD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "FKP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "FKP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GBP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GBP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GEL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GEL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GHS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GHS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GIP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GIP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GMD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GMD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GNF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GNF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "GTQ": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GTQ",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "GYD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "GYD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "HKD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "HKD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "HNL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "HNL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "HRK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "HRK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "HTG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "HTG",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "HUF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "HUF",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "IDR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "IDR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ILS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ILS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "INR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "INR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "IQD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "IQD",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "IRR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "IRR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ISK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ISK",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "JMD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "JMD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "JOD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "JOD",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "JPY": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "JPY",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "KES": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KES",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "KGS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KGS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "KHR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KHR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "KMF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KMF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "KPW": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KPW",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "KRW": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KRW",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "KWD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KWD",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "KYD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KYD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "KZT": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "KZT",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LAK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LAK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LBP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LBP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LKR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LKR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LRD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LRD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LSL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LSL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "LYD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "LYD",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "MAD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MAD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MDL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MDL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MGA": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MGA",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MKD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MKD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MMK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MMK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MNT": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MNT",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MOP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MOP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MRU": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MRU",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MUR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MUR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MVR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MVR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MWK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MWK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MXN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MXN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MXV": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MXV",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MYR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MYR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "MZN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "MZN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NAD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NAD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NGN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NGN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NIO": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NIO",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NOK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NOK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NPR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NPR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "NZD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "NZD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "OMR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "OMR",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "PAB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PAB",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PEN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PEN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PGK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PGK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PHP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PHP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PKR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PKR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PLN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PLN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "PYG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "PYG",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "QAR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "QAR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "RON": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "RON",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "RSD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "RSD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "RUB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "RUB",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "RWF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "RWF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "SAR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SAR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SBD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SBD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SCR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SCR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SDG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SDG",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SEK": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SEK",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SGD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SGD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SHP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SHP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SLL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SLL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SOS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SOS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SRD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SRD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SSP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SSP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "STN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "STN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SVC": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SVC",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SYP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SYP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "SZL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "SZL",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "THB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "THB",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TJS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TJS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TMT": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TMT",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TND": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TND",
+      "scheme": "iso4217",
+      "scale": 3
+    },
+    "TOP": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TOP",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TRY": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TRY",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TTD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TTD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TWD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TWD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "TZS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "TZS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "UAH": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "UAH",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "UGX": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "UGX",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "USD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "USD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "USN": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "USN",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "UYI": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "UYI",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "UYU": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "UYU",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "UZS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "UZS",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "VEF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "VEF",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "VES": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "VES",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "VND": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "VND",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "VUV": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "VUV",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "WST": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "WST",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "XAF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XAF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XAG": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XAG",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XAU": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XAU",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XBA": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XBA",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XBB": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XBB",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XBC": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XBC",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XBD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XBD",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XCD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XCD",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "XDR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XDR",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XOF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XOF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XPD": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XPD",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XPF": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XPF",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XPT": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XPT",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XSU": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XSU",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XTS": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XTS",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XUA": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XUA",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "XXX": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "XXX",
+      "scheme": "iso4217",
+      "scale": 0
+    },
+    "YER": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "YER",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ZAR": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ZAR",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ZMW": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ZMW",
+      "scheme": "iso4217",
+      "scale": 2
+    },
+    "ZWL": {
+      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "code": "ZWL",
+      "scheme": "iso4217",
+      "scale": 2
+    }
+  }
+}

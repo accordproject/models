@@ -1,0 +1,10 @@
+{
+  "$class": "org.accordproject.money@1.0.0.FixedPointMonetaryAmount",
+  "value": 1234560000,
+  "unit": {
+    "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+    "code": "USDC",
+    "scheme": "erc20",
+    "scale": 6
+  }
+}

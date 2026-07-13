@@ -1,0 +1,10 @@
+{
+  "$class": "org.accordproject.money@1.0.0.FixedPointMonetaryAmount",
+  "value": 10050,
+  "unit": {
+    "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+    "code": "JPY",
+    "scheme": "iso4217",
+    "scale": 0
+  }
+}
