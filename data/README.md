@@ -15,6 +15,7 @@ discussion — see the tracking issue.
 |------|--------|----------|
 | [`iso4217.json`](./iso4217.json) | `iso4217` | Fiat currencies. Codes inherited from `money@0.3.0` plus `VES`; scales are ISO 4217 minor units. |
 | [`erc20.json`](./erc20.json) | `erc20` | Illustrative sample of ERC-20 tokens (USDC, USDT, DAI, WETH, WBTC) with their token decimals. |
+| [`slip44.json`](./slip44.json) | `slip44` | Illustrative sample of native L1 coins (BTC, ETH, SOL, SUI) keyed by SLIP-0044 ticker, with their native decimals. |
 | [`examples/`](./examples) | — | Standalone example instances of `MonetaryAmount` and `FixedPointMonetaryAmount`. |
 
 ## Format
