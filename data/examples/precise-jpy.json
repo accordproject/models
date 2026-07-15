@@ -1,8 +1,8 @@
 {
-  "$class": "org.accordproject.money@1.0.0.PreciseMonetaryAmount",
+  "$class": "org.accordproject.money@1.0.0.PreciseAmount",
   "value": "10050",
   "unit": {
-    "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+    "$class": "org.accordproject.money@1.0.0.Unit",
     "code": "JPY",
     "scheme": "iso4217",
     "scale": 0

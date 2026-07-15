@@ -16,32 +16,32 @@ discussion — see the tracking issue.
 | [`iso4217.json`](./iso4217.json) | `iso4217` | Fiat currencies. Codes inherited from `money@0.3.0` plus `VES`; scales are ISO 4217 minor units. |
 | [`erc20.json`](./erc20.json) | `erc20` | Illustrative sample of ERC-20 tokens (USDC, USDT, DAI, WETH, WBTC) with their token decimals. |
 | [`slip44.json`](./slip44.json) | `slip44` | Illustrative sample of native L1 coins (BTC, ETH, SOL, SUI) keyed by SLIP-0044 ticker, with their native decimals. |
-| [`examples/`](./examples) | — | Standalone example instances of `ApproximateMonetaryAmount` and `PreciseMonetaryAmount`. |
+| [`examples/`](./examples) | — | Standalone example instances of `ApproximateAmount` and `PreciseAmount`. |
 
 ## Format
 
 Each registry is a `CurrencyRegistry`: a `scheme` plus a `units` map keyed by
-unit code, where each value is a `MonetaryUnit`.
+unit code, where each value is a `Unit`.
 
 ```json
 {
   "$class": "org.accordproject.money.reference@1.0.0.CurrencyRegistry",
   "scheme": "iso4217",
   "units": {
-    "USD": { "$class": "org.accordproject.money@1.0.0.MonetaryUnit", "code": "USD", "scheme": "iso4217", "scale": 2 },
-    "JPY": { "$class": "org.accordproject.money@1.0.0.MonetaryUnit", "code": "JPY", "scheme": "iso4217", "scale": 0 }
+    "USD": { "$class": "org.accordproject.money@1.0.0.Unit", "code": "USD", "scheme": "iso4217", "scale": 2 },
+    "JPY": { "$class": "org.accordproject.money@1.0.0.Unit", "code": "JPY", "scheme": "iso4217", "scale": 0 }
   }
 }
 ```
 
 A consumer loads the registry for a scheme and indexes `units` by code to
-resolve the canonical `MonetaryUnit` — and to validate that an amount's unit
+resolve the canonical `Unit` — and to validate that an amount's unit
 carries the standard `scale` for its scheme.
 
-> Note: serializing a `code → MonetaryUnit` map where the value concept is
+> Note: serializing a `code → Unit` map where the value concept is
 > imported from another namespace requires concerto-core with the fix from
 > accordproject/concerto#1279. The data files here are authored directly as JSON
-> and each entry is validated individually as a `MonetaryUnit`.
+> and each entry is validated individually as a `Unit`.
 
 ## ISO 4217 scales
 
@@ -57,7 +57,7 @@ set and adds `VES`.
 
 ## Precision & arithmetic
 
-`PreciseMonetaryAmount.value` is an `IntegerAmount` — an **exact integer
+`PreciseAmount.value` is an `IntegerAmount` — an **exact integer
 mantissa encoded as a string** (`scalar IntegerAmount extends String
 regex=/^(0|-?[1-9][0-9]*)$/`). The amount is `value × 10^(−unit.scale)`.
 
@@ -72,7 +72,7 @@ clients convert once at the boundary and then do exact integer arithmetic.
 **You do not need to build a money library for this**: the shape (integer
 mantissa + scale) maps directly onto existing arbitrary-precision money
 libraries. The recommended path is a thin adapter over **Dinero.js v2** with the
-bigint calculator (`MonetaryUnit` → `currency { code, base: 10, exponent: scale }`,
+bigint calculator (`Unit` → `currency { code, base: 10, exponent: scale }`,
 `value` → `BigInt(amount)`), which gives exact add/subtract/allocate/compare and
 locale formatting for free. `big.js` / `bignumber.js` / `decimal.js` work
 equally well. See [#187](https://github.com/accordproject/models/issues/187).

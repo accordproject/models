@@ -1,8 +1,8 @@
 {
-  "$class": "org.accordproject.money@1.0.0.PreciseMonetaryAmount",
+  "$class": "org.accordproject.money@1.0.0.PreciseAmount",
   "value": "1234560000",
   "unit": {
-    "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+    "$class": "org.accordproject.money@1.0.0.Unit",
     "code": "USDC",
     "scheme": "erc20",
     "identifier": "eip155:1/erc20:0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",

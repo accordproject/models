@@ -3,25 +3,25 @@
   "scheme": "slip44",
   "units": {
     "BTC": {
-      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "$class": "org.accordproject.money@1.0.0.Unit",
       "code": "BTC",
       "scheme": "slip44",
       "scale": 8
     },
     "ETH": {
-      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "$class": "org.accordproject.money@1.0.0.Unit",
       "code": "ETH",
       "scheme": "slip44",
       "scale": 18
     },
     "SOL": {
-      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "$class": "org.accordproject.money@1.0.0.Unit",
       "code": "SOL",
       "scheme": "slip44",
       "scale": 9
     },
     "SUI": {
-      "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+      "$class": "org.accordproject.money@1.0.0.Unit",
       "code": "SUI",
       "scheme": "slip44",
       "scale": 9

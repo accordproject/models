@@ -15,24 +15,24 @@ concerto version "^3.0.0"
 
 namespace org.accordproject.money.reference@1.0.0
 
-import org.accordproject.money@1.0.0.{MonetaryUnit}
+import org.accordproject.money@1.0.0.{Unit}
 
 /**
- * A map of unit code -> MonetaryUnit, keyed by the unit's `code`.
+ * A map of unit code -> Unit, keyed by the unit's `code`.
  */
 map UnitMap {
   o String
-  o MonetaryUnit
+  o Unit
 }
 
 /**
- * Reference data: the canonical set of MonetaryUnits for a single scheme
+ * Reference data: the canonical set of Units for a single scheme
  * (e.g. "iso4217", "erc20"), indexed by unit code.
  *
  * This is a container for reference data, not contract data. Published
  * registries are validated instances of this concept; a consumer loads the
  * registry for a scheme and indexes `units` by code to resolve the canonical
- * MonetaryUnit (and to validate that an amount's unit carries the standard
+ * Unit (and to validate that an amount's unit carries the standard
  * scale for its scheme).
  */
 concept CurrencyRegistry {

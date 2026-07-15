@@ -32,7 +32,7 @@ scalar CurrencyCode extends String regex=/^[A-Z]{3}$/
  * `doubleValue` is an IEEE-754 double, so it cannot represent most decimal
  * fractions exactly and errors accumulate under arithmetic. This type is for
  * display, estimates, and legacy contracts only — NOT for settlement, ledgers,
- * or any calculation. For exact arithmetic use PreciseMonetaryAmount.
+ * or any calculation. For exact arithmetic use PreciseAmount.
  *
  * Backwards-compatible with org.accordproject.money@0.3.0.MonetaryAmount:
  * instances of the 0.3.0 concept validate against this definition unchanged
@@ -42,7 +42,7 @@ scalar CurrencyCode extends String regex=/^[A-Z]{3}$/
  *
  * Example: { "doubleValue": 10.50, "currencyCode": "USD" }
  */
-concept ApproximateMonetaryAmount {
+concept ApproximateAmount {
   o Double doubleValue
   o CurrencyCode currencyCode
 }
@@ -63,14 +63,14 @@ concept ApproximateMonetaryAmount {
  *              chains / contracts — so carrying the disambiguator on the
  *              instance avoids relying solely on a registry lookup.
  * `scale`      the number of decimal places / minor units (non-negative).
- *              Travels with the unit so that a PreciseMonetaryAmount is fully
+ *              Travels with the unit so that a PreciseAmount is fully
  *              self-describing without needing to resolve external reference
  *              data. e.g. USD=2, JPY=0, KWD=3, USDC=6, ETH=18.
  *
  * Canonical scales/identifiers for well-known schemes are published as
  * reference data in org.accordproject.money.reference.
  */
-concept MonetaryUnit {
+concept Unit {
   o String code
   o String scheme default="iso4217"
   o String identifier optional
@@ -79,7 +79,7 @@ concept MonetaryUnit {
 
 /**
  * A base-10 integer, as a string. The exact integer mantissa of a
- * PreciseMonetaryAmount, in canonical form (no leading zeros).
+ * PreciseAmount, in canonical form (no leading zeros).
  *
  * Encoded as a string so the value is exact at any magnitude and scale —
  * unbounded by the 2^53 limit of a JSON number / IEEE-754 double, and never
@@ -112,7 +112,7 @@ scalar IntegerAmount extends String regex=/^(0|-?[1-9][0-9]*)$/
  *   100.500 KWD -> { "value": "100500",              "unit": { "code": "KWD",  "scale": 3 } }
  *   1.5 ETH     -> { "value": "1500000000000000000", "unit": { "code": "ETH", "scheme": "slip44", "scale": 18 } }
  */
-concept PreciseMonetaryAmount {
+concept PreciseAmount {
   o IntegerAmount value
-  o MonetaryUnit unit
+  o Unit unit
 }

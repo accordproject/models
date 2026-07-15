@@ -1,8 +1,8 @@
 {
-  "$class": "org.accordproject.money@1.0.0.PreciseMonetaryAmount",
+  "$class": "org.accordproject.money@1.0.0.PreciseAmount",
   "value": "1500000000000000000",
   "unit": {
-    "$class": "org.accordproject.money@1.0.0.MonetaryUnit",
+    "$class": "org.accordproject.money@1.0.0.Unit",
     "code": "ETH",
     "scheme": "slip44",
     "scale": 18
