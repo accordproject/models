@@ -1,0 +1,36 @@
+{
+  "$class": "org.accordproject.money.reference@1.0.0.CurrencyRegistry",
+  "scheme": "erc20",
+  "units": {
+    "DAI": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "DAI",
+      "scheme": "erc20",
+      "scale": 18
+    },
+    "USDC": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "USDC",
+      "scheme": "erc20",
+      "scale": 6
+    },
+    "USDT": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "USDT",
+      "scheme": "erc20",
+      "scale": 6
+    },
+    "WBTC": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "WBTC",
+      "scheme": "erc20",
+      "scale": 8
+    },
+    "WETH": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "WETH",
+      "scheme": "erc20",
+      "scale": 18
+    }
+  }
+}
