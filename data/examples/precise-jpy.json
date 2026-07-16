@@ -1,6 +1,6 @@
 {
   "$class": "org.accordproject.money@1.0.0.PreciseAmount",
-  "value": "10050",
+  "unscaledValue": "10050",
   "unit": {
     "$class": "org.accordproject.money@1.0.0.Unit",
     "code": "JPY",

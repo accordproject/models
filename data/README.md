@@ -57,22 +57,23 @@ set and adds `VES`.
 
 ## Precision & arithmetic
 
-`PreciseAmount.value` is an `IntegerAmount` — an **exact integer
-mantissa encoded as a string** (`scalar IntegerAmount extends String
-regex=/^(0|-?[1-9][0-9]*)$/`). The amount is `value × 10^(−unit.scale)`.
+`PreciseAmount.unscaledValue` is a `BigInteger` — an **exact integer
+encoded as a string** (`scalar BigInteger extends String
+regex=/^(0|-?[1-9][0-9]*)$/`). Following Java's `BigDecimal` model, the amount
+is `unscaledValue × 10^(−unit.scale)`.
 
-Encoding the mantissa as a string makes it **exact at any magnitude and scale**:
-it is not bounded by the 2^53 limit of a JSON number / IEEE-754 double, and it
-is never silently truncated by a JSON parser or lost across languages. So
+Encoding the unscaled value as a string makes it **exact at any magnitude and
+scale**: it is not bounded by the 2^53 limit of a JSON number / IEEE-754 double,
+and it is never silently truncated by a JSON parser or lost across languages. So
 18-decimal tokens (`1500000000000000000` wei = 1.5 ETH), aggregate balances,
 and fiat minor units are all represented exactly.
 
-The trade-off is that `value` is a typed integer string, not a native number —
-clients convert once at the boundary and then do exact integer arithmetic.
-**You do not need to build a money library for this**: the shape (integer
-mantissa + scale) maps directly onto existing arbitrary-precision money
+The trade-off is that `unscaledValue` is a typed integer string, not a native
+number — clients convert once at the boundary and then do exact integer
+arithmetic. **You do not need to build a money library for this**: the shape
+(unscaled value + scale) maps directly onto existing arbitrary-precision money
 libraries. The recommended path is a thin adapter over **Dinero.js v2** with the
 bigint calculator (`Unit` → `currency { code, base: 10, exponent: scale }`,
-`value` → `BigInt(amount)`), which gives exact add/subtract/allocate/compare and
+`unscaledValue` → `BigInt(amount)`), which gives exact add/subtract/allocate/compare and
 locale formatting for free. `big.js` / `bignumber.js` / `decimal.js` work
 equally well. See [#187](https://github.com/accordproject/models/issues/187).

@@ -1,6 +1,6 @@
 {
   "$class": "org.accordproject.money@1.0.0.PreciseAmount",
-  "value": "1234560000",
+  "unscaledValue": "1234560000",
   "unit": {
     "$class": "org.accordproject.money@1.0.0.Unit",
     "code": "USDC",

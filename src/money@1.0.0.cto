@@ -78,41 +78,43 @@ concept Unit {
 }
 
 /**
- * A base-10 integer, as a string. The exact integer mantissa of a
- * PreciseAmount, in canonical form (no leading zeros).
+ * An arbitrary-precision, base-10 integer represented as a string, in
+ * canonical form (no leading zeros). Used as the unscaled value of a
+ * PreciseAmount.
  *
- * Encoded as a string so the value is exact at any magnitude and scale —
- * unbounded by the 2^53 limit of a JSON number / IEEE-754 double, and never
- * silently truncated by a JSON parser. Clients convert once at the boundary
- * (e.g. BigInt(value), or a Dinero.js v2 / big.js money object) and then do
+ * Encoded as a string so the value is exact at any magnitude — unbounded by
+ * the 2^53 limit of a JSON number / IEEE-754 double, and never silently
+ * truncated by a JSON parser. Clients convert once at the boundary (e.g.
+ * BigInt(unscaledValue), or a Dinero.js v2 / big.js money object) and then do
  * exact integer arithmetic.
  */
-scalar IntegerAmount extends String regex=/^(0|-?[1-9][0-9]*)$/
+scalar BigInteger extends String regex=/^(0|-?[1-9][0-9]*)$/
 
 /**
  * A precise (fixed-point) monetary amount.
  *
- * The amount is `value` minor units of `unit`, i.e.
+ * Follows the same model as Java's BigDecimal — an integer `unscaledValue`
+ * and a `scale` (here carried on `unit`):
  *
- *   amount = value × 10^(−unit.scale)
+ *   amount = unscaledValue × 10^(−unit.scale)
  *
- * `value` is an exact integer mantissa (see IntegerAmount): amounts add,
- * subtract and compare with exact integer arithmetic — no floating-point
- * drift, and exact at any magnitude (e.g. 18-decimal tokens, aggregate
- * balances) rather than being capped at 2^53. Because the encoding is fixed
- * there is no discriminator to interpret.
+ * `unscaledValue` is an exact integer (see BigInteger): amounts add, subtract
+ * and compare with exact integer arithmetic — no floating-point drift, and
+ * exact at any magnitude (e.g. 18-decimal tokens, aggregate balances) rather
+ * than being capped at 2^53. Because the encoding is fixed there is no
+ * discriminator to interpret.
  *
  * Use for banking, settlement, ledgers, tax computation, regulated
  * reporting, cross-currency arithmetic, on-chain base-unit accounting, and
  * any currency with non-decimal denominations.
  *
  * Examples:
- *   $10.50      -> { "value": "1050",                "unit": { "code": "USD",  "scale": 2 } }
- *   ¥10,050     -> { "value": "10050",               "unit": { "code": "JPY",  "scale": 0 } }
- *   100.500 KWD -> { "value": "100500",              "unit": { "code": "KWD",  "scale": 3 } }
- *   1.5 ETH     -> { "value": "1500000000000000000", "unit": { "code": "ETH", "scheme": "slip44", "scale": 18 } }
+ *   $10.50      -> { "unscaledValue": "1050",                "unit": { "code": "USD",  "scale": 2 } }
+ *   ¥10,050     -> { "unscaledValue": "10050",               "unit": { "code": "JPY",  "scale": 0 } }
+ *   100.500 KWD -> { "unscaledValue": "100500",              "unit": { "code": "KWD",  "scale": 3 } }
+ *   1.5 ETH     -> { "unscaledValue": "1500000000000000000", "unit": { "code": "ETH", "scheme": "slip44", "scale": 18 } }
  */
 concept PreciseAmount {
-  o IntegerAmount value
+  o BigInteger unscaledValue
   o Unit unit
 }
