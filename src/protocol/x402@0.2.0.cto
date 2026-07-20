@@ -1,0 +1,239 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^4.0.0"
+
+namespace org.accordproject.protocol.x402@0.2.0
+
+// CAIP-2 namespace/reference grammar and canonical unsigned decimal strings.
+scalar Caip2Network extends String regex=/^[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}$/
+scalar UnsignedIntegerString extends String regex=/^(0|[1-9][0-9]*)$/
+
+// ---------------------------------------------------------------------------
+// x402 — Internet-native Payments Protocol (Coinbase / x402 Foundation)
+// Modeled on x402 Protocol Specification v2 (specs/x402-specification-v2.md).
+// Source snapshot: x402-foundation/x402 commit
+// aad8e4e39d385caa14c7b94fefd9d3b345105ea9.
+//
+// Flow: client requests resource → server responds Payment Required with
+// PaymentRequired (accepts[] of PaymentRequirements) → client signs a
+// PaymentPayload → facilitator /verify and /settle → SettleResponse.
+//
+// Accord mapping: an AOEP SettlementObligation is the *source* of a
+// PaymentRequirements entry (amount, asset, payTo derived from the
+// obligation); the SettleResponse folds back into AOEP ProofOfPayment
+// with rail = "x402".
+//
+
+// Canonical source: github.com/x402-foundation/x402 (spec v2 —
+// specs/x402-specification-v2.md; the coinbase/x402 repo mirrors it)
+//
+// Accord standard types deliberately NOT used here: amounts are atomic
+// token units as decimal strings (not ISO 4217 → no CurrencyCode /
+// MonetaryAmount); validAfter/validBefore are unix-second decimal strings
+// inside an EIP-712-signed payload whose bytes must not change (no
+// DateTime); `asset` is a contract-address-or-currency-code union.
+// ---------------------------------------------------------------------------
+
+// Networks use CAIP-2 identifiers, e.g. "eip155:8453" (Base), "eip155:84532"
+// (Base Sepolia), "solana:5eykt4UsFv8P8NJdTREpY1vzqKqZKvdp". Non-blockchain
+// rails are encouraged to follow CAIP-2 too (e.g. "ach:us", "sepa:eu").
+
+// Schemes are open strings in the spec ("exact", "upto", "deferred").
+// Modeled as String throughout; known values documented here.
+
+concept ResourceInfo {
+  o String url                          // URL of the protected resource
+  o String description optional
+  o String mimeType optional
+}
+
+// One protocol extension entry (spec §5.1.2): servers advertise extensions in
+// PaymentRequired, clients echo them in PaymentPayload. The client must
+// include at least the info received; it may append but not delete/overwrite.
+concept X402Extension {
+  o String info                         // extension-specific data, JSON
+  o String schema                       // JSON Schema for `info`, JSON
+}
+
+// Typed parse target for extensions["org.accordproject.obligation"].info.
+// The extension map retains JSON strings at the Concerto boundary; an adapter
+// decodes `info` into this shape and re-encodes it for the x402 wire payload.
+concept AccordObligationExtensionInfo {
+  o String obligationRef               // AOEP obligationId
+  o String agreementId optional
+  o String templateHash optional
+  o String bindingManifestHash optional
+}
+
+// Extensions object: keyed by extension identifier
+map ExtensionMap {
+  o String
+  o X402Extension
+}
+
+concept PaymentRequirements {
+  o String scheme                       // "exact", "upto", "deferred", ...
+  o Caip2Network network                // CAIP-2, e.g. "eip155:84532"
+  o UnsignedIntegerString amount        // atomic token units, decimal string
+  o String asset                        // token contract address, or ISO 4217 code for fiat
+  o String payTo                        // recipient address or role constant
+  o Integer maxTimeoutSeconds range=[0,]
+  o String extra optional               // scheme-specific JSON (e.g. {"name":"USDC","version":"2"})
+}
+
+// The Payment Required response body (HTTP 402 or transport equivalent)
+concept PaymentRequired {
+  o Integer x402Version default=2
+  o String error optional               // why payment is required
+  o ResourceInfo resource
+  o PaymentRequirements[] accepts       // acceptable payment methods
+  o ExtensionMap extensions optional    // keyed by extension identifier
+}
+
+// --- Scheme payloads ---------------------------------------------------------
+
+abstract concept SchemePayload {
+}
+
+// EIP-3009 TransferWithAuthorization parameters (exact scheme on EVM)
+concept EvmAuthorization {
+  o String from                         // payer wallet address
+  o String to                           // recipient wallet address
+  o UnsignedIntegerString value         // amount in atomic units
+  o UnsignedIntegerString validAfter    // unix timestamp, decimal string
+  o UnsignedIntegerString validBefore   // unix timestamp, decimal string
+  o String nonce                        // 32-byte random nonce (replay protection)
+}
+
+concept ExactEvmPayload extends SchemePayload {
+  o String signature                    // EIP-712 signature over the authorization
+  o EvmAuthorization authorization
+}
+
+// Solana exact scheme: base64-encoded partially-signed transaction using
+// SPL TransferChecked with a strict instruction layout
+concept ExactSvmPayload extends SchemePayload {
+  o String transaction                  // serialized transaction
+}
+
+// Client's signed payment authorization (X-PAYMENT header / payload field)
+concept PaymentPayload {
+  o Integer x402Version default=2
+  o ResourceInfo resource optional
+  o PaymentRequirements accepted        // the payment method chosen from accepts[]
+  o SchemePayload payload               // scheme-specific signed data
+  o ExtensionMap extensions optional
+}
+
+// --- Facilitator interface ---------------------------------------------------
+
+concept VerifyRequest {
+  o Integer x402Version default=2
+  o PaymentPayload paymentPayload
+  o PaymentRequirements paymentRequirements
+}
+
+concept VerifyResponse {
+  o Boolean isValid
+  o String invalidReason optional       // standard error code if invalid
+  o String payer optional               // payer wallet address
+}
+
+// /settle request has the same structure as /verify
+concept SettleRequest {
+  o Integer x402Version default=2
+  o PaymentPayload paymentPayload
+  o PaymentRequirements paymentRequirements
+}
+
+concept SettleResponse {
+  o Boolean success
+  o String errorReason optional         // standard error code if failed
+  o String payer optional
+  o String transaction                  // tx hash; empty string if settlement failed
+  o Caip2Network network                // CAIP-2
+  o UnsignedIntegerString amount optional // actual settled amount, atomic units
+  o ExtensionMap extensions optional
+}
+
+// GET /supported — facilitator capabilities
+concept SupportedKind {
+  o Integer x402Version default=2
+  o String scheme
+  o Caip2Network network                // CAIP-2
+  o String extra optional
+}
+
+concept SupportedResponse {
+  o SupportedKind[] kinds
+  o String[] extensions
+  o String signers optional             // JSON map of CAIP-2 pattern → signer addresses
+}
+
+// --- HTTP transport binding -----------------------------------------------------
+// x402 is transport-agnostic; over HTTP the core types ride in headers as
+// base64-encoded JSON alongside status-code signaling:
+//   402 response  → PaymentRequired JSON in the response body (and/or the
+//                   PAYMENT-REQUIRED header)
+//   retry request → PAYMENT-SIGNATURE header carrying base64(PaymentPayload)
+//   200 response  → PAYMENT-RESPONSE header carrying base64(SettleResponse)
+
+concept HttpPaymentRequiredBinding {
+  o String header default="PAYMENT-REQUIRED"
+  o String encoding default="base64(JSON)"
+  o PaymentRequired payload
+}
+
+concept HttpPaymentSignatureBinding {
+  o String header default="PAYMENT-SIGNATURE"
+  o String encoding default="base64(JSON)"
+  o PaymentPayload payload
+}
+
+concept HttpPaymentResponseBinding {
+  o String header default="PAYMENT-RESPONSE"
+  o String encoding default="base64(JSON)"
+  o SettleResponse payload
+}
+
+// --- Discovery (Bazaar) -------------------------------------------------------
+
+concept DiscoveredResource {
+  o String resource                     // monetized resource URL
+  o String type                         // currently "http"
+  o Integer x402Version
+  o PaymentRequirements[] accepts
+  o Long lastUpdated                    // unix timestamp
+  o String metadata optional            // JSON: category, provider, ...
+}
+
+// --- Standard error codes (spec §9) -------------------------------------------
+
+enum X402ErrorCode {
+  o insufficient_funds
+  o invalid_exact_evm_payload_authorization_valid_after
+  o invalid_exact_evm_payload_authorization_valid_before
+  o invalid_exact_evm_payload_authorization_value_mismatch
+  o invalid_exact_evm_payload_signature
+  o invalid_exact_evm_payload_recipient_mismatch
+  o invalid_network
+  o invalid_payload
+  o invalid_payment_requirements
+  o invalid_scheme
+  o unsupported_scheme
+  o invalid_x402_version
+  o invalid_transaction_state
+  o unexpected_verify_error
+  o unexpected_settle_error
+}
