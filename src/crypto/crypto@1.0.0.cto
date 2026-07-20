@@ -20,24 +20,29 @@ namespace org.accordproject.crypto@1.0.0
  * Common hash algorithms used across legal, payment, content-addressing, and
  * distributed-ledger systems.
  *
- * The enum is intentionally not the full universe of algorithms. Use CUSTOM
- * with HashAlgorithm.customName when a protocol needs a newer or
- * domain-specific algorithm before it is promoted into this enum.
+ * Scope: the stable, fully-specified, non-parameterised set. An algorithm is
+ * included only when its name alone pins the digest unambiguously. Algorithms
+ * whose behaviour depends on parameters that a bare name does not carry (field,
+ * arity, round constants — e.g. Poseidon, Pedersen) are deliberately excluded:
+ * a bare enum literal for them would imply an interop guarantee that does not
+ * exist. Use CUSTOM with HashAlgorithm.customName (and uri for a parameter
+ * profile) for those, and for anything newer or domain-specific.
+ *
+ * Coverage note: this set keeps the primary digests of common ledgers
+ * first-class — SHA-384 (Hedera), BLAKE2b-256 and Keccak-256 (Sui),
+ * SHA2/SHA3 (general) — while ZK hashes (e.g. Midnight-class Poseidon) fall
+ * to CUSTOM by design, since those chains do not commit to a fully-specified
+ * algorithm name in their public APIs.
  */
 enum HashAlgorithmType {
   o SHA_256
-  o SHA_384
+  o SHA_384       // Hedera block/running hash default
   o SHA_512
   o SHA3_256
   o SHA3_512
-  o KECCAK_256
-  o KECCAK_512
-  o BLAKE2B_256
-  o BLAKE2B_512
+  o KECCAK_256    // Ethereum/EVM; Sui; fully specified by name
+  o BLAKE2B_256   // Sui primary digest; fully specified by name
   o BLAKE3
-  o RIPEMD_160
-  o POSEIDON
-  o PEDERSEN
   o CUSTOM
 }
 
