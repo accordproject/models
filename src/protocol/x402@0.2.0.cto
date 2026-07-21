@@ -15,6 +15,8 @@ concerto version "^4.0.0"
 
 namespace org.accordproject.protocol.x402@0.2.0
 
+import org.accordproject.money@1.0.0.{PreciseAmount} from https://models.accordproject.org/money@1.0.0.cto
+
 // CAIP-2 namespace/reference grammar and canonical unsigned decimal strings.
 scalar Caip2Network extends String regex=/^[-a-z0-9]{3,8}:[-_a-zA-Z0-9]{1,32}$/
 scalar UnsignedIntegerString extends String regex=/^(0|[1-9][0-9]*)$/
@@ -38,11 +40,17 @@ scalar UnsignedIntegerString extends String regex=/^(0|[1-9][0-9]*)$/
 // Canonical source: github.com/x402-foundation/x402 (spec v2 —
 // specs/x402-specification-v2.md; the coinbase/x402 repo mirrors it)
 //
-// Accord standard types deliberately NOT used here: amounts are atomic
-// token units as decimal strings (not ISO 4217 → no CurrencyCode /
-// MonetaryAmount); validAfter/validBefore are unix-second decimal strings
-// inside an EIP-712-signed payload whose bytes must not change (no
-// DateTime); `asset` is a contract-address-or-currency-code union.
+// Money type usage: the x402 *wire* fields keep atomic-unit decimal strings
+// (`amount`) paired with `asset` (a token-contract / ISO 4217 union) — the
+// wire carries no scale, so org.accordproject.money@1.0.0.PreciseAmount is
+// NOT used on the wire concepts. It IS used on the Accord obligation binding
+// (AccordObligationExtensionInfo.canonicalAmount), where the agreement layer
+// knows the asset's decimals and can express the owed amount exactly. This is
+// the correct seam: the raw x402 payload cannot be losslessly converted to a
+// PreciseAmount without resolving token decimals, but the obligation that
+// *sources* the payment already has them.
+// validAfter/validBefore stay unix-second decimal strings inside the
+// EIP-712-signed payload (bytes must not change → no DateTime).
 // ---------------------------------------------------------------------------
 
 // Networks use CAIP-2 identifiers, e.g. "eip155:8453" (Base), "eip155:84532"
@@ -74,6 +82,13 @@ concept AccordObligationExtensionInfo {
   o String agreementId optional
   o String templateHash optional
   o String bindingManifestHash optional
+  // The owed amount as the canonical money type
+  // (org.accordproject.money@1.0.0.PreciseAmount): exact integer unscaledValue
+  // + self-describing Unit (code/scheme/scale). Populated at the agreement
+  // layer, where the asset's decimals are known — unlike the x402 wire
+  // `amount`/`asset`, which carry no scale. Lets a consumer reconcile the
+  // x402 payment against the AOEP obligation without a separate decimals lookup.
+  o PreciseAmount canonicalAmount optional
 }
 
 // Extensions object: keyed by extension identifier
