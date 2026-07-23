@@ -1,0 +1,146 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+concerto version "^3.0.0"
+
+namespace org.accordproject.signature@1.0.0
+
+import org.accordproject.runtime@0.2.0.Request from https://models.accordproject.org/accordproject/runtime@0.2.0.cto
+import org.accordproject.contract@0.2.0.Contract from https://models.accordproject.org/accordproject/contract@0.2.0.cto
+import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+
+/**
+ * Signature methods used to attest to agreement content.
+ */
+enum SignatureMethodType {
+    o ELECTRONIC_SIGNATURE
+    o DIGITAL_SIGNATURE
+    o VERIFIABLE_CREDENTIAL
+    o WALLET_SIGNATURE
+    o PASSKEY
+    o CUSTOM
+}
+
+/**
+ * Identifies the signature method used for an attestation.
+ */
+concept SignatureMethod {
+    o SignatureMethodType type
+    o String customName optional
+    o String uri optional
+}
+
+/**
+ * Assurance tiers used by policy to compare heterogeneous signature methods.
+ */
+enum AssuranceLevelType {
+    o LOW
+    o STANDARD
+    o ADVANCED
+    o QUALIFIED
+    o CUSTOM
+}
+
+/**
+ * Identifies the assurance level assigned to an attestation.
+ */
+concept AssuranceLevel {
+    o AssuranceLevelType type
+    o String customName optional
+    o String uri optional
+}
+
+/**
+ * Lifecycle status for an attestation.
+ */
+enum AttestationStatus {
+    o CREATED
+    o ACTIVE
+    o SUSPENDED
+    o REVOKED
+    o EXPIRED
+    o CUSTOM
+}
+
+/**
+ * The signatory or signing agent associated with an attestation.
+ */
+concept Signatory {
+    o String identifier
+    o String name optional
+    o String role optional
+    o String uri optional
+}
+
+/**
+ * The time window during which an attestation is valid.
+ */
+concept ValidityWindow {
+    o DateTime validFrom optional
+    o DateTime validUntil optional
+}
+
+/**
+ * Delegation information for signatures created by an agent or delegate.
+ */
+concept Delegation {
+    o String principal
+    o Signatory delegate optional
+    o String scope optional
+    o ValidityWindow validity optional
+}
+
+/**
+ * Base concept for protocol-specific proof material.
+ */
+abstract concept Proof {
+    o String proofType
+    o DateTime created optional
+    o String verificationMethod optional
+}
+
+/**
+ * Opaque proof material for signature protocols that do not yet have a
+ * dedicated Accord Project model.
+ */
+concept OpaqueProof extends Proof {
+    o String value
+    o String encoding optional
+    o String mediaType optional
+}
+
+/**
+ * A verifiable statement that a signatory has attested to agreement content.
+ */
+concept Attestation {
+    o Signatory signatory
+    o ContentHash contentHash
+    o SignatureMethod method
+    o AssuranceLevel assuranceLevel optional
+    o ValidityWindow validity optional
+    o Delegation delegation optional
+    o AttestationStatus status default="CREATED"
+    o Proof proof optional
+}
+
+/**
+ * A request that indicates that a contract has been signed by all parties.
+ *
+ * The optional attestations field preserves the existing transaction shape
+ * while allowing newer integrations to inspect structured signature metadata.
+ */
+transaction ContractSigned extends Request {
+    --> Contract contract
+    o Attestation[] attestations optional
+}
