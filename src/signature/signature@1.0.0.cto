@@ -66,8 +66,13 @@ concept AssuranceLevel {
  *
  * AssuranceLevel records the *tier* of assurance; this records the *mechanism*
  * that backs it, so an ADVANCED claim can be evidenced rather than implied.
- * Wallet-based flows that prove control of an account key currently use CUSTOM
- * with a customName (e.g. "hedera-wallet-key-control").
+ *
+ * WALLET_KEY_CONTROL covers a signatory demonstrating control of a blockchain
+ * account by signing a challenge that is verified against that account's public
+ * key. Unlike the delegated methods above, no third party vouches for the
+ * identity — the ledger does — which makes it a distinct mechanism rather than
+ * a variant of one. Where a verifier needs to know how the key was resolved,
+ * record that in `providerId` (for example "hedera-mirror-node").
  */
 enum IdentityVerificationMethod {
     o EMAIL_LINK
@@ -76,6 +81,7 @@ enum IdentityVerificationMethod {
     o KNOWLEDGE_BASED_AUTH
     o ID_DOCUMENT_SCAN
     o ACCESS_CODE
+    o WALLET_KEY_CONTROL
     o NONE
     o CUSTOM
 }
