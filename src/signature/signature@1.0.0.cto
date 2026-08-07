@@ -62,6 +62,35 @@ concept AssuranceLevel {
 }
 
 /**
+ * The mechanism used to verify the signatory's identity before signing.
+ *
+ * AssuranceLevel records the *tier* of assurance; this records the *mechanism*
+ * that backs it, so an ADVANCED claim can be evidenced rather than implied.
+ * Wallet-based flows that prove control of an account key currently use CUSTOM
+ * with a customName (e.g. "hedera-wallet-key-control").
+ */
+enum IdentityVerificationMethod {
+    o EMAIL_LINK
+    o SMS_OTP
+    o PHONE_CALL
+    o KNOWLEDGE_BASED_AUTH
+    o ID_DOCUMENT_SCAN
+    o ACCESS_CODE
+    o NONE
+    o CUSTOM
+}
+
+/**
+ * How, when and by whom the signatory's identity was verified.
+ */
+concept IdentityVerification {
+    o IdentityVerificationMethod method
+    o DateTime verifiedAt optional
+    o String providerId optional
+    o String customName optional
+}
+
+/**
  * Lifecycle status for an attestation.
  */
 enum AttestationStatus {
@@ -71,6 +100,46 @@ enum AttestationStatus {
     o REVOKED
     o EXPIRED
     o CUSTOM
+}
+
+/**
+ * An attestation status together with the reason it was reached.
+ *
+ * Providers record decline and revocation reasons verbatim; carrying them
+ * alongside the status keeps that evidence with the attestation.
+ */
+concept AttestationStatusDetail {
+    o AttestationStatus status
+    o String reason optional
+    o DateTime timestamp optional
+}
+
+/**
+ * The form of the content that was hashed and signed.
+ *
+ * Signatories typically sign rendered text rather than a data model, so a
+ * verifier needs to know which representation to re-hash.
+ */
+enum ContentRepresentation {
+    o CONCERTO_JSON
+    o CICEROMARK
+    o PLAINTEXT
+    o PDF
+    o CUSTOM
+}
+
+/**
+ * One document covered by an attestation.
+ *
+ * A signing action often covers several documents at once (envelopes, signing
+ * packages), so an attestation carries a list of these rather than a single
+ * content hash.
+ */
+concept DocumentAttestation {
+    o String documentId optional
+    o String documentName optional
+    o ContentHash contentHash
+    o ContentRepresentation contentRepresentation optional
 }
 
 /**
@@ -121,16 +190,46 @@ concept OpaqueProof extends Proof {
 }
 
 /**
+ * Structured evidence from a signing provider.
+ *
+ * For DocuSign this maps directly: providerId "docusign", envelopeOrSessionId
+ * holds the envelope identifier and certificateUri points at the Certificate of
+ * Completion. Other providers populate the same fields differently.
+ */
+concept ProviderProof extends Proof {
+    o String providerId
+    o String envelopeOrSessionId optional
+    o String recipientId optional
+    o String certificateUri optional
+    o String ipAddress optional
+    o String userAgent optional
+}
+
+/**
+ * A reference to the template archive that produced a contract.
+ *
+ * The contract relationship identifies the instance and its class, but two
+ * contracts sharing a class may come from different archive versions with
+ * different logic or clause text.
+ */
+concept TemplateReference {
+    o String identifier
+    o String version
+    o ContentHash archiveHash optional
+}
+
+/**
  * A verifiable statement that a signatory has attested to agreement content.
  */
 concept Attestation {
     o Signatory signatory
-    o ContentHash contentHash
+    o DocumentAttestation[] documents
     o SignatureMethod method
     o AssuranceLevel assuranceLevel optional
+    o IdentityVerification identityVerification optional
     o ValidityWindow validity optional
     o Delegation delegation optional
-    o AttestationStatus status default="CREATED"
+    o AttestationStatusDetail status
     o Proof proof optional
 }
 
@@ -142,5 +241,6 @@ concept Attestation {
  */
 transaction ContractSigned extends Request {
     --> Contract contract
+    o TemplateReference template optional
     o Attestation[] attestations optional
 }
