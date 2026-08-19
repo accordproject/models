@@ -113,9 +113,13 @@ enum AttestationStatus {
  *
  * Providers record decline and revocation reasons verbatim; carrying them
  * alongside the status keeps that evidence with the attestation.
+ *
+ * `status` keeps the CREATED default that previously sat on `Attestation`, so a
+ * newly-built attestation still starts in the same state without the author
+ * having to say so.
  */
 concept AttestationStatusDetail {
-    o AttestationStatus status
+    o AttestationStatus status default="CREATED"
     o String reason optional
     o DateTime timestamp optional
 }
