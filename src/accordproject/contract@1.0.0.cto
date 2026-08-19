@@ -1,0 +1,104 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+concerto version "^3.0.0"
+
+namespace org.accordproject.contract@1.0.0
+
+import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+
+/**
+ * The role of a named artifact within a template archive.
+ */
+enum TemplateArtifactRole {
+  o LOGIC
+  o MODEL
+  o GRAMMAR
+  o PROSE
+  o DOCUMENTATION
+  o TEST
+  o RESOURCE
+  o CUSTOM
+}
+
+/**
+ * A named, hash-addressed artifact contained in a template archive.
+ *
+ * For executable logic, name and path can identify an entry point such as
+ * "logic.ts" while language and runtime describe how it is executed. The
+ * content hash ensures that an evaluation can identify the exact artifact,
+ * independently of the archive-level hash.
+ */
+concept TemplateArtifact {
+  o String name
+  o TemplateArtifactRole role
+  o String customRole optional
+  o String path
+  o String language optional
+  o String runtime optional
+  o Boolean entryPoint default=false
+  o ContentHash contentHash
+}
+
+/**
+ * A reference to the immutable template archive used to create an agreement.
+ *
+ * archiveHash commits to the complete archive. artifactManifestHash commits to
+ * the canonical manifest of named artifacts when the archive supplies one.
+ * Profiles which populate artifacts should define the manifest canonicalization
+ * and require the list to agree with artifactManifestHash.
+ */
+concept TemplateReference {
+  o String identifier
+  o String version
+  o ContentHash archiveHash
+  o ContentHash artifactManifestHash optional
+  o TemplateArtifact[] artifacts optional
+}
+
+/**
+ * Portable provenance for an instantiated agreement.
+ *
+ * agreementId maps to Contract.contractId when the complete Contract asset is
+ * available. clauseId and clauseHash identify a specific originating clause
+ * when a downstream record needs finer-grained provenance.
+ */
+concept AgreementReference {
+  o String agreementId
+  o ContentHash agreementHash
+  o TemplateReference template
+  o String clauseId optional
+  o ContentHash clauseHash optional
+}
+
+/**
+ * Contract data for an instantiated agreement.
+ *
+ * agreementHash commits to the canonical agreement representation, excluding
+ * the agreementHash property itself. template identifies the reusable archive
+ * from which the agreement was created.
+ */
+abstract asset Contract identified by contractId {
+  o String contractId
+  o ContentHash agreementHash
+  o TemplateReference template
+}
+
+/**
+ * An identifiable clause in a contract.
+ */
+abstract asset Clause identified by clauseId {
+  o String clauseId
+  o ContentHash clauseHash optional
+}
