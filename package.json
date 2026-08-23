@@ -34,6 +34,7 @@
     "concerto-util-4.0": "npm:@accordproject/concerto-util@4.0.2",
     "fs-extra": "^6.0.1",
     "lodash": "^4.18.1",
+    "lz-string": "^1.5.0",
     "mkdirp": "^1.0.4",
     "nunjucks": "^3.2.4",
     "plantuml-encoder": "^1.4.0",
