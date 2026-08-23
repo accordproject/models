@@ -32,22 +32,19 @@ transaction Response {
 }
 
 /**
- * An identified, revisioned snapshot of an agreement's runtime state.
+ * The runtime state of a contract.
  *
- * stateHash commits to the canonical state representation, excluding the
- * stateHash property itself. previousStateHash links a revision to its immediate
- * predecessor when one exists. A concrete base state is retained so templates
- * which need no additional properties can use it directly.
+ * This is carried over from runtime@0.2.0 unchanged, and in particular remains
+ * unidentified. Giving State an identifier is a breaking change that optional
+ * properties cannot soften: an identifier is required by definition, so every
+ * existing state instance would become invalid, and templates which subclass
+ * State would have to be reissued. Identity, revisioning and state hashing are
+ * left to a later release which can settle how state is scoped to an agreement
+ * and to its individual clauses.
  *
  * Obligations are intentionally not defined in this namespace. New
  * implementations should use org.accordproject.obligation@1.0.0 so durable
  * obligation state and lifecycle events are not coupled to the runtime API.
  */
-asset State identified by stateId {
-  o String stateId
-  --> Contract contract
-  o Long revision default=0 range=[0,]
-  o DateTime effectiveAt
-  o ContentHash stateHash
-  o ContentHash previousStateHash optional
+asset State {
 }

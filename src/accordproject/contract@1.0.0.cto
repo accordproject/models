@@ -88,11 +88,18 @@ concept AgreementReference {
  * agreementHash commits to the canonical agreement representation, excluding
  * the agreementHash property itself. template identifies the reusable archive
  * from which the agreement was created.
+ *
+ * Both are optional so that a template can move from contract@0.2.0 to this
+ * namespace by changing its import lines alone, and adopt provenance when it
+ * is ready to produce it. Requiring them would invalidate every existing
+ * contract instance, since none carries a hash or a template reference today.
+ * A future release may require them once the canonicalization rules that make
+ * agreementHash reproducible have been agreed.
  */
 abstract asset Contract identified by contractId {
   o String contractId
-  o ContentHash agreementHash
-  o TemplateReference template
+  o ContentHash agreementHash optional
+  o TemplateReference template optional
 }
 
 /**
