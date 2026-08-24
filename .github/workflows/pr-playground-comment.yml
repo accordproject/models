@@ -1,0 +1,46 @@
+name: PR Concerto Playground Preview
+
+# Runs as pull_request_target (rather than pull_request) so the PR-comment
+# step has write access even for PRs from forks. No PR code is checked out
+# or executed: changed .cto file contents are fetched read-only via the
+# GitHub Contents API and only ever treated as text to compress into a
+# playground URL.
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened]
+    paths:
+      - '**/*.cto'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: playground-comment-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout base branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: NPM Install
+        run: npm ci
+
+      - name: Comment with Concerto Playground preview links
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const commentOnPr = require('./scripts/pr-playground-comment.js');
+            await commentOnPr({ github, context, core });
