@@ -12,11 +12,13 @@
  * limitations under the License.
  */
 
-concerto version "^3.0.0"
+// Requires Concerto 4: this model uses a map type, which concerto-core 3.x
+// only accepts behind the enableMapType flag that the models build does not set.
+concerto version "^4.0.0"
 
 namespace org.accordproject.runtime@1.0.0
 
-import org.accordproject.contract@1.0.0.Contract from https://models.accordproject.org/accordproject/contract@1.0.0.cto
+import org.accordproject.agreement@1.0.0.Agreement from https://models.accordproject.org/accordproject/agreement@1.0.0.cto
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
 
 /**
@@ -32,22 +34,84 @@ transaction Response {
 }
 
 /**
- * An identified, revisioned snapshot of an agreement's runtime state.
+ * The extension point for template-specific runtime state.
+ *
+ * A template declares one concrete subtype and it is carried in
+ * AgreementState.data, or in ClauseState.data for state scoped to a clause.
+ * This mirrors agreement@1.0.0.TemplateData: state is composed into the
+ * envelope rather than subclassing it.
+ */
+abstract concept StateData {}
+
+/**
+ * The state of a single clause instance.
+ *
+ * This concept holds nothing but the clause's state data, and exists only to
+ * carry it. The map below would otherwise take StateData directly, which is
+ * what it means; the indirection is a workaround, not a modelling decision.
+ *
+ * Reason: a map value whose concrete type is imported from another namespace
+ * cannot be (de)serialized, and a template's StateData subtype always is. See
+ * accordproject/concerto#1279, which is open and unreleased as of 4.1.5.
+ * Declaring the value as a concept and putting the polymorphic property in a
+ * field avoids the affected code path. Once that fix ships and this repository
+ * moves off a pinned concerto-core, collapse this concept into the map.
+ *
+ * There is deliberately no lifecycle status property, and no repeat of the
+ * clause path: the path is the map key. What it means for a clause to be, for
+ * example, active or breached is a matter for the template and its logic, not
+ * for this model, so the status vocabulary belongs in the concrete StateData
+ * subtype a template declares.
+ */
+concept ClauseState {
+  o StateData data
+}
+
+/**
+ * The state of an agreement's clause instances, keyed by clause instance path.
+ *
+ * Keys are the instance paths defined by agreement@1.0.0.Clause.path, for
+ * example "payment" or "deliveries[2].inspection", and mirror the keys of the
+ * corresponding AgreementDocument.clauses map.
+ */
+map ClauseStates {
+  o String
+  o ClauseState
+}
+
+/**
+ * An identified, revisioned snapshot of the whole runtime state of an
+ * agreement, including the state of each of its clause instances.
+ *
+ * State is held as one document per agreement rather than one asset per
+ * clause. A transition which spans scopes, such as marking a clause BREACHED
+ * because of a condition detected in the agreement or in a peer clause, is
+ * then a single write producing a single revision and a single hash, and
+ * sibling state is in scope without a further lookup. Per-clause state assets
+ * would require a cross-asset transaction that Concerto does not provide, and
+ * would leave revision and previousStateHash without a well-defined meaning.
+ *
+ * The keys of clauseStates mirror the keys of the corresponding
+ * AgreementDocument.clauses maps, so the state tree has the same shape as the
+ * clause structure and can be navigated with ordinary property access in a
+ * host language. Scoping rules for that navigation are deliberately not
+ * encoded in the model.
  *
  * stateHash commits to the canonical state representation, excluding the
- * stateHash property itself. previousStateHash links a revision to its immediate
- * predecessor when one exists. A concrete base state is retained so templates
- * which need no additional properties can use it directly.
+ * stateHash property itself. previousStateHash links a revision to its
+ * immediate predecessor when one exists.
  *
  * Obligations are intentionally not defined in this namespace. New
  * implementations should use org.accordproject.obligation@1.0.0 so durable
  * obligation state and lifecycle events are not coupled to the runtime API.
  */
-asset State identified by stateId {
+asset AgreementState identified by stateId {
   o String stateId
-  --> Contract contract
+  --> Agreement agreement
   o Long revision default=0 range=[0,]
   o DateTime effectiveAt
+  o StateData data optional
+  o ClauseStates clauseStates optional
   o ContentHash stateHash
   o ContentHash previousStateHash optional
 }

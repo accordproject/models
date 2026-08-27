@@ -12,12 +12,17 @@
  * limitations under the License.
  */
 
-concerto version "^3.0.0"
+// Requires Concerto 4: this model has no map type of its own, but it imports
+// agreement@1.0.0, which does. The models build parses a model's imports with
+// the parser chosen for the importing file, so the requirement is inherited.
+concerto version "^4.0.0"
 
 namespace org.accordproject.obligation@1.0.0
 
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
 import org.accordproject.money@1.0.0.PreciseAmount from https://models.accordproject.org/money@1.0.0.cto
+import org.accordproject.party@1.0.0.PartyRef from https://models.accordproject.org/accordproject/party@1.0.0.cto
+import org.accordproject.agreement@1.0.0.AgreementReference from https://models.accordproject.org/accordproject/agreement@1.0.0.cto
 
 /**
  * Lifecycle states for the legal obligation itself.
@@ -46,32 +51,18 @@ enum FulfilmentAttemptStatus {
 }
 
 /**
- * A scheme-qualified party identifier that does not require a relationship to
- * one particular participant registry.
- */
-concept PartyRef {
-  o String id
-  o String scheme
-  o String label optional
-}
-
-/**
- * Stable provenance for the agreement and template from which an obligation
- * was derived. clauseId identifies the originating clause when available.
- */
-concept AgreementRef {
-  o String agreementId
-  o ContentHash agreementHash
-  o String templateId
-  o ContentHash templateHash
-  o String clauseId optional
-}
-
-/**
  * A durable obligation derived from an agreement.
  *
  * Lifecycle changes are recorded as ObligationTransition events. Applications
  * and profiles remain responsible for validating allowed transitions.
+ *
+ * agreement uses the shared agreement@1.0.0.AgreementReference rather than a
+ * local type, so that obligations, attestations and settlement evidence all
+ * denote an agreement the same way. Its clausePath is the clause instance path
+ * defined by agreement@1.0.0.Clause, for example "deliveries[2].inspection".
+ * Note that its template is optional: an agreement recorded across several
+ * documents has no single template, so an obligation derived from one cannot
+ * always state template provenance.
  */
 abstract asset Obligation identified by obligationId {
   o String obligationId
@@ -80,7 +71,7 @@ abstract asset Obligation identified by obligationId {
   o DateTime dueAt optional
   o PartyRef[] bearers
   o PartyRef[] beneficiaries optional
-  o AgreementRef agreement
+  o AgreementReference agreement
   o String description optional
   o String authorityRef optional
   o ContentHash basisHash optional

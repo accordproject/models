@@ -12,13 +12,15 @@
  * limitations under the License.
  */
 
-concerto version "^3.0.0"
+// Requires Concerto 4: inherited transitively via obligation@1.0.0, which
+// imports the map-bearing agreement@1.0.0.
+concerto version "^4.0.0"
 
 namespace org.accordproject.obligation.settlement@1.0.0
 
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
 import org.accordproject.crypto@1.0.0.HashedResource from https://models.accordproject.org/crypto/crypto@1.0.0.cto
-import org.accordproject.obligation@1.0.0.PartyRef from https://models.accordproject.org/accordproject/obligation@1.0.0.cto
+import org.accordproject.party@1.0.0.PartyRef from https://models.accordproject.org/accordproject/party@1.0.0.cto
 import org.accordproject.obligation@1.0.0.PaymentObligation from https://models.accordproject.org/accordproject/obligation@1.0.0.cto
 
 /**
