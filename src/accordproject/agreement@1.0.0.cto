@@ -17,8 +17,12 @@
 concerto version "^4.0.0"
 
 /**
- * Agreements, the documents that record them, and the templates they were
- * created from.
+ * Agreements and the documents that record them.
+ *
+ * The templates they are created from are modelled in
+ * org.accordproject.template@1.0.0, which this namespace imports. Templates
+ * are cited by records that have no agreement in hand, so naming one does not
+ * require taking on this model.
  *
  * Scope: this model records structure and provenance. It does not carry prose.
  * The text of an agreement is defined by its templates, and its instantiated
@@ -60,65 +64,12 @@ concerto version "^4.0.0"
  * Party role vocabulary.
  *   AgreementParty.role is an open string. A profile should constrain it for
  *   its domain.
- *
- * Template artifact manifests.
- *   Where TemplateReference.artifacts is populated, a profile must define the
- *   manifest canonicalization and require the list to agree with
- *   artifactManifestHash. This model cannot express that conditional.
  */
 namespace org.accordproject.agreement@1.0.0
 
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
 import org.accordproject.party@1.0.0.Party from https://models.accordproject.org/accordproject/party@1.0.0.cto
-
-/**
- * The role of a named artifact within a template archive.
- */
-enum TemplateArtifactRole {
-  o LOGIC
-  o MODEL
-  o GRAMMAR
-  o PROSE
-  o DOCUMENTATION
-  o TEST
-  o RESOURCE
-  o CUSTOM
-}
-
-/**
- * A named, hash-addressed artifact contained in a template archive.
- *
- * For executable logic, name and path can identify an entry point such as
- * "logic.ts" while language and runtime describe how it is executed. The
- * content hash ensures that an evaluation can identify the exact artifact,
- * independently of the archive-level hash.
- */
-concept TemplateArtifact {
-  o String name
-  o TemplateArtifactRole role
-  o String customRole optional
-  o String path
-  o String language optional
-  o String runtime optional
-  o Boolean entryPoint default=false
-  o ContentHash contentHash
-}
-
-/**
- * A reference to the immutable template archive used to create an agreement.
- *
- * archiveHash commits to the complete archive. artifactManifestHash commits to
- * the canonical manifest of named artifacts when the archive supplies one.
- * Profiles which populate artifacts should define the manifest canonicalization
- * and require the list to agree with artifactManifestHash.
- */
-concept TemplateReference {
-  o String identifier
-  o String version
-  o ContentHash archiveHash
-  o ContentHash artifactManifestHash optional
-  o TemplateArtifact[] artifacts optional
-}
+import org.accordproject.template@1.0.0.TemplateReference from https://models.accordproject.org/accordproject/template@1.0.0.cto
 
 /**
  * The extension point for template-specific agreement data.

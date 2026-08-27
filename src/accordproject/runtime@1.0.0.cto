@@ -12,9 +12,11 @@
  * limitations under the License.
  */
 
-// Requires Concerto 4: this model uses a map type, which concerto-core 3.x
-// only accepts behind the enableMapType flag that the models build does not set.
-concerto version "^4.0.0"
+// Requires Concerto 4.2: this model uses a map type, which concerto-core 3.x
+// only accepts behind the enableMapType flag that the models build does not
+// set, and its map values are a type imported from another namespace, which
+// only serializes correctly from 4.2.0 (accordproject/concerto#1279).
+concerto version "^4.2.0"
 
 namespace org.accordproject.runtime@1.0.0
 
@@ -37,46 +39,35 @@ transaction Response {
  * The extension point for template-specific runtime state.
  *
  * A template declares one concrete subtype and it is carried in
- * AgreementState.data, or in ClauseState.data for state scoped to a clause.
- * This mirrors agreement@1.0.0.TemplateData: state is composed into the
- * envelope rather than subclassing it.
+ * AgreementState.data, or as a ClauseStates value for state scoped to a
+ * clause. This mirrors agreement@1.0.0.TemplateData: state is composed into
+ * the envelope rather than subclassing it.
+ *
+ * There is deliberately no lifecycle status property here. What it means for a
+ * clause to be, for example, active or breached is a matter for the template
+ * and its logic, not for this model, so the status vocabulary belongs in the
+ * concrete subtype a template declares.
  */
 abstract concept StateData {}
-
-/**
- * The state of a single clause instance.
- *
- * This concept holds nothing but the clause's state data, and exists only to
- * carry it. The map below would otherwise take StateData directly, which is
- * what it means; the indirection is a workaround, not a modelling decision.
- *
- * Reason: a map value whose concrete type is imported from another namespace
- * cannot be (de)serialized, and a template's StateData subtype always is. See
- * accordproject/concerto#1279, which is open and unreleased as of 4.1.5.
- * Declaring the value as a concept and putting the polymorphic property in a
- * field avoids the affected code path. Once that fix ships and this repository
- * moves off a pinned concerto-core, collapse this concept into the map.
- *
- * There is deliberately no lifecycle status property, and no repeat of the
- * clause path: the path is the map key. What it means for a clause to be, for
- * example, active or breached is a matter for the template and its logic, not
- * for this model, so the status vocabulary belongs in the concrete StateData
- * subtype a template declares.
- */
-concept ClauseState {
-  o StateData data
-}
 
 /**
  * The state of an agreement's clause instances, keyed by clause instance path.
  *
  * Keys are the instance paths defined by agreement@1.0.0.Clause.path, for
  * example "payment" or "deliveries[2].inspection", and mirror the keys of the
- * corresponding AgreementDocument.clauses map.
+ * corresponding AgreementDocument.clauses map. The path is the key, so it is
+ * deliberately not repeated in the value.
+ *
+ * The value is StateData directly. Earlier revisions of this model wrapped it
+ * in a single-property ClauseState concept, because a map value whose concrete
+ * type was imported from another namespace could not be (de)serialized, and a
+ * template's StateData subtype always is. That was a workaround, not a
+ * modelling decision; accordproject/concerto#1279 fixed it in concerto-core
+ * 4.2.0 and the wrapper is gone.
  */
 map ClauseStates {
   o String
-  o ClauseState
+  o StateData
 }
 
 /**

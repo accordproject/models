@@ -37,5 +37,7 @@ module.exports = {
     // '0.82.11': concertoFromVersion('0.82'),
     '2.0.0': concertoFromVersion('2.0'),
     '3.6.0': concertoFromVersion('3.6'),
-    '4.0.0': concertoFromVersion('4.0'),
+    // The 4.x slot tracks 4.2.0: cross-namespace map values only serialize
+    // correctly from that release (accordproject/concerto#1279).
+    '4.2.0': concertoFromVersion('4.0'),
 };
