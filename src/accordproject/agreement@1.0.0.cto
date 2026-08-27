@@ -68,22 +68,9 @@ concerto version "^4.0.0"
 namespace org.accordproject.agreement@1.0.0
 
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+import org.accordproject.data@1.0.0.TemplateData from https://models.accordproject.org/accordproject/data@1.0.0.cto
 import org.accordproject.party@1.0.0.Party from https://models.accordproject.org/accordproject/party@1.0.0.cto
 import org.accordproject.template@1.0.0.TemplateReference from https://models.accordproject.org/accordproject/template@1.0.0.cto
-
-/**
- * The extension point for template-specific agreement data.
- *
- * A template declares one concrete subtype holding its instantiated variables,
- * and that subtype is carried in AgreementDocument.data. This is deliberately
- * composition rather than inheritance: a template no longer subclasses the
- * agreement envelope, so the envelope's type and its relationship URIs stay
- * stable across template versions.
- *
- * The data of a clause is a subtree of the document's data, addressed by the
- * clause's path. Clause does not carry its own copy.
- */
-abstract concept TemplateData {}
 
 /**
  * A clause instance within an agreement document.
