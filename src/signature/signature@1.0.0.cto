@@ -1,0 +1,256 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+concerto version "^3.0.0"
+
+namespace org.accordproject.signature@1.0.0
+
+import org.accordproject.runtime@0.2.0.Request from https://models.accordproject.org/accordproject/runtime@0.2.0.cto
+import org.accordproject.contract@0.2.0.Contract from https://models.accordproject.org/accordproject/contract@0.2.0.cto
+import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+
+/**
+ * Signature methods used to attest to agreement content.
+ */
+enum SignatureMethodType {
+    o ELECTRONIC_SIGNATURE
+    o DIGITAL_SIGNATURE
+    o VERIFIABLE_CREDENTIAL
+    o WALLET_SIGNATURE
+    o PASSKEY
+    o CUSTOM
+}
+
+/**
+ * Identifies the signature method used for an attestation.
+ */
+concept SignatureMethod {
+    o SignatureMethodType type
+    o String customName optional
+    o String uri optional
+}
+
+/**
+ * Assurance tiers used by policy to compare heterogeneous signature methods.
+ */
+enum AssuranceLevelType {
+    o LOW
+    o STANDARD
+    o ADVANCED
+    o QUALIFIED
+    o CUSTOM
+}
+
+/**
+ * Identifies the assurance level assigned to an attestation.
+ */
+concept AssuranceLevel {
+    o AssuranceLevelType type
+    o String customName optional
+    o String uri optional
+}
+
+/**
+ * The mechanism used to verify the signatory's identity before signing.
+ *
+ * AssuranceLevel records the *tier* of assurance; this records the *mechanism*
+ * that backs it, so an ADVANCED claim can be evidenced rather than implied.
+ *
+ * WALLET_KEY_CONTROL covers a signatory demonstrating control of a blockchain
+ * account by signing a challenge that is verified against that account's public
+ * key. Unlike the delegated methods above, no third party vouches for the
+ * identity — the ledger does — which makes it a distinct mechanism rather than
+ * a variant of one. Where a verifier needs to know how the key was resolved,
+ * record that in `providerId` (for example "hedera-mirror-node").
+ */
+enum IdentityVerificationMethod {
+    o EMAIL_LINK
+    o SMS_OTP
+    o PHONE_CALL
+    o KNOWLEDGE_BASED_AUTH
+    o ID_DOCUMENT_SCAN
+    o ACCESS_CODE
+    o WALLET_KEY_CONTROL
+    o NONE
+    o CUSTOM
+}
+
+/**
+ * How, when and by whom the signatory's identity was verified.
+ */
+concept IdentityVerification {
+    o IdentityVerificationMethod method
+    o DateTime verifiedAt optional
+    o String providerId optional
+    o String customName optional
+}
+
+/**
+ * Lifecycle status for an attestation.
+ */
+enum AttestationStatus {
+    o CREATED
+    o ACTIVE
+    o SUSPENDED
+    o REVOKED
+    o EXPIRED
+    o CUSTOM
+}
+
+/**
+ * An attestation status together with the reason it was reached.
+ *
+ * Providers record decline and revocation reasons verbatim; carrying them
+ * alongside the status keeps that evidence with the attestation.
+ *
+ * `status` keeps the CREATED default that previously sat on `Attestation`, so a
+ * newly-built attestation still starts in the same state without the author
+ * having to say so.
+ */
+concept AttestationStatusDetail {
+    o AttestationStatus status default="CREATED"
+    o String reason optional
+    o DateTime timestamp optional
+}
+
+/**
+ * The form of the content that was hashed and signed.
+ *
+ * Signatories typically sign rendered text rather than a data model, so a
+ * verifier needs to know which representation to re-hash.
+ */
+enum ContentRepresentation {
+    o CONCERTO_JSON
+    o CICEROMARK
+    o PLAINTEXT
+    o PDF
+    o CUSTOM
+}
+
+/**
+ * One document covered by an attestation.
+ *
+ * A signing action often covers several documents at once (envelopes, signing
+ * packages), so an attestation carries a list of these rather than a single
+ * content hash.
+ */
+concept DocumentAttestation {
+    o String documentId optional
+    o String documentName optional
+    o ContentHash contentHash
+    o ContentRepresentation contentRepresentation optional
+}
+
+/**
+ * The signatory or signing agent associated with an attestation.
+ */
+concept Signatory {
+    o String identifier
+    o String name optional
+    o String role optional
+    o String uri optional
+}
+
+/**
+ * The time window during which an attestation is valid.
+ */
+concept ValidityWindow {
+    o DateTime validFrom optional
+    o DateTime validUntil optional
+}
+
+/**
+ * Delegation information for signatures created by an agent or delegate.
+ */
+concept Delegation {
+    o String principal
+    o Signatory delegate optional
+    o String scope optional
+    o ValidityWindow validity optional
+}
+
+/**
+ * Base concept for protocol-specific proof material.
+ */
+abstract concept Proof {
+    o String proofType
+    o DateTime created optional
+    o String verificationMethod optional
+}
+
+/**
+ * Opaque proof material for signature protocols that do not yet have a
+ * dedicated Accord Project model.
+ */
+concept OpaqueProof extends Proof {
+    o String value
+    o String encoding optional
+    o String mediaType optional
+}
+
+/**
+ * Structured evidence from a signing provider.
+ *
+ * For DocuSign this maps directly: providerId "docusign", envelopeOrSessionId
+ * holds the envelope identifier and certificateUri points at the Certificate of
+ * Completion. Other providers populate the same fields differently.
+ */
+concept ProviderProof extends Proof {
+    o String providerId
+    o String envelopeOrSessionId optional
+    o String recipientId optional
+    o String certificateUri optional
+    o String ipAddress optional
+    o String userAgent optional
+}
+
+/**
+ * A reference to the template archive that produced a contract.
+ *
+ * The contract relationship identifies the instance and its class, but two
+ * contracts sharing a class may come from different archive versions with
+ * different logic or clause text.
+ */
+concept TemplateReference {
+    o String identifier
+    o String version
+    o ContentHash archiveHash optional
+}
+
+/**
+ * A verifiable statement that a signatory has attested to agreement content.
+ */
+concept Attestation {
+    o Signatory signatory
+    o DocumentAttestation[] documents
+    o SignatureMethod method
+    o AssuranceLevel assuranceLevel optional
+    o IdentityVerification identityVerification optional
+    o ValidityWindow validity optional
+    o Delegation delegation optional
+    o AttestationStatusDetail status
+    o Proof proof optional
+}
+
+/**
+ * A request that indicates that a contract has been signed by all parties.
+ *
+ * The optional attestations field preserves the existing transaction shape
+ * while allowing newer integrations to inspect structured signature metadata.
+ */
+transaction ContractSigned extends Request {
+    --> Contract contract
+    o TemplateReference template optional
+    o Attestation[] attestations optional
+}
