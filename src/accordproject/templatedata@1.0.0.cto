@@ -33,7 +33,7 @@ concerto version "^3.0.0"
  * declare map types and require Concerto 4, while a template that only
  * subclasses these two concepts stays on Concerto 3 syntax.
  */
-namespace org.accordproject.data@1.0.0
+namespace org.accordproject.templatedata@1.0.0
 
 /**
  * The extension point for template-specific data.

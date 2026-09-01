@@ -34,7 +34,7 @@ concerto version "^3.0.0"
  *   artifactManifestHash. This model cannot express that conditional.
  *
  * Identifier syntax.
- *   TemplateReference.identifier is an open string. A profile should define
+ *   TemplateReference.templateId is an open string. A profile should define
  *   whether it is a name, a URI or a registry key, and how it is compared.
  */
 namespace org.accordproject.template@1.0.0
@@ -82,11 +82,17 @@ concept TemplateArtifact {
  * Profiles which populate artifacts should define the manifest canonicalization
  * and require the list to agree with artifactManifestHash.
  *
+ * templateId names the template itself, not this reference: the same
+ * templateId and version denote the same archive wherever they are cited.
+ * TemplateReference is deliberately not a Concerto-identified type, so
+ * templateId carries no identity semantics of its own; its syntax is deferred
+ * to a profile.
+ *
  * The hash commits only to the archive. Nothing here states a relationship
  * between it and the hash of anything created from the template.
  */
 concept TemplateReference {
-  o String identifier
+  o String templateId
   o String version
   o ContentHash archiveHash
   o ContentHash artifactManifestHash optional

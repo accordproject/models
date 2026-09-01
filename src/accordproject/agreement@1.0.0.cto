@@ -54,6 +54,23 @@ concerto version "^4.0.0"
  *   material is identified and hash-committed, and whether it is incorporated
  *   as at a fixed version or as amended from time to time.
  *
+ * Hash canonicalization.
+ *   Every hash property here is optional, and this model does not define how
+ *   the bytes they commit to are produced. Two implementations hashing the
+ *   same agreement under different canonicalization rules would both be
+ *   conformant, so a hash is only meaningful under a profile that fixes those
+ *   rules. A deterministic profile must define the canonical serialization,
+ *   state that the hash property itself is excluded from its own pre-image,
+ *   and may require the properties this model leaves optional. Where a hash is
+ *   supplied its crypto@1.0.0 Canonicalization should be populated, so that a
+ *   verifier can tell which discipline produced it rather than having to
+ *   assume one.
+ *
+ *   The properties are optional rather than required because optional to
+ *   required is a breaking change and this family is published permanently: a
+ *   profile can tighten what the core model leaves open, but nothing can
+ *   loosen it afterwards.
+ *
  * Cross-level hash commitment.
  *   Each hash in this model commits only to its own level. Nothing states that
  *   an agreement's hash commits to its documents' hashes, or a document's to
@@ -68,7 +85,7 @@ concerto version "^4.0.0"
 namespace org.accordproject.agreement@1.0.0
 
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
-import org.accordproject.data@1.0.0.TemplateData from https://models.accordproject.org/accordproject/data@1.0.0.cto
+import org.accordproject.templatedata@1.0.0.TemplateData from https://models.accordproject.org/accordproject/templatedata@1.0.0.cto
 import org.accordproject.party@1.0.0.Party from https://models.accordproject.org/accordproject/party@1.0.0.cto
 import org.accordproject.template@1.0.0.TemplateReference from https://models.accordproject.org/accordproject/template@1.0.0.cto
 
@@ -79,22 +96,26 @@ import org.accordproject.template@1.0.0.TemplateReference from https://models.ac
  * {{#clause ...}} block bound to a sub-template. Prose which is not bound to a
  * sub-template is not a Clause; it is ordinary markup in the parent grammar.
  *
- * path is the instance path of the clause in the document's data, and is the
- * key under which the clause appears in AgreementDocument.clauses. It is a
- * bare name for a singleton clause, for example "payment", and is qualified by
- * index where a clause is generated inside a list or foreach block, for
- * example "deliveries[2].inspection". Instance paths, rather than a static
- * clause tree, are used because the number of clause instances is determined
- * by the data: a list block yields one instance per element and a conditional
- * block may yield none. The authoritative structure of the agreement remains
- * the TemplateMark and CiceroMark markup; this model records provenance over
- * it and does not restate it.
+ * A clause is addressed by its instance path, which is the key it appears
+ * under in AgreementDocument.clauses. The path is a bare name for a singleton
+ * clause, for example "payment", and is qualified by index where a clause is
+ * generated inside a list or foreach block, for example
+ * "deliveries[2].inspection". Instance paths, rather than a static clause
+ * tree, are used because the number of clause instances is determined by the
+ * data: a list block yields one instance per element and a conditional block
+ * may yield none. The authoritative structure of the agreement remains the
+ * TemplateMark and CiceroMark markup; this model records provenance over it
+ * and does not restate it.
+ *
+ * The path is deliberately held only in the map key and not repeated as a
+ * property, so there is one place it is stated and no invariant tying two
+ * copies together. Records which cite a clause from outside the map, such as
+ * AgreementReference, carry the path themselves.
  *
  * clauseId is an optional stable handle for a clause whose identity must
  * survive across agreement revisions, where the instance path may change.
  */
 concept Clause {
-  o String path
   o TemplateReference template
   o String clauseId optional
   o ContentHash clauseHash optional
@@ -123,10 +144,11 @@ concept AgreementParty {
  * A single instrument recording part of an agreement: a master agreement, a
  * schedule, a confirmation, an annex or a standalone contract.
  *
- * documentHash commits to the canonical document representation, excluding the
- * documentHash property itself. It is independent of the hashes of the
- * agreement above it and the clauses within it; no cross-level commitment is
- * implied.
+ * documentHash commits to the document, excluding the documentHash property
+ * itself. It is optional and its canonicalization is left to a deterministic
+ * profile, as set out under Hash canonicalization above. It is independent of
+ * the hashes of the agreement above it and the clauses within it; no
+ * cross-level commitment is implied.
  *
  * template is optional because an assembled instrument may bind sub-templates
  * per clause without itself being generated from a document-level template.
@@ -140,7 +162,7 @@ concept AgreementParty {
  */
 asset AgreementDocument identified by documentId {
   o String documentId
-  o ContentHash documentHash
+  o ContentHash documentHash optional
   o TemplateReference template optional
   o TemplateData data optional
   o Clauses clauses optional
@@ -150,8 +172,9 @@ asset AgreementDocument identified by documentId {
 /**
  * An agreement between parties, recorded in one or more documents.
  *
- * agreementHash commits to the canonical agreement representation, excluding
- * the agreementHash property itself.
+ * agreementHash commits to the agreement, excluding the agreementHash
+ * property itself. It is optional and its canonicalization is left to a
+ * deterministic profile, as set out under Hash canonicalization above.
  *
  * documents is ordered by reading order, that is, the order in which the
  * instruments are assembled and rendered. Order of precedence between
@@ -166,7 +189,7 @@ asset AgreementDocument identified by documentId {
  */
 asset Agreement identified by agreementId {
   o String agreementId
-  o ContentHash agreementHash
+  o ContentHash agreementHash optional
   --> AgreementDocument[] documents
   o AgreementParty[] parties
 }
@@ -183,11 +206,18 @@ asset Agreement identified by agreementId {
  * available. template is optional because an agreement carries no template of
  * its own; supply it when the provenance derives from a single templated
  * document. clausePath identifies a specific originating clause instance,
- * using the same instance path as Clause.path.
+ * using the same instance path that keys AgreementDocument.clauses. It is held
+ * here because a reference travels without the map that would otherwise supply
+ * it.
+ *
+ * agreementHash is optional and its canonicalization is left to a
+ * deterministic profile, as set out under Hash canonicalization above. A
+ * profile whose evidence depends on the reference being verifiable should
+ * require it.
  */
 concept AgreementReference {
   o String agreementId
-  o ContentHash agreementHash
+  o ContentHash agreementHash optional
   o TemplateReference template optional
   o String clausePath optional
   o ContentHash clauseHash optional

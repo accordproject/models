@@ -22,7 +22,7 @@ namespace org.accordproject.runtime@1.0.0
 
 import org.accordproject.agreement@1.0.0.Agreement from https://models.accordproject.org/accordproject/agreement@1.0.0.cto
 import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
-import org.accordproject.data@1.0.0.StateData from https://models.accordproject.org/accordproject/data@1.0.0.cto
+import org.accordproject.templatedata@1.0.0.StateData from https://models.accordproject.org/accordproject/templatedata@1.0.0.cto
 
 /**
  * Base request for invoking contract logic with no custom request properties.
@@ -39,10 +39,10 @@ transaction Response {
 /**
  * The state of an agreement's clause instances, keyed by clause instance path.
  *
- * Keys are the instance paths defined by agreement@1.0.0.Clause.path, for
- * example "payment" or "deliveries[2].inspection", and mirror the keys of the
- * corresponding AgreementDocument.clauses map. The path is the key, so it is
- * deliberately not repeated in the value.
+ * Keys are the clause instance paths that key agreement@1.0.0's
+ * AgreementDocument.clauses, for example "payment" or
+ * "deliveries[2].inspection". The path is the key in both maps, so it is
+ * deliberately not repeated in either value.
  *
  * The value is StateData itself, so a template's own state subtype is the map
  * value with nothing wrapping it. Both the declared value type and the
@@ -59,6 +59,16 @@ map ClauseStates {
  * An identified, revisioned snapshot of the whole runtime state of an
  * agreement, including the state of each of its clause instances.
  *
+ * AgreementState is registry-resident, and intentionally so. It holds a
+ * relationship to its Agreement rather than the portable AgreementReference
+ * used by obligations and settlement evidence, because state is written by a
+ * runtime that has the agreement and its documents in hand: a revision counter
+ * and a previous-state hash chain are only meaningful where successive
+ * revisions can be resolved against one another. Records which must travel
+ * standalone reference an agreement portably instead; state does not travel,
+ * so it does not need to. This mirrors the distinction party@1.0.0 draws
+ * between Party and PartyRef.
+ *
  * State is held as one document per agreement rather than one asset per
  * clause. A transition which spans scopes, such as marking a clause BREACHED
  * because of a condition detected in the agreement or in a peer clause, is
@@ -73,9 +83,16 @@ map ClauseStates {
  * host language. Scoping rules for that navigation are deliberately not
  * encoded in the model.
  *
- * stateHash commits to the canonical state representation, excluding the
- * stateHash property itself. previousStateHash links a revision to its
- * immediate predecessor when one exists.
+ * stateHash commits to the state, excluding the stateHash property itself,
+ * and previousStateHash links a revision to its immediate predecessor when one
+ * exists. Both are optional and this model does not define the canonicalization
+ * they use, so a hash chain over revisions is only meaningful under a profile
+ * that fixes those rules. A deterministic profile must define the canonical
+ * serialization, state that stateHash is excluded from its own pre-image, and
+ * should require stateHash where the chain is relied upon. Where a hash is
+ * supplied its crypto@1.0.0 Canonicalization should be populated. The
+ * properties are optional rather than required because optional to required is
+ * a breaking change and this namespace is published permanently.
  *
  * Obligations are intentionally not defined in this namespace. New
  * implementations should use org.accordproject.obligation@1.0.0 so durable
@@ -88,6 +105,6 @@ asset AgreementState identified by stateId {
   o DateTime effectiveAt
   o StateData data optional
   o ClauseStates clauseStates optional
-  o ContentHash stateHash
+  o ContentHash stateHash optional
   o ContentHash previousStateHash optional
 }

@@ -37,6 +37,14 @@ participant Party identified by partyId {
  *
  * A PartyRef with scheme "party" and id equal to Party.partyId denotes the
  * corresponding Party in the same deployment.
+ *
+ * PartyRef deliberately carries no role. A role is a property of an act, not
+ * of a party: the same party may be a signatory on one document and a witness
+ * on another, and may sign in different roles on documents within one
+ * agreement. Role therefore belongs on the record of the act — on
+ * agreement@1.0.0's AgreementParty for a party's role under an agreement, and
+ * on an attestation for the capacity in which a signature was given. label is
+ * a display name only and must not be used to carry one.
  */
 concept PartyRef {
   o String id
