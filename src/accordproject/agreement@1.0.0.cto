@@ -92,20 +92,32 @@ import org.accordproject.template@1.0.0.TemplateReference from https://models.ac
 /**
  * A clause instance within an agreement document.
  *
- * A clause corresponds to a TemplateMark ClauseDefinition, that is, a
- * {{#clause ...}} block bound to a sub-template. Prose which is not bound to a
- * sub-template is not a Clause; it is ordinary markup in the parent grammar.
+ * A Clause records a sub-template archive composed into this document: a
+ * {{#clause ...}} block whose body is supplied by a separate template, named
+ * by Clause.template. It is provenance for composition, not an index of the
+ * document's structure.
+ *
+ * An inline {{#clause ...}} block, whose body is written in the parent grammar
+ * and which composes no separate archive, gets no entry. A document whose
+ * clause blocks are all inline has no composed archives to record, so its
+ * clauses map is absent rather than present and empty. Clause.template is
+ * required for the same reason: there is nothing to name where nothing was
+ * composed. Prose outside a clause block is likewise not a Clause; it is
+ * ordinary markup in the parent grammar.
  *
  * A clause is addressed by its instance path, which is the key it appears
- * under in AgreementDocument.clauses. The path is a bare name for a singleton
- * clause, for example "payment", and is qualified by index where a clause is
- * generated inside a list or foreach block, for example
- * "deliveries[2].inspection". Instance paths, rather than a static clause
- * tree, are used because the number of clause instances is determined by the
- * data: a list block yields one instance per element and a conditional block
- * may yield none. The authoritative structure of the agreement remains the
- * TemplateMark and CiceroMark markup; this model records provenance over it
- * and does not restate it.
+ * under in AgreementDocument.clauses. The path is rooted at the document's
+ * data — the TemplateData subtype carried in AgreementDocument.data — and not
+ * at the document itself, so a clause bound to the paymentTerms property of
+ * the data has the path "paymentTerms" and never "data.paymentTerms". It is a
+ * bare name for a singleton clause, for example "payment", and is qualified by
+ * index where a clause is generated inside a list or foreach block, for
+ * example "deliveries[2].inspection". Instance paths, rather than a static
+ * clause tree, are used because the number of clause instances is determined
+ * by the data: a list block yields one instance per element and a conditional
+ * block may yield none. The authoritative structure of the agreement remains
+ * the TemplateMark and CiceroMark markup; this model records provenance over
+ * it and does not restate it.
  *
  * The path is deliberately held only in the map key and not repeated as a
  * property, so there is one place it is stated and no invariant tying two
@@ -122,7 +134,10 @@ concept Clause {
 }
 
 /**
- * The clause instances of a document, keyed by clause instance path.
+ * The sub-template archives composed into a document, keyed by clause instance
+ * path.
+ *
+ * Absent, rather than empty, where a document composes no archives of its own.
  */
 map Clauses {
   o String

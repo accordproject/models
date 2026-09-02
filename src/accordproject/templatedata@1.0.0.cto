@@ -46,6 +46,25 @@ namespace org.accordproject.templatedata@1.0.0
  *
  * The data of a clause is a subtree of the document's data, addressed by the
  * clause's instance path. A clause does not carry its own copy.
+ *
+ * The @template decorator belongs on this subtype, never on the agreement
+ * envelope. The renderable root of a template's grammar is the TemplateData
+ * subtype it declares, so {{effectiveDate}} resolves against the data directly
+ * and no {{#with data}} wrapper is required. Placing @template on a subclass
+ * of an envelope does not merely add a level of nesting, it cannot render at
+ * all: markdown-template resolves clause and with blocks with getOwnProperty,
+ * which does not walk supertypes, so {{#with data}} on a subclass with an
+ * empty body never resolves. Plain variables resolve through inheritance;
+ * block constructs do not. The division of labour is that a template author
+ * writes data, and the runtime wraps it in a provenance envelope the author
+ * never has to see.
+ *
+ * A template's data should name parties with party@1.0.0's PartyRef rather
+ * than with a relationship to Party. Data travels to contract logic as a
+ * serialized value with no resolution step, where a relationship arrives as an
+ * unresolvable "resource:...#me" string. Relationships to Party belong on the
+ * envelope, in agreement@1.0.0's AgreementParty, where a registry is available
+ * to resolve them.
  */
 abstract concept TemplateData {}
 
