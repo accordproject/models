@@ -47,17 +47,23 @@ namespace org.accordproject.templatedata@1.0.0
  * The data of a clause is a subtree of the document's data, addressed by the
  * clause's instance path. A clause does not carry its own copy.
  *
- * The @template decorator belongs on this subtype, never on the agreement
- * envelope. The renderable root of a template's grammar is the TemplateData
- * subtype it declares, so {{effectiveDate}} resolves against the data directly
- * and no {{#with data}} wrapper is required. Placing @template on a subclass
- * of an envelope does not merely add a level of nesting, it cannot render at
- * all: markdown-template resolves clause and with blocks with getOwnProperty,
- * which does not walk supertypes, so {{#with data}} on a subclass with an
- * empty body never resolves. Plain variables resolve through inheritance;
- * block constructs do not. The division of labour is that a template author
- * writes data, and the runtime wraps it in a provenance envelope the author
- * never has to see.
+ * Extending this concept is what declares a template's data. A template's
+ * model holds exactly one concrete subtype of TemplateData, and that subtype
+ * is the template's renderable root, found by its parent type. No decorator
+ * marks it: the supertype carries that meaning, so a template author states
+ * the fact once rather than declaring an inheritance and then repeating it as
+ * an annotation which nothing keeps in agreement with it. Types the data is
+ * composed of are ordinary concepts and do not extend TemplateData; only the
+ * root does.
+ *
+ * Because the grammar roots at the data, {{effectiveDate}} resolves against it
+ * directly and no {{#with data}} wrapper is required. Rooting a grammar at an
+ * agreement envelope instead cannot render at all: markdown-template resolves
+ * clause and with blocks with getOwnProperty, which does not walk supertypes,
+ * so {{#with data}} on an empty subclass of an envelope never resolves. Plain
+ * variables resolve through inheritance; block constructs do not. The division
+ * of labour is that a template author writes data, and the runtime wraps it in
+ * a provenance envelope the author never has to see.
  *
  * A template's data should name parties with party@1.0.0's PartyRef rather
  * than with a relationship to Party. Data travels to contract logic as a
@@ -71,9 +77,11 @@ abstract concept TemplateData {}
 /**
  * The extension point for template-specific runtime state.
  *
- * A template declares one concrete subtype. It is carried in runtime@1.0.0's
- * AgreementState.data for state scoped to the agreement, and as a ClauseStates
- * value, keyed by clause instance path, for state scoped to a clause.
+ * A template declares one concrete subtype, and as with TemplateData that
+ * subtype is found by its parent type rather than by a decorator. It is
+ * carried in runtime@1.0.0's AgreementState.data for state scoped to the
+ * agreement, and as a ClauseStates value, keyed by clause instance path, for
+ * state scoped to a clause.
  *
  * There is deliberately no lifecycle status property. What it means for a
  * clause to be, for example, active or breached is a matter for the template
