@@ -15,7 +15,7 @@ discussion — see the tracking issue.
 |------|--------|----------|
 | [`iso4217.json`](./iso4217.json) | `iso4217` | Fiat currencies. Codes inherited from `money@0.3.0` plus `VES`; scales are ISO 4217 minor units. |
 | [`erc20.json`](./erc20.json) | `erc20` | Illustrative sample of ERC-20 tokens (USDC, USDT, DAI, WETH, WBTC) with their token decimals. |
-| [`slip44.json`](./slip44.json) | `slip44` | Illustrative sample of native L1 coins (BTC, ETH, SOL, SUI) keyed by SLIP-0044 ticker, with their native decimals. |
+| [`slip44.json`](./slip44.json) | `slip44` | Illustrative sample of native L1 coins (BTC, ETH, HBAR, SOL, SUI) keyed by SLIP-0044 ticker, with their native decimals. |
 | [`examples/`](./examples) | — | Standalone example instances of `ApproximateAmount` and `PreciseAmount`. |
 
 ## Format
@@ -37,6 +37,39 @@ unit code, where each value is a `Unit`.
 A consumer loads the registry for a scheme and indexes `units` by code to
 resolve the canonical `Unit` — and to validate that an amount's unit
 carries the standard `scale` for its scheme.
+
+### Native HBAR
+
+Native HBAR uses its registered SLIP-0044 coin type (`3030`) and eight decimal
+places (tinybars):
+
+```json
+{
+  "$class": "org.accordproject.money@1.0.0.PreciseAmount",
+  "unscaledValue": "50000",
+  "unit": {
+    "$class": "org.accordproject.money@1.0.0.Unit",
+    "code": "HBAR",
+    "scheme": "slip44",
+    "identifier": "3030",
+    "scale": 8
+  }
+}
+```
+
+This represents exactly `0.0005 HBAR`. Network selection (for example,
+`hedera:testnet`) belongs in the payment protocol metadata; it is not part of
+the SLIP-0044 currency unit identity. Likewise, Hedera x402 uses `0.0.0` as its
+rail-specific asset value for native HBAR; that value belongs in the x402
+payment requirements, not in `Unit.identifier`. A payment adapter must apply
+the selected rail's asset mapping; it must not copy `Unit.identifier` into a
+protocol asset field. For example, `slip44:3030` maps to x402 Hedera asset
+`0.0.0`, while retaining the exact amount and scale.
+
+HTS fungible tokens are distinct assets rather than denominations of native
+HBAR. They should use a chain-scoped identifier (for example a CAIP-19 asset
+type containing the Hedera network and token ID), with the token's own decimal
+scale. They must not reuse HBAR's `slip44:3030` identity or assume HBAR's scale.
 
 > Note: serializing a `code → Unit` map where the value concept is
 > imported from another namespace requires concerto-core with the fix from

@@ -1,0 +1,338 @@
+/*
+ * Copyright 2026 Accord Project contributors.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+concerto version "^4.0.0"
+
+namespace org.accordproject.licensing.rsl@1.0.0
+
+import org.accordproject.money@1.0.0.{CurrencyCode, PreciseAmount} from https://models.accordproject.org/money@1.0.0.cto
+
+// ---------------------------------------------------------------------------
+// RSL 1.0 — Really Simple Licensing (RSL Collective)
+//
+// Specification: https://rslstandard.org/rsl (RSL-SPEC-1.0, Recommendation,
+// published 2025-12-10). Element semantics from section 3; every structural
+// rule below is taken from the normative Relax NG compact grammar in
+// Appendix A, which is what this model is a projection of.
+//
+// RSL is an XML vocabulary a publisher attaches to content — via robots.txt
+// `License:`, a `Link: rel=license` header, an HTML <link>, an RSS module, or
+// embedded metadata — declaring what may be done with that content and on what
+// payment terms. Its companion API, the Open License Protocol (OLP,
+// https://rslstandard.org/api), acquires and introspects licences.
+//
+// Namespaced under `licensing` rather than `protocol` (where the proposed x402
+// model sits) because RSL is a licensing vocabulary, not a wire protocol; it
+// leaves `licensing.odrl` free for the same treatment.
+//
+// Modelling decisions, and where they depart from the XML shape:
+//
+//  1. Hyphenated tokens (`ai-train`, `non-commercial`) become underscored enum
+//     values (`AI_TRAIN`, `NON_COMMERCIAL`). Concerto enum names cannot carry
+//     hyphens. The mapping is mechanical and total: lowercase and replace `_`
+//     with `-` to serialise.
+//
+//  2. Appendix A permits at most one <permits>/<prohibits> per type value, and
+//     at most one <legal> per type value, in a given <license>. Modelling those
+//     as typed fields on LicenseTerms and LegalStatements makes that
+//     cardinality rule structural rather than a validation pass, and removes
+//     the possibility of two <permits type="usage"> elements disagreeing.
+//
+//  3. The usage, user and payment vocabularies are OPEN. Appendix A defines
+//     `usageToken = rslUsageToken | qnameToken` (and the same for user and
+//     payment), and section 3.4.1 says tokens from extension namespaces MAY
+//     appear but MUST NOT be interpreted unless the processor recognises them.
+//     The enums here are therefore the RSL core vocabulary only, and each is
+//     paired with a QNameToken field carrying the extension tokens a processor
+//     does not interpret. Dropping unrecognised tokens on the floor would lose
+//     data that must survive a round trip. The geo, reporting, warranty and
+//     disclaimer vocabularies are closed in Appendix A and are enums alone.
+//
+//  4. RSL's own <amount> remains exactly as specified: an ISO 4217 code and an
+//     xsd:decimal. Payment.preciseAmount is a typed Accord extension for exact
+//     units that <amount> cannot represent, such as HBAR and token contracts.
+//     It reuses org.accordproject.money@1.0.0.PreciseAmount, whose Unit carries
+//     a code, scheme, optional identifier and scale. An XML adapter MUST emit
+//     it as a foreign-namespace element, never as an RSL <amount>; Appendix A
+//     admits foreignElement inside <payment>, and RSL Core processors ignore
+//     extensions they do not recognise. Such a payment should also carry
+//     <accepts> so a core RSL client can obtain authoritative pricing and
+//     settlement instructions through the named protocol.
+//
+//     The canonical XML binding for this field is the foreign element
+//     `{https://models.accordproject.org/money@1.0.0}preciseAmount`, conventionally
+//     prefixed `accord-money`. `unscaledValue` is an attribute on that element;
+//     its single `accord-money:unit` child carries the `code`, `scheme`,
+//     optional `identifier`, and `scale` attributes. See rsl-example.xml.
+//
+//  5. Payment has two exclusive choices that Concerto cannot express without
+//     changing the direct projection of RSL Core: type versus typeExtension,
+//     and amount versus preciseAmount. A polymorphic PaymentAmount supertype
+//     could enforce the latter, but would replace RSL's specified `amount`
+//     property with a wrapper/discriminator shape. This model preserves the
+//     RSL Core property unchanged; adapters MUST enforce both exclusive choices.
+//
+// What this model cannot enforce, and an adapter must:
+//
+//   - Appendix A requires `content+` in <rsl>, `license+` in <content>, and one
+//     or more tokens in every token list. Concerto arrays carry no minimum
+//     length, so an empty `contents`, `licenses`, or vocabulary array validates
+//     here and is NOT a valid RSL document.
+//   - Section 3.1.1: all applicable licences are evaluated together and a
+//     prohibition always wins, whether it sits in the same <license> or another
+//     one governing the same asset. A permit that another licence prohibits is
+//     structurally valid and legally inert.
+//   - Section 3.3: when `server` is present, `url` MUST be non-empty and a
+//     client MUST obtain a licence from that server before access, even for a
+//     free licence. Do not advertise a server that is not implemented.
+//   - A QNameToken carries a prefix but not its namespace binding, which lives
+//     in an `xmlns:` declaration on the XML document. An adapter must carry a
+//     prefix -> namespace URI map alongside this model to serialise or resolve
+//     extension tokens; two documents may bind the same prefix differently.
+//   - Payment.type and Payment.typeExtension are alternatives — Appendix A's
+//     `paymentToken` is a choice, not a pair — but Concerto cannot express an
+//     exclusive-or, so both can be set. An adapter must reject that.
+//   - Payment.amount and Payment.preciseAmount are also alternatives. The first
+//     is the RSL core element; the second is the Accord foreign extension. An
+//     adapter must reject a payment that sets both rather than choose between
+//     potentially contradictory prices.
+// ---------------------------------------------------------------------------
+
+// Appendix A: qnameToken. An extension-namespace token in a usage, user or
+// payment vocabulary — e.g. `acme:translate`. Valid RSL; not interpreted unless
+// the processor recognises it.
+scalar QNameToken extends String regex=/^[A-Za-z_][A-Za-z0-9_.-]*:[A-Za-z_][A-Za-z0-9_.-]*$/
+
+// Appendix A: geoToken. ISO 3166-1 alpha-2, plus the literal EU.
+scalar GeoToken extends String regex=/^([A-Z]{2}|EU)$/
+
+// Appendix A: the <amount> body is an xsd:decimal, carried as a string so no
+// precision is lost in transit. It is not a money type — see note 4.
+scalar DecimalString extends String regex=/^[+-]?(0|[1-9][0-9]*)(\.[0-9]+)?$/
+
+// Appendix A: absoluteURI and httpsURI.
+scalar AbsoluteUri extends String regex=/^[A-Za-z][A-Za-z0-9+.-]*:.*$/
+scalar HttpsUri extends String regex=/^https:\/\/.+$/
+
+// Appendix A: the only value <schema type> may take.
+scalar JsonLdMediaType extends String regex=/^application\/ld\+json$/
+
+// RSL core usage vocabulary (section 3.4.1.1). ALL and AI_ALL are aggregates:
+// AI_ALL covers AI_TRAIN, AI_INPUT and AI_INDEX, and other AI uses not yet
+// enumerated. AI_INPUT is retrieval at inference (RAG, grounding, summaries);
+// AI_INDEX is inclusion in an internal index; SEARCH excludes AI-generated
+// summaries.
+enum UsageType {
+  o ALL
+  o AI_ALL
+  o AI_TRAIN
+  o AI_INPUT
+  o AI_INDEX
+  o SEARCH
+}
+
+// RSL core user vocabulary (section 3.4.1.2). Classifies the operator
+// responsible for the automated use, not the audience for its output.
+enum UserType {
+  o COMMERCIAL
+  o NON_COMMERCIAL
+  o EDUCATION
+  o GOVERNMENT
+  o PERSONAL
+}
+
+// RSL core payment vocabulary (section 3.7).
+enum PaymentType {
+  o PURCHASE
+  o SUBSCRIPTION
+  o TRAINING
+  o CRAWL
+  o USE
+  o CONTRIBUTION
+  o ATTRIBUTION
+  o FREE
+}
+
+// <legal type="warranty"> (section 3.13). Closed in Appendix A.
+enum WarrantyType {
+  o OWNERSHIP
+  o AUTHORITY
+  o NO_INFRINGEMENT
+  o PRIVACY_CONSENT
+  o NO_MALWARE
+}
+
+// <legal type="disclaimer"> (section 3.13). Closed in Appendix A.
+enum DisclaimerType {
+  o AS_IS
+  o NO_WARRANTY
+  o NO_LIABILITY
+  o NO_INDEMNITY
+}
+
+// <reporting type> (section 3.12). Closed in Appendix A.
+enum ReportingType {
+  o TELEMETRY
+  o PROVENANCE
+  o AUDIT
+}
+
+// <copyright type> (section 3.16).
+enum RightsHolderType {
+  o PERSON
+  o ORGANIZATION
+}
+
+// <amount currency="EUR">49.00</amount>. The RSL element as specified: an ISO
+// 4217 code and a decimal. It cannot express a price on a token rail — see
+// note 4 in the header.
+concept Amount {
+  o CurrencyCode currency
+  o DecimalString value
+}
+
+// <accepts type="application/x402+json">{...}</accepts> (section 3.11).
+// `type` is a media type identifying the payment protocol and payload format;
+// for x402 it MUST be application/x402+json. `metadata` is the element body,
+// carried verbatim because its shape is defined by that media type, not by RSL.
+// This is where authoritative pricing arrives when <amount> cannot carry it.
+concept Accepts {
+  o String type
+  o String metadata optional
+}
+
+// <payment> (section 3.7). Omitting it entirely means the licence is free.
+// `type` and `typeExtension` are alternatives: Appendix A allows either a core
+// token or an extension-namespace QName, never both.
+concept Payment {
+  o PaymentType type optional
+  o QNameToken typeExtension optional
+  // <standard>: a public or collective licence (Creative Commons,
+  // rslcollective.org). <custom>: a publisher-specific licensing page. Both are
+  // opaque identifiers and are not required to resolve.
+  o AbsoluteUri standard optional
+  o String custom optional
+  o Amount amount optional
+  // Accord extension for an exact fiat, native-chain or token amount. In XML
+  // this is the accord-money:preciseAmount foreignElement defined in note 4,
+  // not an element in the RSL namespace. For HBAR, for example: code="HBAR",
+  // scheme="slip44", identifier="3030", scale=8. Hedera's x402 asset value
+  // "0.0.0" identifies native HBAR on that settlement rail; it belongs in the
+  // payment-protocol metadata rather than replacing this cross-chain unit id.
+  // An adapter MUST use the selected payment protocol's asset mapping and MUST
+  // NOT copy Unit.identifier into an x402 asset field. HTS tokens are not
+  // native HBAR and require their own chain-scoped identity.
+  o PreciseAmount preciseAmount optional
+  o Accepts accepts optional
+}
+
+// The five <legal> types, flattened — Appendix A allows at most one of each per
+// licence. `attestation` affirms authorisation; `contact` is a URL (including
+// mailto:) or email address; `proof` is absolute URIs referencing verifiable
+// evidence of authority.
+concept LegalStatements {
+  o WarrantyType[] warranty optional
+  o DisclaimerType[] disclaimer optional
+  o Boolean attestation optional
+  o String contact optional
+  o AbsoluteUri[] proof optional
+}
+
+// <reporting> (section 3.12). `profile` identifies the reporting profile and is
+// opaque — clients match on it and are not required to resolve it.
+// `configuration` is the element's profile-specific JSON body. A client that
+// cannot comply with the profile MUST treat the activity as not licensed.
+concept Reporting {
+  o ReportingType type
+  o AbsoluteUri profile
+  o HttpsUri endpoint optional
+  o String configuration optional
+}
+
+// <license> (section 3.4). Every field is optional in Appendix A; an empty
+// <license> is structurally valid and grants nothing, because RSL is read
+// conservatively — a use not permitted is not licensed.
+concept LicenseTerms {
+  o UsageType[] permitsUsage optional
+  o UserType[] permitsUser optional
+  o GeoToken[] permitsGeo optional
+  o UsageType[] prohibitsUsage optional
+  o UserType[] prohibitsUser optional
+  o GeoToken[] prohibitsGeo optional
+  // Extension-namespace tokens appearing in the same lists — see note 3.
+  o QNameToken[] permitsUsageExtensions optional
+  o QNameToken[] permitsUserExtensions optional
+  o QNameToken[] prohibitsUsageExtensions optional
+  o QNameToken[] prohibitsUserExtensions optional
+  o Payment payment optional
+  o LegalStatements legal optional
+  o Reporting[] reporting optional
+}
+
+// <schema> (section 3.15). Either a URL (no `type`) or an inline Schema.org
+// JSON-LD object (`type="application/ld+json"`), so the body is a string
+// either way.
+concept Schema {
+  o String value
+  o JsonLdMediaType type optional
+}
+
+// <copyright> (section 3.16). The element body is the rights holder's name.
+concept Copyright {
+  o String name
+  o RightsHolderType type optional
+  o String contactEmail optional
+  o String contactUrl optional
+}
+
+// <alternate> (section 3.14). An alternative representation of the same asset,
+// inheriting the parent content's licensing terms.
+concept Alternate {
+  o String url
+  o String type optional
+}
+
+// <content> (section 3.3). Appendix A: `license+ & alternate* & schema? &
+// copyright? & terms? & foreignElement*` — schema, copyright and terms are at
+// most one each, which is why they are single-valued here.
+//
+// `url` is the canonical identifier for the licence and, unless an association
+// mechanism defines the scope, MUST be a robots.txt-style path (RFC 9309),
+// not an absolute URL. The empty string is permitted only where an association
+// mechanism defines the scope.
+concept Content {
+  o String url
+  // OLP licence server. Present means a client MUST obtain a licence from it
+  // before access, even for a free licence, and `url` MUST be non-empty.
+  o String server optional
+  o Boolean encrypted default=false
+  o DateTime lastmod optional
+  // At least one — Appendix A says `license+`, which Concerto cannot enforce.
+  o LicenseTerms[] licenses
+  o Alternate[] alternates optional
+  o Schema schema optional
+  o Copyright copyright optional
+  // <terms>: a URL to human-readable terms. The only hook RSL offers to an
+  // actual agreement document, and it carries no hash, format or version.
+  o String terms optional
+}
+
+// <rsl> (section 3.2). `maxAgeDays` is the `max-age` attribute in days; absent
+// means the client may treat the document as authoritative for 30 days.
+// At least one Content — Appendix A says `content+`.
+concept RslDocument {
+  o Integer maxAgeDays range=[1,] optional
+  o Content[] contents
+}

@@ -14,6 +14,13 @@
       "scheme": "slip44",
       "scale": 18
     },
+    "HBAR": {
+      "$class": "org.accordproject.money@1.0.0.Unit",
+      "code": "HBAR",
+      "scheme": "slip44",
+      "identifier": "3030",
+      "scale": 8
+    },
     "SOL": {
       "$class": "org.accordproject.money@1.0.0.Unit",
       "code": "SOL",

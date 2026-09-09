@@ -9,7 +9,8 @@
   "main": "build.js",
   "scripts": {
     "build": "node build.js",
-    "start": "serve ./build"
+    "start": "serve ./build",
+    "test": "node --test \"test/**/*.test.js\""
   },
   "repository": {
     "type": "git",

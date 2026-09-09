@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  The canonical XML serialisation of rsl-example.json, kept beside it so the
+  model can be read against the form RSL is actually published in. This file is
+  documentation: nothing parses it, and there is no XML adapter in this
+  repository.
+
+  Two licences, neither of which prohibits anything. RSL is read conservatively
+  (section 3.1.1): a use that no applicable licence permits is not licensed, so
+  a prohibition is unnecessary here — and would be actively wrong, because a
+  prohibition in one licence defeats a permit in another for the same asset.
+  Paid training is offered by the second licence; prohibiting ai-train in the
+  first would make that offer unreachable.
+
+  Note what is absent. There is no `server` attribute: when one is present a
+  client MUST obtain a licence from that OLP server before access, even for a
+  free licence (section 3.3), so it must not be advertised unless it is
+  implemented. The first licence carries no RSL Core <amount>: HBAR is not ISO
+  4217. It instead carries Accord's typed foreign extension and retains
+  <accepts>, where section 3.11 provides the payment-protocol route for RSL Core
+  clients that do not recognise that extension.
+-->
+<rsl xmlns="https://rslstandard.org/rsl"
+     xmlns:accord-money="https://models.accordproject.org/money@1.0.0"
+     max-age="30">
+  <content url="/reports/digital-assets-outlook-2026">
+    <license>
+      <permits type="usage">search ai-input ai-index</permits>
+      <permits type="user">commercial non-commercial education government personal</permits>
+      <payment type="use">
+        <custom>https://example.com/licensing</custom>
+        <accord-money:preciseAmount unscaledValue="50000">
+          <accord-money:unit code="HBAR" scheme="slip44" identifier="3030" scale="8"/>
+        </accord-money:preciseAmount>
+        <accepts type="application/x402+json"><![CDATA[{"network":"hedera:testnet","scheme":"exact","asset":"0.0.0"}]]></accepts>
+      </payment>
+      <legal type="warranty">ownership authority no-infringement</legal>
+      <legal type="disclaimer">as-is no-warranty</legal>
+      <legal type="attestation">true</legal>
+      <legal type="contact">mailto:licensing@example.com</legal>
+    </license>
+    <license>
+      <permits type="usage">ai-train</permits>
+      <permits type="user">commercial non-commercial education government personal</permits>
+      <payment type="training">
+        <custom>https://example.com/licensing/training</custom>
+        <amount currency="USD">50.00</amount>
+      </payment>
+      <legal type="warranty">ownership authority no-infringement</legal>
+      <legal type="disclaimer">as-is no-warranty</legal>
+      <legal type="attestation">true</legal>
+      <legal type="contact">mailto:licensing@example.com</legal>
+    </license>
+    <copyright type="organization" contactUrl="https://example.com/contact">Example Media LLC</copyright>
+    <terms>https://example.com/legal/content-access-terms</terms>
+  </content>
+</rsl>
