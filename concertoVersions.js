@@ -37,5 +37,5 @@ module.exports = {
     // '0.82.11': concertoFromVersion('0.82'),
     '2.0.0': concertoFromVersion('2.0'),
     '3.6.0': concertoFromVersion('3.6'),
-    '4.0.0': concertoFromVersion('4.0'),
+    '5.0.0': concertoFromVersion('5.0'),
 };
