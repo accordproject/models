@@ -1,0 +1,114 @@
+/*
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+concerto version "^3.0.0"
+
+namespace org.accordproject.obligation.settlement@1.0.0
+
+import org.accordproject.crypto@1.0.0.ContentHash from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+import org.accordproject.crypto@1.0.0.HashedResource from https://models.accordproject.org/crypto/crypto@1.0.0.cto
+import org.accordproject.obligation@1.0.0.PartyRef from https://models.accordproject.org/accordproject/obligation@1.0.0.cto
+import org.accordproject.obligation@1.0.0.PaymentObligation from https://models.accordproject.org/accordproject/obligation@1.0.0.cto
+
+/**
+ * The business direction of a settlement obligation. Direction is explicit so
+ * that refund and penalty semantics are not encoded as negative amounts.
+ */
+enum SettlementDirection {
+  o PAYMENT
+  o REFUND
+  o PENALTY_ADJUSTMENT
+}
+
+/**
+ * Evidence progresses by producing immutable records linked by hash.
+ */
+enum SettlementEvidenceStage {
+  o PENDING
+  o SETTLED
+  o REVERSED
+  o DISPUTED
+}
+
+/**
+ * The reproducible inputs and result from which an amount was derived.
+ */
+concept Derivation {
+  o String metric
+  o HashedResource inputs
+  o HashedResource result
+}
+
+/**
+ * The engine invocation which evaluated the agreement.
+ */
+concept Evaluation {
+  o String engine
+  o String engineVersion
+  o DateTime evaluatedAt
+  o Boolean reproducible default=true
+}
+
+/**
+ * The material required to independently reproduce an evaluation.
+ */
+concept Reproduction {
+  o HashedResource inputs
+  o ContentHash expectedResultHash
+}
+
+/**
+ * A rail-neutral reference to evidence that settlement occurred.
+ */
+concept SettlementProof {
+  o String network
+  o String rail optional
+  o PartyRef sender optional
+  o PartyRef recipient optional
+  o String transactionId optional
+  o DateTime settledAt optional
+  o HashedResource receipt optional
+}
+
+/**
+ * A payment obligation with an explicit settlement direction and reproducible
+ * derivation. Agreement provenance, parties, precise amount, lifecycle state,
+ * authority and evidence hashes are inherited from PaymentObligation.
+ */
+asset SettlementObligation extends PaymentObligation {
+  o SettlementDirection direction default="PAYMENT"
+  o DateTime computedAt
+  o Derivation derivation
+}
+
+/**
+ * An immutable evidence record for a settlement obligation.
+ *
+ * artifact.hash commits to the evidence document. A later record links to the
+ * preceding record with previousEvidenceHash, forming the pending-to-settled
+ * (and, when needed, reversed or disputed) evidence chain.
+ */
+asset SettlementEvidence identified by evidenceId {
+  o String evidenceId
+  --> SettlementObligation obligation
+  o SettlementEvidenceStage stage
+  o Evaluation evaluation
+  o Reproduction reproduction
+  o SettlementProof proof optional
+  o DateTime createdAt
+  o PartyRef issuer optional
+  o ContentHash previousEvidenceHash optional
+  o ContentHash resultingStateHash optional
+  o HashedResource artifact
+}
