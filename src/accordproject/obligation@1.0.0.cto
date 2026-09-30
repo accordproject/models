@@ -12,10 +12,11 @@
  * limitations under the License.
  */
 
-// Requires Concerto 4: this model has no map type of its own, but it imports
-// agreement@1.0.0, which does. The models build parses a model's imports with
-// the parser chosen for the importing file, so the requirement is inherited.
-concerto version "^4.0.0"
+// Requires map type support: this model has no map type of its own, but it
+// imports agreement@1.0.0, which does. The models build parses a model's
+// imports with the parser chosen for the importing file, so the requirement is
+// inherited, and the declared floor tracks agreement@1.0.0's.
+concerto version "^5.0.0"
 
 namespace org.accordproject.obligation@1.0.0
 

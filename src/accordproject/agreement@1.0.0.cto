@@ -12,9 +12,11 @@
  * limitations under the License.
  */
 
-// Requires Concerto 4: this model uses a map type, which concerto-core 3.x
-// only accepts behind the enableMapType flag that the models build does not set.
-concerto version "^4.0.0"
+// Requires a Concerto with map type support: concerto-core 3.x accepts a map
+// type only behind the enableMapType flag, which the models build does not set.
+// The requirement first held at 4.0.0; the declared floor tracks the release
+// the models build supports, which is Concerto 5 since #204.
+concerto version "^5.0.0"
 
 /**
  * Agreements and the documents that record them.

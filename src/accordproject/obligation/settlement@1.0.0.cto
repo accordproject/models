@@ -12,9 +12,10 @@
  * limitations under the License.
  */
 
-// Requires Concerto 4: inherited transitively via obligation@1.0.0, which
-// imports the map-bearing agreement@1.0.0.
-concerto version "^4.0.0"
+// Requires map type support, inherited transitively via obligation@1.0.0,
+// which imports the map-bearing agreement@1.0.0. The declared floor tracks
+// the chain it inherits from.
+concerto version "^5.0.0"
 
 namespace org.accordproject.obligation.settlement@1.0.0
 

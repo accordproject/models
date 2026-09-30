@@ -12,11 +12,14 @@
  * limitations under the License.
  */
 
-// Requires Concerto 4.2: this model uses a map type, which concerto-core 3.x
-// only accepts behind the enableMapType flag that the models build does not
-// set, and its map values are a type imported from another namespace, which
-// only serializes correctly from 4.2.0 (accordproject/concerto#1279).
-concerto version "^4.2.0"
+// Requires map type support, and specifically a release in which map values
+// that are a type imported from another namespace serialize correctly: 3.x
+// accepts a map type only behind the enableMapType flag that the models build
+// does not set, and the cross-namespace map value fix landed in 4.2.0
+// (accordproject/concerto#1279). The requirement first held at 4.2.0; the
+// declared floor tracks the release the models build supports, which is
+// Concerto 5 since #204.
+concerto version "^5.0.0"
 
 namespace org.accordproject.runtime@1.0.0
 
