@@ -144,6 +144,18 @@ event ObligationTransition {
 }
 
 /**
+ * The issue of an obligation.
+ *
+ * Logic issues an obligation by emitting this event rather than by writing the
+ * obligation record itself, as it changes one by emitting an
+ * ObligationTransition. The obligation registry applies both, so the record
+ * has one writer.
+ */
+event ObligationIssued {
+  o Obligation obligation
+}
+
+/**
  * A durable record of an operational attempt to fulfil an obligation.
  */
 asset FulfilmentAttempt identified by attemptId {

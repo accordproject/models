@@ -107,11 +107,21 @@ import org.accordproject.template@1.0.0.TemplateReference from https://models.ac
  * composed. Prose outside a clause block is likewise not a Clause; it is
  * ordinary markup in the parent grammar.
  *
+ * A composed clause is a template instance in its own right: it carries its
+ * own data, at its own TemplateData subtype, and the clauses composed into it
+ * in turn. A document and the clauses composed into it therefore form one
+ * tree of template instances, rooted at the document. The parent's model
+ * declares nothing about the clauses composed into it, and an inline clause,
+ * which is a subtree of its template's data, is unaffected.
+ *
  * A clause is addressed by its instance path, which is the key it appears
- * under in AgreementDocument.clauses. The path is rooted at the document's
- * data — the TemplateData subtype carried in AgreementDocument.data — and not
- * at the document itself, so a clause bound to the paymentTerms property of
- * the data has the path "paymentTerms" and never "data.paymentTerms". It is a
+ * under in its parent's clauses map. The path is rooted at the parent's data
+ * — the TemplateData subtype carried in AgreementDocument.data, or in the
+ * parent Clause.data — and not at the parent itself, so a clause bound to the
+ * paymentTerms property of the data has the path "paymentTerms" and never
+ * "data.paymentTerms". A clause composed into a composed clause is addressed
+ * from the document by joining the keys with "/", for example
+ * "latePayment/notice". It is a
  * bare name for a singleton clause, for example "payment", and is qualified by
  * index where a clause is generated inside a list or foreach block, for
  * example "deliveries[2].inspection". Instance paths, rather than a static
@@ -126,20 +136,25 @@ import org.accordproject.template@1.0.0.TemplateReference from https://models.ac
  * copies together. Records which cite a clause from outside the map, such as
  * AgreementReference, carry the path themselves.
  *
- * clauseId is an optional stable handle for a clause whose identity must
- * survive across agreement revisions, where the instance path may change.
+ * clauseId is the clause's stable instance id. It survives across agreement
+ * revisions, where the instance path may change, and it keys the clause's
+ * state in runtime@1.0.0's AgreementState.states, as documentId keys a
+ * document's. It is unique within the agreement.
  */
 concept Clause {
   o TemplateReference template
-  o String clauseId optional
+  o String clauseId
+  o TemplateData data
+  o Clauses clauses optional
   o ContentHash clauseHash optional
 }
 
 /**
- * The sub-template archives composed into a document, keyed by clause instance
- * path.
+ * The sub-template archives composed into a document or a clause, keyed by
+ * clause instance path.
  *
- * Absent, rather than empty, where a document composes no archives of its own.
+ * Absent, rather than empty, where a document or clause composes no archives
+ * of its own.
  */
 map Clauses {
   o String
@@ -222,10 +237,13 @@ asset Agreement identified by agreementId {
  * agreementId corresponds to Agreement.agreementId when the complete asset is
  * available. template is optional because an agreement carries no template of
  * its own; supply it when the provenance derives from a single templated
- * document. clausePath identifies a specific originating clause instance,
- * using the same instance path that keys AgreementDocument.clauses. It is held
- * here because a reference travels without the map that would otherwise supply
- * it.
+ * document. documentId names the document the reference points into, and
+ * clausePath a specific originating clause within it, using the instance path
+ * that keys the clauses maps, or a path into an inline clause in the
+ * document's data. A clause path is only unique within its document, so a
+ * reference into an agreement of several documents needs both. They are held
+ * here because a reference travels without the agreement that would otherwise
+ * supply them.
  *
  * agreementHash is optional and its canonicalization is left to a
  * deterministic profile, as set out under Hash canonicalization above. A
@@ -235,6 +253,7 @@ asset Agreement identified by agreementId {
 concept AgreementReference {
   o String agreementId
   o ContentHash agreementHash optional
+  o String documentId optional
   o TemplateReference template optional
   o String clausePath optional
   o ContentHash clauseHash optional

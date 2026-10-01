@@ -40,12 +40,12 @@ transaction Response {
 }
 
 /**
- * The state of an agreement's clause instances, keyed by clause instance path.
+ * The state of an agreement's template instances, keyed by instance id.
  *
- * Keys are the clause instance paths that key agreement@1.0.0's
- * AgreementDocument.clauses, for example "payment" or
- * "deliveries[2].inspection". The path is the key in both maps, so it is
- * deliberately not repeated in either value.
+ * Keys are a document's AgreementDocument.documentId or a composed clause's
+ * Clause.clauseId from agreement@1.0.0. Ids are stable across revisions, so
+ * the index never has to mirror the shape of the agreement's tree, and a
+ * stateless instance has no entry.
  *
  * The value is StateData itself, so a template's own state subtype is the map
  * value with nothing wrapping it. Both the declared value type and the
@@ -53,7 +53,7 @@ transaction Response {
  * namespaces, which requires concerto-core 4.2.0 or later
  * (accordproject/concerto#1279).
  */
-map ClauseStates {
+map InstanceStates {
   o String
   o StateData
 }
@@ -80,11 +80,10 @@ map ClauseStates {
  * would require a cross-asset transaction that Concerto does not provide, and
  * would leave revision and previousStateHash without a well-defined meaning.
  *
- * The keys of clauseStates mirror the keys of the corresponding
- * AgreementDocument.clauses maps, so the state tree has the same shape as the
- * clause structure and can be navigated with ordinary property access in a
- * host language. Scoping rules for that navigation are deliberately not
- * encoded in the model.
+ * states holds every stateful instance's state, the documents' and the
+ * composed clauses' alike, keyed by instance id. A template's logic reads and
+ * writes only its own entry; a transition that changes a document and the
+ * clauses composed into it is still one write and one revision.
  *
  * stateHash commits to the state, excluding the stateHash property itself,
  * and previousStateHash links a revision to its immediate predecessor when one
@@ -106,8 +105,7 @@ asset AgreementState identified by stateId {
   --> Agreement agreement
   o Long revision default=0 range=[0,]
   o DateTime effectiveAt
-  o StateData data optional
-  o ClauseStates clauseStates optional
+  o InstanceStates states optional
   o ContentHash stateHash optional
   o ContentHash previousStateHash optional
 }
